@@ -1,38 +1,283 @@
-.App {
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html ul,
+li {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.Gesipan {
+  width: 1000px;
+  margin: 100px auto;
+}
+
+.title {
+  margin-bottom: 30px;
+}
+
+.title strong {
+  font-size: 30px;
+}
+
+.title p {
+  margin-top: 5px;
+  font-size: 14px;
+}
+
+/* 버튼 */
+.bt_wrap {
+  margin-top: 30px;
   text-align: center;
+  font-size: 0;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.bt_wrap a {
+  display: inline-block;
+  min-width: 80px;
+  margin-left: 10px;
+  padding: 10px;
+  border: 1px solid black;
+  border-radius: 2px;
+  font-size: 14px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.bt_wrap a:first-child {
+  margin-left: 0;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+.bt_wrap a.on {
+  background: black;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+/* list */
+
+.list {
+  width: 100%;
+  border-top: 2px solid black;
+  padding-top: 5px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.list article {
+  padding-bottom: 5px;
+  border-bottom: 1px solid rgb(150, 145, 145);
+  margin-bottom: 10px;
+  display: flex;
+}
+
+.list article div:nth-child(1) {
+  font-weight: bolder;
+  margin-right: 5px;
+  width: 3%;
+}
+
+.list article div:nth-child(2) {
+  margin-right: 8px;
+  flex-grow: 2;
+  width: 87%;
+}
+
+.list article div:nth-child(3) {
+  flex-grow: 1;
+  width: 10%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* page button */
+/* 
+.page {
+  margin-top: 30px;
+  text-align: center;
+  font-size: 0;
+} */
+
+/* Edit */
+
+.Edit {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.Edit h2 {
+  margin-top: 100px;
+  margin-bottom: 20px;
+}
+
+.Edit input {
+  width: 500px;
+  height: 30px;
+  margin-bottom: 20px;
+  padding: 5px;
+  border-radius: 10px;
+  border: 1px solid gray;
+}
+
+.Edit textarea {
+  width: 500px;
+  height: 300px;
+  margin-bottom: 20px;
+  padding: 5px;
+  border-radius: 10px;
+  border: 1px solid gray;
+}
+
+.Edit button {
+  width: 200px;
+  height: 30px;
+  margin: 10px;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.Edit .Submit {
+  background-color: white;
+  color: black;
+  border: 1px solid gray;
+}
+
+.Edit .Cancle {
+  background-color: rgb(19, 18, 18);
+  color: white;
+}
+
+/* Post */
+.Posts {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 800px;
+  margin: 0 auto;
+  margin-top: 50px;
+}
+
+.Posts header {
+  margin-bottom: 30px;
+}
+
+.Posts article {
+  margin-bottom: 20px;
+  border-bottom: 1px solid gray;
+}
+
+.Posts .Write {
+  display: inline;
+  text-align: right;
+}
+
+.list_top {
+  display: flex;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.list_top .num {
+  width: 4%;
+}
+.list_top .content {
+  width: 87%;
+  text-align: center;
+}
+.list_top .nickname {
+  width: 10%;
+}
+
+/* pagination */
+
+.Pagination nav {
+  display: flex;
+  gap: 4px;
+  margin: 16px;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.Pagination button {
+  border: none;
+  border-radius: 8px;
+  padding: 8px;
+  margin: 0;
+  background: black;
+  color: white;
+  font-size: 1rem;
+}
+
+.Pagination button:hover {
+  background: tomato;
+  cursor: pointer;
+  transform: translateY(-2px);
+}
+
+.Pagination button:disabled {
+  background: grey;
+  cursor: revert;
+  transform: revert;
+}
+
+/* .Pagination button:aria-current {
+  background: green;
+  font-weight: bold;
+  cursor: revert;
+  transform: revert;
+} */
+
+.Pagination button[aria-current] {
+  background: deeppink;
+  font-weight: bold;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/*ckeditor*/
+.Input {
+  display: flex;
+  flex-direction: column;
+  /* text-align: center;
+  justify-content: center; */
+  align-items: center;
+}
+
+.ck.ck-editor__editable:not(.ck-editor__nested-editable) {
+  min-height: 400px;
+  width: 800px;
+  margin-bottom: 20px;
+}
+
+.Input input {
+  width: 500px;
+  padding: 5px;
+  height: 20px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.Editor .control-box {
+  display: flex;
+  justify-content: center;
+}
+
+.control-box button {
+  width: 300px;
+  height: 30px;
+  margin: 10px;
+  background-color: white;
+}
+
+.control-box .cancle {
+  background-color: black;
+  color: white;
 }
