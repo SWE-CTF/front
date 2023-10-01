@@ -13,9 +13,28 @@ const Editor = () => {
   const [body, setBody] = useState("");
 
   const customUploadAdapter = (loader) => {
+    // return {
+    //   upload() {
+    //     return new Promise((resolve, reject) => {
+    //       const formData = new FormData();
+    //       loader.file.then((file) => {
+    //         formData.append("file", file);
+
+    //         axios
+    //           .post("http://localhost:8080/api/v0/file/upload", formData)
+    //           .then((res) => {
+    //             resolve({
+    //               default: res.data.data.uri,
+    //             });
+    //           })
+    //           .catch((err) => reject(err));
+    //       });
+    //     });
+    //   },
+    // };
     return {
       upload() {
-        return new Promise((resolve, reject) => {
+        return ((resolve, reject) => {
           const formData = new FormData();
           loader.file.then((file) => {
             formData.append("file", file);
@@ -122,5 +141,4 @@ const Editor = () => {
     </div>
   );
 };
-
 export default Editor;
