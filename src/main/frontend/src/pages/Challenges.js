@@ -1,16 +1,35 @@
+import Editor from "@monaco-editor/react";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-// import DarkModeButton from "../components/DarkModeButton";
 import useDarkMode from "../theme/useDarkMode";
 
+// 언어 목록
+const languages = ["javascript", "python", "cpp"];
+
+// 언어와 에디터 상태 연결
+const languageEditors = {
+  javascript: {
+    value: "// Your JavaScript code here",
+    label: "JavaScript",
+  },
+  python: {
+    value: "# Your Python code here",
+    label: "Python",
+  },
+  cpp: {
+    value: "// Your C++ code here",
+    label: "C++",
+  },
+};
+
 const Challenges = () => {
-  const { postId } = useParams(); // URL에서 파라미터 추출
-  const [post, setPost] = useState(null); // 게시물 데이터를 저장할 상태
+  const { postId } = useParams();
+  const [post, setPost] = useState(null);
   const [theme, toggleTheme] = useDarkMode();
+  const [selectedLanguage, setSelectedLanguage] = useState("javascript");
 
   useEffect(() => {
-    // postId를 사용하여 해당 게시물의 데이터를 가져오기
     const fetchPost = async () => {
       try {
         const response = await axios.get(
@@ -25,14 +44,19 @@ const Challenges = () => {
     fetchPost();
   }, [postId]);
 
+  // 언어 변경 핸들러
+  const handleLanguageChange = (language) => {
+    setSelectedLanguage(language);
+  };
+
   return (
     <div className={`container ${theme.dark ? "dark" : "light"}`}>
       <div className="darkBtn">
-          <button onClick={toggleTheme}>
-              {theme.dark ? "Switch to Light Mode" : "Switch to Dark Mode"}
-          </button>
+        <button onClick={toggleTheme}>
+          {theme.dark ? "Switch to Light Mode" : "Switch to Dark Mode"}
+        </button>
       </div>
-      <div className={`ChallengesForm ${theme.dark ? "dark" : "light"}`}>
+      <div className={`ChallengesForm `}>
         <div className="ChallengesContent">
           {post ? (
             <>
@@ -41,7 +65,22 @@ const Challenges = () => {
                 <p>{post.body}</p>
               </div>
               <div className="ChallengesRight">
-                <h3>Code Input Area</h3>
+                <h3>Select Language:</h3>
+                {languages.map((language) => (
+                  <button
+                    key={language}
+                    onClick={() => handleLanguageChange(language)}
+                  >
+                    {languageEditors[language].label}
+                  </button>
+                ))}
+                <h3>{languageEditors[selectedLanguage].label} Code Input Area:</h3>
+                <Editor
+                  value={languageEditors[selectedLanguage].value}
+                  language={selectedLanguage}
+                  theme="vs-dark"
+                  height="300px"
+                />
               </div>
             </>
           ) : (
@@ -54,4 +93,3 @@ const Challenges = () => {
 };
 
 export default Challenges;
-
