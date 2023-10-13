@@ -49,6 +49,7 @@ input::placeholder {
   padding: 8px 16px;
   cursor: pointer;
   border-radius: 4px;
+  margin:5px;
 }
 
 /* @media (prefers-reduced-motion: no-preference) {
@@ -113,12 +114,12 @@ input::placeholder {
 
 /* Login */
 
-/* .Login_Wrap {
+ .Login_Wrap {
   display: flex;
   flex-direction: column;
   text-align: center;
   margin-top: 150px;
-} */
+}
 
 .Login_Wrap h2 {
   font-size: 50px;
@@ -163,7 +164,7 @@ input::placeholder {
 .HomeButton img {
   position: fixed;
   top: 15px;
-  /* width: 100% */
+  width: 100%;
   left: 15px;
   width: 50px;
   cursor: pointer;
@@ -176,33 +177,39 @@ input::placeholder {
   justify-content: center;
 }
 
+.Signup h2{
+  font-size:50px;
+}
+
 .CheckButton {
   height: 50px;
-  margin-top: 156px;
   font-family: "Open Sans", sans-serif;
   font-family: "Source Code Pro", monospace;
   font-family: "VT323", monospace;
   font-size: 20px;
   background-color: rgb(80, 238, 94);
   color: white;
-  padding: 10px;
   margin-left: 5px;
-  width: 90px;
   border-radius: 10px;
   border: none;
   cursor: pointer;
+  float:right;
 }
 
+.buttonContainer {
+  display: flex;
+  margin:3px 0;
+}
+
+
 .impormation {
+  width:500px;
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-top: 150px;
 }
 
-.impormation > div {
-  text-align: right;
-}
 
 .impormation input {
   font-family: "Open Sans", sans-serif;
@@ -214,7 +221,7 @@ input::placeholder {
   border: none;
   padding: 10px;
   margin: 5px;
-  background-color: rgb(240, 90, 90);
+  background-color: #f05a5a;
   &::placeholder {
     color: white;
     font-size: 20px;
@@ -222,19 +229,24 @@ input::placeholder {
   }
 }
 
-.impormation button {
+.imporm {
+  left:70px;
+  position:relative;
+}
+
+.SignButton {
   font-family: "Open Sans", sans-serif;
   font-family: "Source Code Pro", monospace;
   font-family: "VT323", monospace;
   font-size: 20px;
-  background-color: rgb(80, 238, 94);
+  background-color: #50ee5e;
   color: white;
   padding: 10px;
-  margin-left: 5px;
   width: 80px;
   border-radius: 10px;
   border: none;
   cursor: pointer;
+  margin:5px 0;
 }
 
 .MyPage {
@@ -267,8 +279,12 @@ input::placeholder {
 /* List */
 .List {
   width:1024px;
+  height:550px;
+  border:1px solid white;
+  border-top:none;
+  border-bottom: none;
   margin:0 auto;
-  border:1px solid red;
+  margin-top:150px;
 }
 
 .linkList {
@@ -276,9 +292,67 @@ input::placeholder {
   text-decoration:none;
   font-weight:lighter;
   list-style:none;
-  margin:10px 0;
+  margin:12px 0;
   font-size:25px;
 }
+
+.linkList:hover {
+  text-decoration: underline;
+}
+
+.WriteBtn{
+  float:right;
+  margin:0;
+  margin-top:-60px;
+}
+
+.WriteBtn button{
+  font-family: "Open Sans", sans-serif;
+  font-family: "Source Code Pro", monospace;
+  font-family: "VT323", monospace;
+  background-color:#f05a5a;
+  color: white;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-size:20px;
+}
+
+.Pages{
+  width:1024px;
+  margin:0 auto;
+  margin-top:50px;
+}
+
+.pagination {
+  margin:20px 160px;
+  list-style: none;
+  display: flex;
+  gap: 10px;
+}
+
+.pagination li.active button {
+  background-color: #50ee5e;
+  color: #000;
+  /* 다른 스타일 속성 추가 가능 */
+}
+
+.pagination li button {
+  font-family: "Open Sans", sans-serif;
+  font-family: "Source Code Pro", monospace;
+  font-family: "VT323", monospace;
+  background-color: #f05a5a;
+  width:80px;
+  color: white;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+/* 다른 버튼 스타일 속성 추가 가능 */
 
 
 /* Challeges */
@@ -295,8 +369,6 @@ input::placeholder {
   border-radius: 5px;
 }
 
-
-
 .ChallengesContent {
   display: flex;
   width: 100%;
@@ -307,6 +379,10 @@ input::placeholder {
   flex: 1;
 }
 
+.ChallengesLeft p{
+  font-size:20px;
+}
+
 .ChallengesRight {
   border-left:1px solid #d1d1d1;
   flex: 1;
@@ -314,15 +390,21 @@ input::placeholder {
   padding: 16px;
 }
 
-/* 코드 입력 공간의 스타일 */
-/* dark 모드일 때 배경색 설정 */
-.CodeMirror {
-  background-color: #1e1e1e;
-  color: #ffffff;
+.LangBtn{
+  font-family: "Open Sans", sans-serif;
+  font-family: "Source Code Pro", monospace;
+  font-family: "VT323", monospace;
+  background-color:#f05a5a;
+  color: white;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  margin:0 2px;
+  font-size:17px;
 }
 
-/* light 모드일 때 배경색 설정 */
-.CodeMirror-light {
-  background-color: #ffffff;
-  color: #000000;
+.LangBtn.active {
+  background-color: #50ee5e;
+  color:#000;
 }

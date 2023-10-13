@@ -69,18 +69,18 @@ const Signup = () => {
       <div className="Signup">
         <HomeButton />
         <div className="impormation">
-          <div>
+        <h2>Sign up</h2>
+          <div className="imporm">
             <div>
-              ID:
               <input
                 name="username"
                 placeholder="ID"
                 value={userData.username}
                 onChange={handleInputChange}
               ></input>
+                <button className="CheckButton">Duplicate Check</button>
             </div>
             <div>
-              PWD:
               <input
                 type="password"
                 name="password"
@@ -90,7 +90,6 @@ const Signup = () => {
               ></input>
             </div>
             <div>
-              NAME:
               <input
                 name="name"
                 placeholder="Name"
@@ -99,7 +98,6 @@ const Signup = () => {
               ></input>
             </div>
             <div>
-              E-MAIL:
               <input
                 type="email"
                 name="email"
@@ -109,7 +107,6 @@ const Signup = () => {
               ></input>
             </div>
             <div>
-              NICKNAME:
               <input
                 name="nickname"
                 placeholder="Nickname"
@@ -118,7 +115,9 @@ const Signup = () => {
               ></input>
             </div>
           </div>
-          <button onClick={handleSignup}>Sign Up</button>
+            <div className="buttonContainer">
+              <button  className="SignButton" onClick={handleSignup}>Sign Up</button>
+            </div>
         </div>
       </div>
     </div>

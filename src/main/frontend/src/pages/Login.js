@@ -34,9 +34,10 @@ const Login = () => {
       const response = await axios.post("/api/member/login", credentials,
       {withCredentials: true,});
   
-      if (response.data === "로그인 성공") {
+      if (response.data) {
         console.log("로그인 성공");
-        navigate("/MyPage"); // 로그인 성공 시 마이페이지로 이동
+        alert('로그인 성공!');
+        navigate("/"); // 로그인 성공 시 마이페이지로 이동
       } else {
         alert("아이디 또는 비밀번호가 일치하지 않습니다.");
       }
@@ -48,28 +49,31 @@ const Login = () => {
 
   return (
     <div className={`container ${theme.dark ? "dark" : "light"}`}>
-      <div className="Login">
-        <HomeButton />
-        <div className="login">
-          <div className="Id">
-            <input
-              name="username"
-              placeholder="ID"
-              value={credentials.username}
-              onChange={handleInputChange}
-            ></input>
+      <div className="Login_Wrap">
+        <h2>Login</h2>
+        <div className="Login">
+          <HomeButton />
+          <div className="login">
+            <div className="Id">
+              <input
+                name="username"
+                placeholder="ID"
+                value={credentials.username}
+                onChange={handleInputChange}
+              ></input>
+            </div>
+            <div className="Password">
+              <input
+                type="password"
+                name="password"
+                placeholder="PWD"
+                value={credentials.password}
+                onChange={handleInputChange}
+              ></input>
+            </div>
           </div>
-          <div className="Password">
-            <input
-              type="password"
-              name="password"
-              placeholder="PWD"
-              value={credentials.password}
-              onChange={handleInputChange}
-            ></input>
-          </div>
+          <button onClick={handleLogin}>Sign In</button>
         </div>
-        <button onClick={handleLogin}>Sign In</button>
       </div>
     </div>
   );
