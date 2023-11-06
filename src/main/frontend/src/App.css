@@ -1,0 +1,846 @@
+/* 자동완성시 css 변경하는 코드 */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  transition: background-color 5000s ease-in-out 0s;
+  -webkit-transition: background-color 9999s ease-out;
+  -webkit-box-shadow: 0 0 0px 1000px rgb(240, 90, 90) inset !important;
+  -webkit-text-fill-color: black !important;
+}
+
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+.input * {
+  font-family: "Open Sans", sans-serif;
+  font-family: "Source Code Pro", monospace;
+  font-family: "VT323", monospace;
+}
+
+input::placeholder {
+  color: white;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+/* darkmode */
+
+.dark {
+  background-color: #202123;
+  color: #fff !important;
+}
+
+.darkBtn {
+  position: fixed;
+  right: 0%;
+}
+
+.darkBtn button {
+  background-color: #333; /* Dark Mode 버튼 배경색을 설정하세요. */
+  color: #fff; /* Dark Mode 버튼 텍스트 색상을 설정하세요. */
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+/* @media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+} */
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.container {
+  width: 100%;
+  height: 1050px;
+  position: absolute;
+}
+
+.logo {
+  width: 350px;
+  margin: 0 auto;
+  margin-top: 150px;
+}
+
+.logo img {
+  width: 350px;
+}
+
+.menu {
+  margin: 0 auto;
+  padding: 50px 0;
+  text-align: center;
+}
+
+.menu-link {
+  text-decoration: none;
+  color: #000;
+  font-size: 40px;
+  margin: 0 20px;
+}
+
+/* Login */
+
+/* .Login_Wrap {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin-top: 150px;
+} */
+
+.Login {
+  display: flex;
+  justify-content: center;
+  margin-top: 300px;
+}
+
+.Login_Wrap h2 {
+  font-size: 50px;
+}
+
+.Login_Wrap .Login {
+  display: flex;
+  /* align-items: center; */
+  justify-content: center;
+  /* margin-top: 250px; */
+  /* border: 1px solid gray; */
+}
+
+.Login input {
+  font-family: "Open Sans", sans-serif;
+  font-family: "Source Code Pro", monospace;
+  font-family: "VT323", monospace;
+  font-size: 20px;
+  height: 30px;
+  border-radius: 10px;
+  border: none;
+  padding: 10px;
+  margin: 5px;
+  background-color: rgb(240, 90, 90);
+}
+
+.Login button {
+  font-family: "Open Sans", sans-serif;
+  font-family: "Source Code Pro", monospace;
+  font-family: "VT323", monospace;
+  font-size: 20px;
+  background-color: rgb(99, 226, 109);
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+.menu button {
+  font-family: "Open Sans", sans-serif;
+  font-family: "Source Code Pro", monospace;
+  font-family: "VT323", monospace;
+  background: none;
+  border: none;
+  text-decoration: none;
+  color: #000;
+  font-size: 40px;
+  margin: 0 20px;
+  cursor: pointer;
+}
+
+/* HomeButton */
+
+.HomeButton img {
+  position: fixed;
+  top: 15px;
+  /* width: 100% */
+  left: 15px;
+  width: 50px;
+  cursor: pointer;
+}
+
+/* Signup */
+
+.Signup {
+  display: flex;
+  justify-content: center;
+}
+
+.CheckButton {
+  height: 50px;
+  margin-top: 156px;
+  font-family: "Open Sans", sans-serif;
+  font-family: "Source Code Pro", monospace;
+  font-family: "VT323", monospace;
+  font-size: 20px;
+  background-color: rgb(80, 238, 94);
+  color: white;
+  padding: 10px;
+  margin-left: 5px;
+  width: 90px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+.impormation {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 150px;
+}
+
+.impormation > div {
+  text-align: right;
+}
+
+.impormation input {
+  font-family: "Open Sans", sans-serif;
+  font-family: "Source Code Pro", monospace;
+  font-family: "VT323", monospace;
+  font-size: 20px;
+  height: 30px;
+  border-radius: 10px;
+  border: none;
+  padding: 10px;
+  margin: 5px;
+  background-color: rgb(240, 90, 90);
+  &::placeholder {
+    color: white;
+    font-size: 20px;
+    font-weight: 500;
+  }
+}
+
+.impormation button {
+  font-family: "Open Sans", sans-serif;
+  font-family: "Source Code Pro", monospace;
+  font-family: "VT323", monospace;
+  font-size: 20px;
+  background-color: rgb(80, 238, 94);
+  color: white;
+  padding: 10px;
+  margin-left: 5px;
+  width: 80px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+.MyPage {
+  display: flex;
+  justify-content: center;
+}
+
+/* Nav */
+
+.Nav {
+  /* position: fixed;
+  z-index: 1;
+  background-color: red;
+  width: 100%;
+  padding: 15px 0px;
+  margin-right: 50px;
+  text-align: center;
+  align-items: center; */
+  position: fixed;
+  z-index: 1;
+  top: 3%; /* 화면 상단에서 50% 위치에 배치 */
+  left: 50%; /* 화면 왼쪽에서 50% 위치에 배치 */
+  transform: translate(-50%, -50%); /* 가운데 정렬 */
+}
+
+.Nav .navMenu {
+  margin: 20px;
+  text-decoration: none;
+  font-size: 25px;
+}
+
+.myPageLogo img {
+  text-align: center;
+  height: 450px;
+}
+
+/* List */
+.List {
+  width: 1024px;
+  margin: 0 auto;
+  border: 1px solid red;
+}
+
+.linkList {
+  color: #000;
+  text-decoration: none;
+  font-weight: lighter;
+  list-style: none;
+  margin: 10px 0;
+  font-size: 25px;
+}
+
+/* Challeges */
+
+.ChallengesForm {
+  margin: 0 auto;
+  margin-top: 50px;
+  width: 70%;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+}
+
+.ChallengesContent {
+  display: flex;
+  width: 100%;
+  gap: 16px;
+}
+
+.ChallengesLeft {
+  flex: 1;
+}
+
+.ChallengesRight {
+  border-left: 1px solid #d1d1d1;
+  flex: 1;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+/* 코드 입력 공간의 스타일 */
+/* dark 모드일 때 배경색 설정 */
+.CodeMirror {
+  background-color: #1e1e1e;
+  color: #ffffff;
+}
+
+/* light 모드일 때 배경색 설정 */
+.CodeMirror-light {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+/* 질문 게시판 */
+
+.Gesipan {
+  width: 1000px;
+  margin: 100px auto;
+}
+
+.Gesipan .link {
+  text-decoration: none;
+  color: black;
+}
+
+.title {
+  margin-bottom: 30px;
+}
+
+.title strong {
+  font-size: 30px;
+}
+
+.title p {
+  margin-top: 5px;
+  font-size: 14px;
+}
+
+/* 버튼 */
+.bt_wrap {
+  margin-top: 30px;
+  text-align: center;
+  font-size: 0;
+}
+
+.bt_wrap a {
+  display: inline-block;
+  min-width: 80px;
+  margin-left: 10px;
+  padding: 10px;
+  border: 1px solid black;
+  border-radius: 2px;
+  font-size: 14px;
+}
+
+.bt_wrap a:first-child {
+  margin-left: 0;
+}
+
+.bt_wrap a.on {
+  background: black;
+  color: white;
+}
+
+/* list */
+
+.list {
+  width: 100%;
+  border-top: 2px solid black;
+  padding-top: 5px;
+}
+
+.list article {
+  padding-bottom: 5px;
+  border-bottom: 1px solid rgb(150, 145, 145);
+  margin-bottom: 10px;
+  display: flex;
+  height: 30px;
+  font-size: 18px;
+}
+
+.list article div:nth-child(1) {
+  font-weight: bolder;
+  font-size: 18px;
+  margin-right: 5px;
+  width: 5%;
+}
+
+.list article div:nth-child(2) {
+  margin-right: 8px;
+  flex-grow: 2;
+  width: 65%;
+}
+
+.list article div:nth-child(3) {
+  flex-grow: 1;
+  width: 20%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.list article div:nth-child(4) {
+  flex-grow: 1;
+  width: 10%;
+  white-space: nowrap;
+  /* overflow: hidden; */
+  /* text-overflow: ellipsis; */
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/* .list article div:nth-child(5) {
+  flex-grow: 1;
+  width: 10%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+} */
+/* page button */
+/* 
+.page {
+  margin-top: 30px;
+  text-align: center;
+  font-size: 0;
+} */
+
+/* Post */
+.Posts {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 800px;
+  margin: 0 auto;
+  margin-top: 50px;
+}
+
+.Posts header {
+  margin-bottom: 30px;
+}
+
+.Posts article {
+  margin-bottom: 20px;
+  border-bottom: 1px solid gray;
+}
+
+.Posts .Write {
+  display: inline;
+  text-align: right;
+}
+
+.list_top {
+  display: flex;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.list_top .num {
+  width: 5%;
+}
+.list_top .content {
+  width: 68%;
+  text-align: center;
+}
+.list_top .nickname {
+  width: 8%;
+}
+.list_top .writeTime {
+  width: 18%;
+}
+
+/* pagination */
+
+.Pagination nav {
+  display: flex;
+  gap: 4px;
+  margin: 16px;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.Pagination button {
+  border: none;
+  border-radius: 8px;
+  padding: 8px;
+  margin: 0;
+  background: black;
+  color: white;
+  font-size: 1rem;
+}
+
+.Pagination button:hover {
+  background: tomato;
+  cursor: pointer;
+  transform: translateY(-2px);
+}
+
+.Pagination button:disabled {
+  background: grey;
+  cursor: revert;
+  transform: revert;
+}
+
+/* .Pagination button:aria-current {
+  background: green;
+  font-weight: bold;
+  cursor: revert;
+  transform: revert;
+} */
+
+.Pagination button[aria-current] {
+  background: deeppink;
+  font-weight: bold;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/*ckeditor*/
+.Editor .Input {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.Input .input-title {
+  width: 500px;
+  height: 30px;
+  padding: 5px;
+  margin-right: 10px;
+}
+.Input .input-id {
+  padding: 5px;
+  height: 30px;
+  width: 60px;
+}
+.Input .title-wrapper {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.Input textarea {
+  width: 700px;
+  height: 500px;
+  padding: 5px;
+  font-size: 15px;
+}
+
+.Editor .control-box {
+  display: flex;
+  justify-content: center;
+}
+
+.control-box button {
+  width: 300px;
+  height: 30px;
+  margin: 10px;
+  background-color: white;
+}
+
+.control-box .cancle {
+  background-color: black;
+  color: white;
+}
+
+/* Board */
+.Board {
+  /* display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  margin-top: 20px; */
+  /* border: 1px solid black; */
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  /* text-align: center; */
+  width: 1000px;
+  margin: 0 400px;
+  margin-top: 100px;
+}
+
+.Board h2 {
+  /* border: 1px solid black; */
+  text-align: left;
+  width: 800px;
+}
+
+.Board .info {
+  /* border: 1px solid black; */
+  display: flex;
+  /* border-bottom: 1px solid gray; */
+  width: 800px;
+}
+
+.Board .writer {
+  width: 150px;
+  font-size: 15px;
+}
+
+.Board .num {
+  width: 150px;
+  font-size: 15px;
+}
+
+.Board .content {
+  text-align: left;
+  border: 1px solid lightslategray;
+  height: 500px;
+  width: 800px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.Board .Chat {
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid black;
+  width: 800px;
+}
+
+.Board .Comment {
+  margin-bottom: 20px;
+}
+
+.Board input {
+  width: 500px;
+  height: 30px;
+  padding: 4px;
+  font-size: 14px;
+  border-radius: 10px;
+}
+
+.Board button {
+  height: 40px;
+  width: 50px;
+  margin-left: 10px;
+  border-radius: 10px;
+}
+
+.Board h3 {
+  margin-bottom: 20px;
+}
+
+/* BoardDetail */
+.BoardDetail {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-items: center;
+}
+
+.BoardDetail .Comment {
+  margin-bottom: 20px;
+}
+
+.BoardDetail input {
+  width: 500px;
+  height: 30px;
+  padding: 4px;
+  font-size: 14px;
+  border-radius: 10px;
+}
+
+.BoardDetail button {
+  height: 40px;
+  width: 50px;
+  margin-left: 10px;
+  border-radius: 10px;
+}
+.BoardDetail h3 {
+  margin-bottom: 20px;
+}
+
+.BoardDetail .modify_delete button {
+  height: 20px;
+}
+
+.BoardDetail .modify_delete {
+  margin-bottom: 20px;
+}
+
+/* Mypage */
+
+.MyPage .wrap {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  height: 500px;
+  border: 1px solid black;
+  margin-top: 120px;
+  padding: 10px;
+}
+
+.MyPage .header {
+  display: flex;
+  /* border: 1px solid black; */
+  height: 110px;
+  border-bottom: 1px solid black;
+  margin-bottom: 20px;
+}
+
+.MyPage .photo {
+  border: 1px solid black;
+  width: 100px;
+  height: 100px;
+  margin-right: 10px;
+}
+
+.MyPage .username {
+  display: flex;
+  align-items: flex-end;
+  margin-right: 10px;
+  /* border: 1px solid black; */
+  font-size: 40px;
+  height: 100px;
+}
+
+.MyPage .email {
+  display: flex;
+  align-items: flex-end;
+  /* border: 1px solid black; */
+  font-size: 20px;
+  height: 100px;
+}
+
+.Ex .Body {
+  /* border: 1px solid black; */
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  /* text-align: center; */
+  width: 1000px;
+  margin: 0 400px;
+  margin-top: 100px;
+}
+
+.Body .title input {
+  width: 400px;
+  height: 25px;
+}
+
+.Body .num input {
+  width: 150px;
+  height: 25px;
+  margin-bottom: 30px;
+}
+
+.Body .title input::placeholder {
+  color: black; /* 원하는 플레이스홀더 텍스트 색상을 설정합니다. */
+  font-family: "Open Sans", sans-serif;
+  font-family: "Source Code Pro", monospace;
+  font-family: "VT323", monospace;
+}
+
+.Body .num input::placeholder {
+  color: black; /* 원하는 플레이스홀더 텍스트 색상을 설정합니다. */
+  font-family: "Open Sans", sans-serif;
+  font-family: "Source Code Pro", monospace;
+  font-family: "VT323", monospace;
+  font-size: 17px;
+}
+
+.Body textarea::placeholder {
+  color: black; /* 원하는 플레이스홀더 텍스트 색상을 설정합니다. */
+  font-family: "Open Sans", sans-serif;
+  font-family: "Source Code Pro", monospace;
+  font-family: "VT323", monospace;
+  font-size: 30px;
+}
+
+.Body .content textarea {
+  width: 800px;
+  height: 300px;
+}
+
+.Body .button {
+  display: flex;
+  width: 800px;
+  /* border: 1px solid black; */
+  /* margin: 0 auto; */
+  margin-top: 10px;
+  justify-content: end;
+}
+
+.Body .buttton .save {
+  margin-left: 10px;
+}
+
+.Body .button button {
+  height: 30px;
+  width: 80px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.Body .button .save {
+  border: none;
+  color: white;
+  background-color: rgb(99, 226, 109);
+}
+
+.Body .button .cancle {
+  border: none;
+  color: white;
+  background-color: rgb(240, 90, 90);
+}
