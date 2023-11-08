@@ -201,6 +201,7 @@ input::placeholder {
 
 .CheckButton {
   height: 50px;
+  margin-top: 156px;
   font-family: "Open Sans", sans-serif;
   font-family: "Source Code Pro", monospace;
   font-family: "VT323", monospace;
@@ -214,7 +215,6 @@ input::placeholder {
   border: none;
   cursor: pointer;
 }
-
 .impormation {
   margin-left: 5px;
   border-radius: 10px;

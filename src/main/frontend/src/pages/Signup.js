@@ -12,8 +12,7 @@ const Signup = () => {
     name: "",
     email: "",
     nickname: "",
-    team: "",
-    dup: 0
+    team: ""
   });
 
   const [theme, toggleTheme] = useDarkMode();
@@ -31,34 +30,33 @@ const Signup = () => {
   }
 
   const handleDuplicateCheck = async (e) => {
-    e.preventDefault();
+    alert("not implemented yet");
+    return;
+    // e.preventDefault();
 
-    if (userData.username.length <= 5) {
-      alert("입력값을 확인하세요.");
-      return;
-    }
+    // if (userData.username.length <= 5) {
+    //   alert("입력값을 확인하세요.");
+    //   return;
+    // }
 
-    // TODO: request for duplicate check 
-    const response = await axios.post(
-      "/api/member/join",
-      userData
-    );
-    if (response.data === "아이디") {
-      alert("사용 가능한 아이디입니다!");
-      return;
-    }
+    // // TODO: request for duplicate check 
+    // const response = await axios.post(
+    //   "/api/member/join",
+    //   userData
+    // );
+    // if (response.data === "아이디") {
+    //   alert("사용 가능한 아이디입니다!");
+    //   return;
+    // }
   }
 
   const handleSignup = async (e) => {
     e.preventDefault();
 
     // 회원가입 기준 검사
-    if (userData.dup === 2) {
-      alert("아이디 중복체크를 해주세요.");
-      return;
-    }
+    
     if (
-      userData.dup ||
+      userData.username.length <= 5 ||
       userData.password.length <= 5 ||
       userData.name.length <= 1 ||
       !emailValidation(userData.email) ||
