@@ -301,11 +301,6 @@ input::placeholder {
   top: 3%; /* 화면 상단에서 50% 위치에 배치 */
   left: 50%; /* 화면 왼쪽에서 50% 위치에 배치 */
   transform: translate(-50%, -50%); /* 가운데 정렬 */
-  border:1px solid red;
-  width: 100%;
-  padding: 15px 0px;
-  margin-right: 50px;
-  text-align: right;
 }
 
 .Nav .navMenu {
