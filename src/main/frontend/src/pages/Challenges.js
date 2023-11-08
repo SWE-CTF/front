@@ -2,8 +2,9 @@ import Editor from "@monaco-editor/react";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import useDarkMode from "../theme/useDarkMode";
 import HomeButton from "../components/HomeButton";
+import useDarkMode from "../theme/useDarkMode";
+
 
 // 언어 목록
 const languages = ["javascript", "python", "cpp"];
@@ -29,6 +30,8 @@ const Challenges = () => {
   const [post, setPost] = useState(null);
   const [theme, toggleTheme] = useDarkMode();
   const [selectedLanguage, setSelectedLanguage] = useState("javascript");
+  const [activeLanguage, setActiveLanguage] = useState("javascript");
+
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -48,11 +51,12 @@ const Challenges = () => {
   // 언어 변경 핸들러
   const handleLanguageChange = (language) => {
     setSelectedLanguage(language);
+    setActiveLanguage(language);
   };
 
   return (
     <div className={`container ${theme.dark ? "dark" : "light"}`}>
-      <HomeButton></HomeButton>
+      <HomeButton />
       <div className="darkBtn">
         <button onClick={toggleTheme}>
           {theme.dark ? "Switch to Light Mode" : "Switch to Dark Mode"}
@@ -63,22 +67,21 @@ const Challenges = () => {
           {post ? (
             <>
               <div className="ChallengesLeft">
-                <h2>{post.title}</h2>
+                <h1>{post.title}</h1>
                 <p>{post.body}</p>
               </div>
               <div className="ChallengesRight">
                 <h3>Select Language:</h3>
                 {languages.map((language) => (
                   <button
+                  className={`LangBtn ${activeLanguage === language ? "active" : ""}`}
                     key={language}
                     onClick={() => handleLanguageChange(language)}
                   >
                     {languageEditors[language].label}
                   </button>
                 ))}
-                <h3>
-                  {languageEditors[selectedLanguage].label} Code Input Area:
-                </h3>
+                <h3>{languageEditors[selectedLanguage].label} Code Input Area:</h3>
                 <Editor
                   value={languageEditors[selectedLanguage].value}
                   language={selectedLanguage}

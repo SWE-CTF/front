@@ -27,10 +27,11 @@ function App() {
           <Route path="/pages/:postId" element={<Challenges />} />
           <Route path="/MyImpormation" element={<MyPage />} />
           <Route path="/Announcement" element={<Announcement />} />
-          {/* Challenges 컴포넌트로 수정 */}
           <Route path="/QuestionBoard" element={<BoardMain />} />
           <Route path="/QuestionBoardEdit" element={<Edit />} />
           <Route path="/api/question/:questionId" element={<BoardDetail />} />
+          <Route exact path="/Scoreboard" element={<Scoreboard />} />
+          {/* Challenges 컴포넌트로 수정 */}
         </Routes>
       </div>
     </Router>

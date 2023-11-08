@@ -8,9 +8,12 @@ const Signup = () => {
   const [userData, setUserData] = useState({
     username: "",
     password: "",
+    passwordCheck: "",
     name: "",
     email: "",
     nickname: "",
+    team: "",
+    dup: 0
   });
 
   const [theme, toggleTheme] = useDarkMode();
@@ -23,18 +26,51 @@ const Signup = () => {
     });
   };
 
+  const emailValidation = (email) => {
+    return email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
+  }
+
+  const handleDuplicateCheck = async (e) => {
+    e.preventDefault();
+
+    if (userData.username.length <= 5) {
+      alert("입력값을 확인하세요.");
+      return;
+    }
+
+    // TODO: request for duplicate check 
+    const response = await axios.post(
+      "/api/member/join",
+      userData
+    );
+    if (response.data === "아이디") {
+      alert("사용 가능한 아이디입니다!");
+      return;
+    }
+  }
+
   const handleSignup = async (e) => {
     e.preventDefault();
 
     // 회원가입 기준 검사
+    if (userData.dup === 2) {
+      alert("아이디 중복체크를 해주세요.");
+      return;
+    }
     if (
-      userData.username.length <= 5 ||
+      userData.dup ||
       userData.password.length <= 5 ||
       userData.name.length <= 1 ||
-      !userData.email.includes("@") ||
+      !emailValidation(userData.email) ||
       userData.nickname.length <= 1
     ) {
       alert("입력값을 확인하세요.");
+      return;
+    }
+
+
+    if (userData.password !== userData.passwordCheck) {
+      alert("패스워드와 패스워드 중복체크 값이 다릅니다.");
       return;
     }
 
@@ -90,6 +126,16 @@ const Signup = () => {
               ></input>
             </div>
             <div>
+              PWDCHECK:
+              <input
+                type="password"
+                name="passwordCheck"
+                placeholder="Password check"
+                value={userData.passwordCheck}
+                onChange={handleInputChange}
+              ></input>
+            </div>
+            <div>
               NAME:
               <input
                 name="name"
@@ -117,9 +163,19 @@ const Signup = () => {
                 onChange={handleInputChange}
               ></input>
             </div>
+            <div>
+              TEAM:
+              <input
+                name="team"
+                placeholder="Team"
+                value={userData.team}
+                onChange={handleInputChange}
+              ></input>
+            </div>
           </div>
           <button onClick={handleSignup}>Sign Up</button>
         </div>
+        <button className="CheckButton" onClick={handleDuplicateCheck}>Duplicate Check</button>
       </div>
     </div>
   );
