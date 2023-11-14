@@ -2,10 +2,12 @@ import axios from "axios";
 import React, { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import HomeButton from "../components/HomeButton";
+import Nav from "../components/Nav";
 import Pagination from "../components/Pagination";
 import Posts from "../components/Posts";
 import { MyContextProvider } from "../components/myContext";
 import useDarkMode from "../theme/useDarkMode";
+
 
 function Scoreboard() {
   const [theme, toggleTheme] = useDarkMode();
@@ -38,6 +40,7 @@ function Scoreboard() {
 
   return (
     <MyContextProvider>
+      <Nav></Nav>
       <div className={`container ${theme.dark ? "dark" : "light"}`}>
         <HomeButton />
         <div className="darkBtn">

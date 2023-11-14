@@ -434,6 +434,54 @@ input::placeholder {
   padding: 16px;
 }
 
+.seq {
+  width:1024px;
+  height:500px;
+  margin:0 auto;
+  margin-top:150px;
+  overflow:scroll;
+}
+
+.seq::-webkit-scrollbar {
+  display: none;
+}
+
+.seq {
+  -ms-overflow-style: none; /* 인터넷 익스플로러 */
+  scrollbar-width: none; /* 파이어폭스 */
+}
+
+
+.seq div {
+  margin:15px 0;
+}
+
+.seq label{
+  float:left;
+  width:100px;
+}
+
+.seq div:nth-child(3) label{
+  width:800px;
+}
+
+.seq input{
+  width:300px;
+  height:30px;
+}
+
+.seq textarea {
+  width:1024px;
+  height:500px;
+}
+
+.testCase{
+  width:500px;
+  height:100px;
+  float:left;
+}
+
+
 /* 코드 입력 공간의 스타일 */
 /* dark 모드일 때 배경색 설정 */
 .CodeMirror {
