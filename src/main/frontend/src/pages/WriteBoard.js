@@ -9,7 +9,7 @@ const WriteBoard = () => {
   const [theme, toggleTheme] = useDarkMode();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState("1");
   const [files, setFiles] = useState([]);
   const [hint, setHint] = useState("");
   const [memory, setMemory] = useState("");
@@ -104,13 +104,16 @@ const WriteBoard = () => {
   };
 
   const formData = new FormData();
-  formData.append("json", JSON.stringify(data));
+  formData.append("saveForm", new Blob([JSON.stringify(data)], {
+    type: "application/json"
+}));
 
   if (files.length > 0) {
-    formData.append("image", files[0]);
+    formData.append("files", files[0]);
     console.log("파일 이름:", files[0].name);
   }
 
+  console.log("formData",formData)
   console.log("제목:", title);
   console.log("카테고리:", category);
   console.log("내용:", content);
@@ -129,7 +132,7 @@ const WriteBoard = () => {
     const response = await axios.post("/api/challenge/save", formData, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("login_token")}`,
-        "Content-Type": "multipart/form-data",
+        "Content-Type": "multipart/form-data"
       },
     });
 
@@ -175,6 +178,7 @@ const WriteBoard = () => {
               name="category"
               value={category}
               onChange={handleCategoryChange}
+              defaultValue={category}
             >
               <option value="1">Category 1</option>
               <option value="2">Category 2</option>
