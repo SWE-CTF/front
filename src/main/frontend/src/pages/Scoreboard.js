@@ -1,13 +1,12 @@
 import axios from "axios";
 import React, { useCallback, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import HomeButton from "../components/HomeButton";
 import Nav from "../components/Nav";
 import Pagination from "../components/Pagination";
 import Posts from "../components/Posts";
 import { MyContextProvider } from "../components/myContext";
 import useDarkMode from "../theme/useDarkMode";
-
 
 function Scoreboard() {
   const [theme, toggleTheme] = useDarkMode();
@@ -16,18 +15,60 @@ function Scoreboard() {
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage, setPostsPerPage] = useState(15);
   const [activePage, setActivePage] = useState(1);
+  const [searchQuery, setSearchQuery] = useState({
+    challengeTitle: "",
+    challengeCategory: ""
+  });
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       const response = await axios.get(
-        "https://jsonplaceholder.typicode.com/posts"
+        "/api/challenge/search?keyword="
       );
       setPosts(response.data);
       setLoading(false);
     };
     fetchData();
   }, []);
+
+  const handleSearch = async (e) => {
+    e.preventDefault();
+
+    const fetchData = async () => {
+      setLoading(true);
+      const response = await axios.get(
+        "/api/challenge/search?keyword=" + searchQuery.challengeTitle
+      );
+      console.log("/api/challenge/search?keyword=" + searchQuery.challengeTitle);
+      setPosts(response.data);
+      setLoading(false);
+    };
+    fetchData();
+  }
+
+  const handleOnKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleSearch(e);
+    }
+  };
+
+  const handleInputChange = (e) => {
+    setSearchQuery({
+      ...searchQuery,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const onWrite = () => {
+    if (localStorage.getItem("login") === "true") {
+      navigate("/WriteBoard");
+    } else {
+      alert("로그인 해주세요");
+      navigate(`/login`);
+    }
+  };
 
   const indexOfLast = currentPage * postsPerPage;
   const indexOfFirst = indexOfLast - postsPerPage;
@@ -48,6 +89,19 @@ function Scoreboard() {
             {theme.dark ? "Switch to Light Mode" : "Switch to Dark Mode"}
           </button>
         </div>
+        {/* TODO: css design */}
+        <form>
+          <div>
+            <input
+              name="challengeTitle"
+              placeholder="Search Challenge"
+              value={searchQuery.challengeTitle}
+              onChange={handleInputChange}
+              onKeyDown={handleOnKeyPress}
+            />
+          </div>
+          <button onClick={handleSearch}>Search</button>
+        </form>
         <div className="List">
           <Posts
             className={`linkList ${theme.dark ? "dark" : "light"}`}
@@ -62,12 +116,11 @@ function Scoreboard() {
             currentPage={activePage}
             onPageChange={handlePageChange}
           />
-          <Link
-            to="/WriteBoard"
+          <div
             className={`WriteBtn ${theme.dark ? "dark" : "light"}`}
           >
-            <button>set exam questions</button>
-          </Link>
+            <button onClick={onWrite}>set exam questions</button>
+          </div>
         </div>
       </div>
     </MyContextProvider>
