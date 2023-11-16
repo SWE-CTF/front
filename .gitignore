@@ -1,4 +1,6 @@
 HELP.md
+### BACKEND ###
+
 .gradle
 build/
 !gradle/wrapper/gradle-wrapper.jar
@@ -39,3 +41,7 @@ out/
 !/.gitignore
 /src/main/resources/application.properties
 
+
+### FRONTEND ###
+/src/main/frontend/node_modules
+/src/main/frontend/package-lock.json
