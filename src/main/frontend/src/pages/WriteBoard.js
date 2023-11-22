@@ -86,70 +86,70 @@ const WriteBoard = () => {
   };
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  const data = {
-    title: title,
-    content: content,
-    categoryId: category,
-    time: time,
-    memory: memory,
-    hint: hint,
-    input1: input1,
-    output1: output1,
-    input2: input2,
-    output2: output2,
-    input3: input3,
-    output3: output3,
+    const data = {
+      title: title,
+      content: content,
+      categoryId: parseInt(category),
+      time: parseFloat(time),
+      memory: parseFloat(memory),
+      hint: hint,
+      input1: input1,
+      output1: output1,
+      input2: input2,
+      output2: output2,
+      input3: input3,
+      output3: output3,
+    };
+
+    const formData = new FormData();
+    formData.append("saveForm", new Blob([JSON.stringify(data)], {
+      type: "application/json"
+    }));
+
+    if (files.length > 0) {
+      formData.append("files", files[0]);
+      console.log("파일 이름:", files[0].name);
+    }
+
+    console.log("formData", formData)
+    console.log("제목:", title);
+    console.log("카테고리:", category);
+    console.log("내용:", content);
+    console.log("힌트:", hint);
+    console.log("메모리 제한:", memory);
+    console.log("시간 제한:", time);
+    console.log("Test Case 1 (Input):", input1);
+    console.log("Test Case 1 (Output):", output1);
+    console.log("Test Case 2 (Input):", input2);
+    console.log("Test Case 2 (Output):", output2);
+    console.log("Test Case 3 (Input):", input3);
+    console.log("Test Case 3 (Output):", output3);
+
+
+    try {
+      const response = await axios.post("/api/challenge/save", formData, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("login_token")}`,
+          "Content-Type": "multipart/form-data"
+        },
+      });
+
+      console.log("문제가 성공적으로 등록되었습니다.", response.data);
+
+      navigate("/problems");
+    } catch (error) {
+      console.error("문제 등록 중 오류가 발생했습니다.", error);
+
+      if (error.response) {
+        console.error("Response data:", error.response.data);
+      }
+    }
   };
 
-  const formData = new FormData();
-  formData.append("saveForm", new Blob([JSON.stringify(data)], {
-    type: "application/json"
-}));
-
-  if (files.length > 0) {
-    formData.append("files", files[0]);
-    console.log("파일 이름:", files[0].name);
-  }
-
-  console.log("formData",formData)
-  console.log("제목:", title);
-  console.log("카테고리:", category);
-  console.log("내용:", content);
-  console.log("힌트:", hint);
-  console.log("메모리 제한:", memory);
-  console.log("시간 제한:", time);
-  console.log("Test Case 1 (Input):", input1);
-  console.log("Test Case 1 (Output):", output1);
-  console.log("Test Case 2 (Input):", input2);
-  console.log("Test Case 2 (Output):", output2);
-  console.log("Test Case 3 (Input):", input3);
-  console.log("Test Case 3 (Output):", output3);
 
 
-  try {
-    const response = await axios.post("/api/challenge/save", formData, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("login_token")}`,
-        "Content-Type": "multipart/form-data"
-      },
-    });
-
-    console.log("문제가 성공적으로 등록되었습니다.", response.data);
-
-    navigate("/problems");
-  } catch (error) {
-    console.error("문제 등록 중 오류가 발생했습니다.", error);
-
-    if (error.response) {
-      console.error("Response data:", error.response.data);
-    }
-  }
-};
-
-  
-  
   return (
     <div className={`container ${theme.dark ? "dark" : "light"}`}>
       <Nav></Nav>

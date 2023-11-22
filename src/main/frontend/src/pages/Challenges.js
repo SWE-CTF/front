@@ -32,12 +32,17 @@ const Challenges = () => {
   const [selectedLanguage, setSelectedLanguage] = useState("javascript");
   const [activeLanguage, setActiveLanguage] = useState("javascript");
 
+  // 언어 변경 핸들러
+  const handleLanguageChange = (language) => {
+    setSelectedLanguage(language);
+    setActiveLanguage(language);
+  };
 
   useEffect(() => {
     const fetchPost = async () => {
       try {
         const response = await axios.get(
-          `https://jsonplaceholder.typicode.com/posts/${postId}`
+          `/api/challenge/${postId}`
         );
         setPost(response.data);
       } catch (error) {
@@ -47,12 +52,6 @@ const Challenges = () => {
 
     fetchPost();
   }, [postId]);
-
-  // 언어 변경 핸들러
-  const handleLanguageChange = (language) => {
-    setSelectedLanguage(language);
-    setActiveLanguage(language);
-  };
 
   return (
     <div className={`container ${theme.dark ? "dark" : "light"}`}>
