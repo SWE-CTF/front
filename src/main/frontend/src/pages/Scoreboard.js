@@ -24,11 +24,17 @@ function Scoreboard() {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      const response = await axios.get(
-        "/api/challenge/search?keyword="
-      );
-      setPosts(response.data);
-      setLoading(false);
+      try {
+        const response = await axios.get(
+          "api/challenge/paging"
+        );
+        setPosts(response.data);
+        setLoading(false);
+      } catch (error) {
+        alert("게시물을 불러오는데 실패했습니다.");
+        console.error("게시물을 불러오는 동안 오류가 발생했습니다.", error);
+        navigate("/");
+      }
     };
     fetchData();
   }, []);
@@ -38,12 +44,18 @@ function Scoreboard() {
 
     const fetchData = async () => {
       setLoading(true);
-      const response = await axios.get(
-        "/api/challenge/search?keyword=" + searchQuery.challengeTitle
-      );
-      console.log("/api/challenge/search?keyword=" + searchQuery.challengeTitle);
-      setPosts(response.data);
-      setLoading(false);
+      try {
+        const response = await axios.get(
+          "/api/challenge/search?keyword=" + searchQuery.challengeTitle
+        );
+        console.log("/api/challenge/search?keyword=" + searchQuery.challengeTitle);
+        setPosts(response.data);
+        setLoading(false);
+      } catch (error) {
+        alert("게시물을 불러오는데 실패했습니다.");
+        console.error("게시물을 검색하는 동안 오류가 발생했습니다.", error);
+        navigate("/");
+      }
     };
     fetchData();
   }

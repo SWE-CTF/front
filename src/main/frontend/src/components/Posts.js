@@ -10,7 +10,7 @@ const Posts = ({ posts,loading }) => {
             <ul>
                 {posts.map((post) => (
                 <li className="linkList" key={post.challengeId}> {/* key 속성 추가 */}
-                    <Link className={`linkList ${JSON.parse(localStorage.getItem("theme"))["dark"] ? "dark" : "light"}`} to={`/pages/${post.challengeId}`}>
+                    <Link className={`linkList ${JSON.parse(localStorage.getItem("theme"))["dark"] ? "dark" : "light"}`} to={`/pages/${post.id}`}>
                     {post.title}
                     </Link>
                 </li>
