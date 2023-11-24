@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HomeButton from "../components/HomeButton";
 import Nav from "../components/Nav";
@@ -9,7 +9,8 @@ const WriteBoard = () => {
   const [theme, toggleTheme] = useDarkMode();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [category, setCategory] = useState("1");
+  const [category, setCategory] = useState("");
+  const [categories, setCategories] = useState([]);
   const [files, setFiles] = useState([]);
   const [hint, setHint] = useState("");
   const [memory, setMemory] = useState("");
@@ -20,8 +21,37 @@ const WriteBoard = () => {
   const [output2, setOutput2] = useState("");
   const [input3, setInput3] = useState("");
   const [output3, setOutput3] = useState("");
+  const [error, setError] = useState("");
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    console.log("Fuck");
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          "api/challenge/categories"
+        );
+
+        if (response.status !== 200) {
+          throw new Error(`Error! status: ${response.status}`);
+        }
+
+        setCategories(response.data);
+      } catch (error) {
+        alert("카테고리 목록을 불러오는데 실패했습니다.");
+        setError(error);
+        // console.error("카테고리 목록을 불러오는 동안 오류가 발생했습니다.", error);
+        navigate("/");
+      }
+    };
+    fetchData();
+  }, []);
+
+  const selectOptions = (e) => {
+    return e.map(x => <option key={x.categoryId}>{x.categoryName}</option>);
+    // return e.map( x => <option key={x.categoryId}>{x.categoryId}</option> );
+  }
 
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
@@ -180,8 +210,7 @@ const WriteBoard = () => {
               onChange={handleCategoryChange}
               defaultValue={category}
             >
-              <option value="1">Category 1</option>
-              <option value="2">Category 2</option>
+              {selectOptions(categories)}
             </select>
           </div>
           <div className="form-group">

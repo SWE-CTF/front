@@ -53,6 +53,11 @@ const Challenges = () => {
     fetchPost();
   }, [postId]);
 
+  const newlineText = (content) => {
+    return content.split('\n').map(str => <p>{str}</p>);
+  }
+  
+  console.log(post.files)
   return (
     <div className={`container ${theme.dark ? "dark" : "light"}`}>
       <HomeButton />
@@ -67,7 +72,7 @@ const Challenges = () => {
             <>
               <div className="ChallengesLeft">
                 <h1>{post.title}</h1>
-                <p>{post.body}</p>
+                <p>{newlineText(post.content)}</p>
               </div>
               <div className="ChallengesRight">
                 <h3>Select Language:</h3>

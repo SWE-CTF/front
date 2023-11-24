@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 
 
 const Posts = ({ posts,loading }) => {
-    // const [theme, toggleTheme] = useDarkMode();
     return (
         <>
             {loading && <div> loading... </div>}
