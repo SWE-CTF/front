@@ -10,9 +10,14 @@ import WriteBoard from "./pages/WriteBoard";
 import BoardMain from "./Board/BoardMain";
 import Edit from "./Board/Edit";
 import MyPage from "./pages/MyPage";
-import Announcement from "./pages/Announcement";
 import BoardDetail from "./Board/BoardDetail";
-
+import Modify from "./Board/Modify";
+import Announcement from "./Announcement.js/Announcement";
+import AnnouncementEdit from "./Announcement.js/AnnouncementEdit";
+import AnnounceDetail from "./Announcement.js/AnnounceDetail";
+import AnnouncementModify from "./Announcement.js/AnnouncementModify";
+import ShowHistory from "./pages/ShowHistoy";
+import Rank from "./pages/Rank";
 function App() {
   return (
     <Router>
@@ -26,11 +31,20 @@ function App() {
           <Route exact path="/WriteBoard" element={<WriteBoard />} />
           <Route path="/pages/:postId" element={<Challenges />} />
           <Route path="/MyImpormation" element={<MyPage />} />
+          <Route path="/api/MyPage/:item" element={<ShowHistory />} />
           <Route path="/Announcement" element={<Announcement />} />
           {/* Challenges 컴포넌트로 수정 */}
           <Route path="/QuestionBoard" element={<BoardMain />} />
           <Route path="/QuestionBoardEdit" element={<Edit />} />
           <Route path="/api/question/:questionId" element={<BoardDetail />} />
+          <Route path="/QuestionBoardModify" element={<Modify />} />
+          <Route
+            path="/AnnouncementEdit"
+            element={<AnnouncementEdit />}
+          ></Route>
+          <Route path="/Rank" element={<Rank />} />
+          <Route path="/api/notice/:noticeId" element={<AnnounceDetail />} />
+          <Route path="/AnnouncementModify" element={<AnnouncementModify />} />
         </Routes>
       </div>
     </Router>

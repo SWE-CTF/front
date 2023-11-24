@@ -61,7 +61,10 @@ const Board = ({
         <h5 className="writer">작성자 : {createdBy}</h5>
         <h5 className="num">문제 번호 : {challengeId}</h5>
       </div>
-      <p className="content">{contents}</p>
+      <div className="info2">
+        <p className="content">{contents}</p>
+        <button>해당 문제 보기</button>
+      </div>
     </div>
   );
 };

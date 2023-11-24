@@ -4,7 +4,7 @@ import React, { useRef, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-const Ex = () => {
+const AnnouncementEdit = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const titleRef = useRef();
@@ -14,21 +14,10 @@ const Ex = () => {
   const initialQuestionId = oldQuestionId || "";
   const [title, setTitle] = useState(initialTitle);
   const [content, setContent] = useState(initialContent);
-  const [questionId, setQuestionId] = useState(initialQuestionId);
-
-  const handleInputNum = (e) => {
-    // 입력된 값에서 숫자 이외의 문자 제거
-    const numericValue = e.target.value.replace(/[^0-9]/g, "");
-    setQuestionId(numericValue);
-  };
 
   const handleSubmit = () => {
     if (title.length < 1) {
       titleRef.current.focus();
-      return;
-    }
-    if (questionId.length < 1) {
-      alert("문제 번호는 1이상입니다");
       return;
     }
     if (content.length < 5) {
@@ -36,19 +25,11 @@ const Ex = () => {
       setContent("");
       return;
     }
-    console.log(`Bearer ${localStorage.getItem("login_token")}`);
-    const challengeId = parseInt(questionId, 10);
-    const data = {
-      challengeId,
-      title,
-      content,
-    };
-
+    alert("버튼 누름");
     axios
       .post(
-        `/api/question/save`,
+        `/api/notice/save`,
         {
-          challengeId: challengeId,
           title: title,
           content: content,
         },
@@ -59,16 +40,8 @@ const Ex = () => {
         }
       )
       .then((res) => {
-        // if (res.statusCode === 200 || res.statusCode === 404) {
-        //   alert("저장 성공!");
-        //   navigate("/QuestionBoard", { replace: true });
-        //   return;
-        // } else if (res.status === 500) {
-        //   alert("업로드 실패.");
-        //   return;
-        // }
         alert("저장 성공!");
-        navigate("/QuestionBoard", { replace: true });
+        navigate("/Announcement", { replace: true });
         return;
       })
       .catch((error) => {
@@ -84,22 +57,15 @@ const Ex = () => {
       <div className="Body">
         <div className="title">
           <input
-            placeholder="write qeustion title here"
+            placeholder="write title here"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             ref={titleRef}
           ></input>
         </div>
-        <div className="num">
-          <input
-            placeholder="write problem num here"
-            value={questionId}
-            onChange={handleInputNum}
-          ></input>
-        </div>
         <div className="content">
           <textarea
-            placeholder="write question content here"
+            placeholder="write content here"
             value={content}
             onChange={(e) => {
               setContent(e.target.value);
@@ -126,4 +92,4 @@ const Ex = () => {
   );
 };
 
-export default Ex;
+export default AnnouncementEdit;

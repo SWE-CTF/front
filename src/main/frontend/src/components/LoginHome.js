@@ -11,6 +11,7 @@ const LoginHome = () => {
     localStorage.removeItem("name");
     localStorage.removeItem("email");
     localStorage.removeItem("role");
+    localStorage.removeItem("nickname");
     window.location.reload();
   };
   if (localStorage.getItem("login") === "true") {
@@ -36,7 +37,7 @@ const LoginHome = () => {
             </button>
           </Link>
           <Link
-            to="/Scoreboard"
+            to="/Rank"
             className={`menu-link ${theme.dark ? "dark" : "light"}`}
           >
             Scoreboard
@@ -71,7 +72,7 @@ const LoginHome = () => {
             Log in
           </Link>
           <Link
-            to="/Scoreboard"
+            to="/Rank"
             className={`menu-link ${theme.dark ? "dark" : "light"}`}
           >
             Scoreboard
