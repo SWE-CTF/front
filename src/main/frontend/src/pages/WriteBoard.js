@@ -26,7 +26,6 @@ const WriteBoard = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log("Fuck");
     const fetchData = async () => {
       try {
         const response = await axios.get(
