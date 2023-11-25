@@ -73,6 +73,7 @@ const Ex = () => {
       })
       .catch((error) => {
         // Handle the error here
+        alert("문제 번호가 존재하지않습니다!");
         console.error("Axios request error:", error);
       });
   };

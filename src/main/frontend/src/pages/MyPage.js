@@ -36,10 +36,7 @@ const MyPage = () => {
   const checkNickname = async () => {
     const authToken = localStorage.getItem("login_token");
     try {
-      const res = await axios.get("/api/member/profile/check/nickname", {
-        params: {
-          nickname: nickname,
-        },
+      const res = await axios.get(`/api/member/profile/check/${nickname}`, {
         headers: {
           Authorization: `Bearer ${authToken}`,
         },
@@ -47,6 +44,7 @@ const MyPage = () => {
       alert("사용가능한 닉네임입니다!");
       SetDupNicknameBol(true);
     } catch (e) {
+      alert("사용중인 닉네임입니다.");
       console.log(e);
     }
   };
@@ -113,7 +111,8 @@ const MyPage = () => {
         }
       );
       console.log(res.data);
-      alert("비밀번호 변경 성공!");
+      alert("정보 변경 성공!");
+      localStorage.setItem("nickname", nickname);
       setChangeInformation(false);
     } catch (e) {
       alert("현재 비밀번호가 일치하지 않습니다.");
@@ -160,7 +159,10 @@ const MyPage = () => {
             <div className="username">
               <strong>{localStorage.getItem("username")}</strong>
             </div>
-            <div className="email">{localStorage.getItem("email")}</div>
+            <div className="email">
+              {localStorage.getItem("email")}{" "}
+              <span>{localStorage.getItem("nickname")}</span>
+            </div>
           </div>
           <div className="changeInformation">
             <button

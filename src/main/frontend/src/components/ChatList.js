@@ -83,29 +83,32 @@ function ChatList(props) {
 
   // 별 누르기
   const clickStar = (commentId) => {
-    alert("버튼누름");
-    console.log("댓글 번호" + JSON.stringify(commentId));
-    axios
-      .post(
-        `/api/comment/${commentId}/adopt`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("login_token")}`, // 헤더에 토큰을 설정합니다
-          },
-        }
-      )
-      .then((res) => {
-        if (res.status === 200) {
-          alert("채택 완료");
-          window.location.reload();
-        } else {
-          console.log("채택 실패");
-        }
-      })
-      .catch((e) => {
-        console.log("채택 실패 : " + e);
-      });
+    const confirmAdopt = window.confirm("해당 댓글을 체택하시겠습니까?");
+    if (confirmAdopt) {
+      axios
+        .post(
+          `/api/comment/${commentId}/adopt`,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("login_token")}`, // 헤더에 토큰을 설정합니다
+            },
+          }
+        )
+        .then((res) => {
+          if (res.status === 200) {
+            alert("채택 완료");
+            window.location.reload();
+          } else {
+            console.log("채택 실패");
+          }
+        })
+        .catch((e) => {
+          console.log("채택 실패 : " + e);
+        });
+    } else {
+      return;
+    }
   };
 
   return (
