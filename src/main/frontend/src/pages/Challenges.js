@@ -45,7 +45,7 @@ const Challenges = () => {
 
   const handleInputChange = (e) => {
     setCode(e);
-    console.log(code);
+    console.log(escape(code));
   };
 
   const handleSubmit = async (e) => {
@@ -53,8 +53,7 @@ const Challenges = () => {
 
     const data = {
       "challengeId": postId,
-      // "code": code.replace("\n", "\\n"),
-      "code":code,
+      "code":escape(code),
       "language": selectedLanguage
     };
 
