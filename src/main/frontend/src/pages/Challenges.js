@@ -7,21 +7,21 @@ import useDarkMode from "../theme/useDarkMode";
 
 
 // 언어 목록
-const languages = ["javascript", "python", "cpp"];
+const languages = ["java", "python", "c"];
 
 // 언어와 에디터 상태 연결
 const languageEditors = {
-  javascript: {
-    value: "// Your JavaScript code here",
-    label: "JavaScript",
+  java: {
+    value: "// Your Java code here",
+    label: "java",
   },
   python: {
     value: "# Your Python code here",
-    label: "Python",
+    label: "python",
   },
-  cpp: {
-    value: "// Your C++ code here",
-    label: "C++",
+  c: {
+    value: "// Your C code here",
+    label: "c",
   },
 };
 
@@ -29,14 +29,65 @@ const Challenges = () => {
   const { postId } = useParams();
   const [post, setPost] = useState(null);
   const [theme, toggleTheme] = useDarkMode();
-  const [selectedLanguage, setSelectedLanguage] = useState("javascript");
-  const [activeLanguage, setActiveLanguage] = useState("javascript");
+  const [selectedLanguage, setSelectedLanguage] = useState("java");
+  const [activeLanguage, setActiveLanguage] = useState("java");
+  const [code, setCode] = useState(languageEditors["java"].value);
+  
+  const languages = ["java", "python", "c"];
+
 
   // 언어 변경 핸들러
   const handleLanguageChange = (language) => {
     setSelectedLanguage(language);
     setActiveLanguage(language);
+    setCode(languageEditors[selectedLanguage].value);
   };
+
+  const handleInputChange = (e) => {
+    setCode(e);
+    console.log(code);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const data = {
+      "challengeId": postId,
+      // "code": code.replace("\n", "\\n"),
+      "code":code,
+      "language": selectedLanguage
+    };
+
+    // const formData = new FormData();
+    // formData.append("saveForm", new Blob([JSON.stringify(data)], {
+    //   type: "application/json"
+    // }));
+
+    // console.log(formData);
+    console.log(data);
+    try {
+      // const response = await axios.post("/api/attempt/challenge", data, {
+      //   headers: {
+      //     Authorization: `Bearer ${localStorage.getItem("login_token")}`,
+      //     "Content-Type": "multipart/form-data"
+      //   },
+      // });
+      const response = await axios.post("/api/attempt/challenge", data);
+
+      if (response.status !== 200) {
+        throw new Error(`Error! status: ${response.status}`);
+      }
+
+    } catch (error) {
+      console.error(error);
+    }
+
+
+  }
+
+  const handleHint = async (e) => {
+    e.preventDefault();
+  }
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -44,6 +95,11 @@ const Challenges = () => {
         const response = await axios.get(
           `/api/challenge/${postId}`
         );
+
+        if (response.status !== 200) {
+          throw new Error(`Error! status: ${response.status}`);
+        }
+
         setPost(response.data);
       } catch (error) {
         console.error("게시물을 불러오는 동안 오류가 발생했습니다.", error);
@@ -56,8 +112,7 @@ const Challenges = () => {
   const newlineText = (content) => {
     return content.split('\n').map(str => <p>{str}</p>);
   }
-  
-  console.log(post.files)
+
   return (
     <div className={`container ${theme.dark ? "dark" : "light"}`}>
       <HomeButton />
@@ -78,7 +133,7 @@ const Challenges = () => {
                 <h3>Select Language:</h3>
                 {languages.map((language) => (
                   <button
-                  className={`LangBtn ${activeLanguage === language ? "active" : ""}`}
+                    className={`LangBtn ${activeLanguage === language ? "active" : ""}`}
                     key={language}
                     onClick={() => handleLanguageChange(language)}
                   >
@@ -86,12 +141,16 @@ const Challenges = () => {
                   </button>
                 ))}
                 <h3>{languageEditors[selectedLanguage].label} Code Input Area:</h3>
-                <Editor
-                  value={languageEditors[selectedLanguage].value}
-                  language={selectedLanguage}
-                  theme="vs-dark"
-                  height="300px"
-                />
+                  <Editor
+                    name="code"
+                    value={code}
+                    language={selectedLanguage}
+                    onChange={handleInputChange}
+                    theme="vs-dark"
+                    height="300px"
+                  />
+                  <button onClick={handleSubmit}>채점하기</button>
+                  <button onClick={handleHint}>힌트보기</button>
               </div>
             </>
           ) : (

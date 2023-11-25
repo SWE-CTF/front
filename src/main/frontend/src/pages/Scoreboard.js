@@ -28,6 +28,11 @@ function Scoreboard() {
         const response = await axios.get(
           "api/challenge/paging"
         );
+
+        if (response.status !== 200) {
+          throw new Error(`Error! status: ${response.status}`);
+        }
+
         setPosts(response.data);
         setLoading(false);
       } catch (error) {
