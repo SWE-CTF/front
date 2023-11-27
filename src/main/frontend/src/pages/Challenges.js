@@ -45,7 +45,7 @@ const Challenges = () => {
 
   const handleInputChange = (e) => {
     setCode(e);
-    console.log(escape(code));
+    
   };
 
   const handleSubmit = async (e) => {
@@ -53,25 +53,17 @@ const Challenges = () => {
 
     const data = {
       "challengeId": postId,
-      "code":escape(code),
+      "code":encodeURIComponent(code),
       "language": selectedLanguage
     };
 
-    // const formData = new FormData();
-    // formData.append("saveForm", new Blob([JSON.stringify(data)], {
-    //   type: "application/json"
-    // }));
-
-    // console.log(formData);
     console.log(data);
     try {
-      // const response = await axios.post("/api/attempt/challenge", data, {
-      //   headers: {
-      //     Authorization: `Bearer ${localStorage.getItem("login_token")}`,
-      //     "Content-Type": "multipart/form-data"
-      //   },
-      // });
-      const response = await axios.post("/api/attempt/challenge", data);
+      const response = await axios.post("/api/attempt/challenge", data, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("login_token")}`
+        },
+      });
 
       if (response.status !== 200) {
         throw new Error(`Error! status: ${response.status}`);
@@ -106,6 +98,8 @@ const Challenges = () => {
     };
 
     fetchPost();
+
+    // console.log(post);
   }, [postId]);
 
   const newlineText = (content) => {

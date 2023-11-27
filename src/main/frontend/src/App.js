@@ -1,17 +1,18 @@
 import React from "react";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import "./App.css";
+import BoardDetail from "./Board/BoardDetail";
+import BoardMain from "./Board/BoardMain";
+import Edit from "./Board/Edit";
+import Announcement from "./pages/Announcement";
 import Challenges from "./pages/Challenges";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
+import MyPage from "./pages/MyPage";
+import Problem from "./pages/Problem";
 import Scoreboard from "./pages/Scoreboard";
 import Signup from "./pages/Signup";
 import WriteBoard from "./pages/WriteBoard";
-import BoardMain from "./Board/BoardMain";
-import Edit from "./Board/Edit";
-import MyPage from "./pages/MyPage";
-import Announcement from "./pages/Announcement";
-import BoardDetail from "./Board/BoardDetail";
 
 function App() {
   return (
@@ -22,7 +23,7 @@ function App() {
           <Route exact path="/" element={<Home />} />
           <Route exact path="/Login" element={<Login />} />
           <Route exact path="/Signup" element={<Signup />} />
-          <Route exact path="/Problem" element={<Scoreboard />} />
+          <Route exact path="/Problem" element={<Problem />} />
           <Route exact path="/WriteBoard" element={<WriteBoard />} />
           <Route path="/pages/:postId" element={<Challenges />} />
           <Route path="/MyImpormation" element={<MyPage />} />

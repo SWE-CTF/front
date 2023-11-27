@@ -8,7 +8,7 @@ import Posts from "../components/Posts";
 import { MyContextProvider } from "../components/myContext";
 import useDarkMode from "../theme/useDarkMode";
 
-function Scoreboard() {
+function Problem() {
   const [theme, toggleTheme] = useDarkMode();
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -144,4 +144,4 @@ function Scoreboard() {
   );
 }
 
-export default Scoreboard;
+export default Problem;
