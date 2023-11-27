@@ -12,15 +12,29 @@ const languages = ["java", "python", "c"];
 // 언어와 에디터 상태 연결
 const languageEditors = {
   java: {
-    value: "// Your Java code here",
+    value: `// your java code here
+public class Main {
+  public static void main(String[] args) {
+
+  }
+}`,
     label: "java",
   },
   python: {
-    value: "# Your Python code here",
+    value: `# Your Python code here
+import sys
+`,
     label: "python",
   },
   c: {
-    value: "// Your C code here",
+    value: `// Your C code here
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(int argc, char *argv[]) {
+
+  return 0;
+}`,
     label: "c",
   },
 };
@@ -40,7 +54,7 @@ const Challenges = () => {
   const handleLanguageChange = (language) => {
     setSelectedLanguage(language);
     setActiveLanguage(language);
-    setCode(languageEditors[selectedLanguage].value);
+    setCode(languageEditors[language].value);
   };
 
   const handleInputChange = (e) => {
@@ -104,9 +118,9 @@ const Challenges = () => {
     return content.split('\n').map(str => <p>{str}</p>);
   }
 
-  const testCases = (e) => {
-    return <p><p>Input</p><div>{e['input']}</div><p>Output</p><div>{e['output']}</div></p>
-  }
+  // const testCases = (e) => {
+  //   return <p></p>
+  // }
 
   return (
     <div className={`container ${theme.dark ? "dark" : "light"}`}>
@@ -123,10 +137,16 @@ const Challenges = () => {
               <div className="ChallengesLeft">
                 <h1>{post.title}</h1>
                 <p>{newlineText(post.content)}</p>
-                <h1>Test case 1</h1>
-                <p>{testCases(post.testcases[0])}</p>
-                <h1>Test case 2</h1>
-                <p>{testCases(post.testcases[1])}</p>
+                <h2>Test case 1</h2>
+                <h3>Input</h3>
+                <div>{post.testcases[0]['input']}</div>
+                <h3>Output</h3>
+                <div>{post.testcases[1]['output']}</div>
+                <h2>Test case 2</h2>
+                <h3>Input</h3>
+                <div>{post.testcases[0]['input']}</div>
+                <h3>Output</h3>
+                <div>{post.testcases[1]['output']}</div>
               </div>
               <div className="ChallengesRight">
                 <h3>Select Language:</h3>
