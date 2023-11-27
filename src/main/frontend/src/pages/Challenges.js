@@ -135,10 +135,12 @@ const Challenges = () => {
           {post ? (
             <>
               <div className="ChallengesLeft">
-                <h1>{post.title}</h1>
+                <div className="ChallengesTitle">
+                  {post.title}
+                </div>
                 <p>{newlineText(post.content)}</p>
-                <h2>Test case 1</h2>
-                <h3>Input</h3>
+                <h3>Test case 1</h3>
+                <h4>Input</h4>
                 <div>{post.testcases[0]['input']}</div>
                 <h3>Output</h3>
                 <div>{post.testcases[1]['output']}</div>
