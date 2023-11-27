@@ -49,6 +49,7 @@ input::placeholder {
   padding: 8px 16px;
   cursor: pointer;
   border-radius: 4px;
+  margin:5px;
 }
 
 /* @media (prefers-reduced-motion: no-preference) {
@@ -181,7 +182,7 @@ input::placeholder {
 .HomeButton img {
   position: fixed;
   top: 15px;
-  /* width: 100% */
+  width: 100%;
   left: 15px;
   width: 50px;
   cursor: pointer;
@@ -210,6 +211,19 @@ input::placeholder {
   border: none;
   cursor: pointer;
 }
+.impormation {
+  margin-left: 5px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  float:right;
+}
+
+.buttonContainer {
+  display: flex;
+  margin:3px 0;
+}
+
 
 .impormation {
   display: flex;
@@ -255,6 +269,22 @@ input::placeholder {
   cursor: pointer;
 }
 
+
+.SignButton {
+  font-family: "Open Sans", sans-serif;
+  font-family: "Source Code Pro", monospace;
+  font-family: "VT323", monospace;
+  font-size: 20px;
+  background-color: #50ee5e;
+  color: white;
+  padding: 10px;
+  margin-left: 5px;
+  width: 80px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+}
+
 .MyPage {
   display: flex;
   justify-content: center;
@@ -289,28 +319,92 @@ input::placeholder {
   height: 450px;
 }
 
+
 /* List */
 .List {
-  width: 1024px;
-  margin: 0 auto;
-  border: 1px solid red;
+  width:1024px;
+  height:550px;
+  border:1px solid white;
+  border-top:none;
+  border-bottom: none;
+  margin:0 auto;
+  margin-top:150px;
 }
 
 .linkList {
-  color: #000;
-  text-decoration: none;
-  font-weight: lighter;
-  list-style: none;
-  margin: 10px 0;
-  font-size: 25px;
+  color:#000;
+  text-decoration:none;
+  font-weight:lighter;
+  list-style:none;
+  margin:12px 0;
+  font-size:25px;
 }
+
+.linkList:hover {
+  text-decoration: underline;
+}
+
+.WriteBtn{
+  float:right;
+  margin:0;
+  margin-top:-60px;
+}
+
+.WriteBtn button{
+  font-family: "Open Sans", sans-serif;
+  font-family: "Source Code Pro", monospace;
+  font-family: "VT323", monospace;
+  background-color:#f05a5a;
+  color: white;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-size:20px;
+}
+
+.Pages{
+  width:1024px;
+  margin:0 auto;
+  margin-top:50px;
+}
+
+.pagination {
+  margin:20px 160px;
+  list-style: none;
+  display: flex;
+  gap: 10px;
+}
+
+.pagination li.active button {
+  background-color: #50ee5e;
+  color: #000;
+  /* 다른 스타일 속성 추가 가능 */
+}
+
+.pagination li button {
+  font-family: "Open Sans", sans-serif;
+  font-family: "Source Code Pro", monospace;
+  font-family: "VT323", monospace;
+  background-color: #f05a5a;
+  width:80px;
+  color: white;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+/* 다른 버튼 스타일 속성 추가 가능 */
+
 
 /* Challeges */
 
 .ChallengesForm {
-  margin: 0 auto;
-  margin-top: 50px;
-  width: 70%;
+  margin:0 auto;
+  margin-top:50px;
+  width:70%;
   flex-direction: column;
   align-items: center;
   padding: 20px;
@@ -329,12 +423,64 @@ input::placeholder {
   flex: 1;
 }
 
+.ChallengesLeft p{
+  font-size:20px;
+}
+
 .ChallengesRight {
-  border-left: 1px solid #d1d1d1;
+  border-left:1px solid #d1d1d1;
   flex: 1;
   border-radius: 8px;
   padding: 16px;
 }
+
+.seq {
+  width:1024px;
+  height:500px;
+  margin:0 auto;
+  margin-top:150px;
+  overflow:scroll;
+}
+
+.seq::-webkit-scrollbar {
+  display: none;
+}
+
+.seq {
+  -ms-overflow-style: none; /* 인터넷 익스플로러 */
+  scrollbar-width: none; /* 파이어폭스 */
+}
+
+
+.seq div {
+  margin:15px 0;
+}
+
+.seq label{
+  float:left;
+  width:100px;
+}
+
+.seq div:nth-child(3) label{
+  width:800px;
+}
+
+.seq input{
+  width:300px;
+  height:30px;
+}
+
+.seq textarea {
+  width:1024px;
+  height:500px;
+}
+
+.testCase{
+  width:500px;
+  height:100px;
+  float:left;
+}
+
 
 /* 코드 입력 공간의 스타일 */
 /* dark 모드일 때 배경색 설정 */
@@ -1405,4 +1551,22 @@ input::placeholder {
   background-color: rgb(99, 226, 109);
   color: white;
   border: none;
+
+.LangBtn{
+  font-family: "Open Sans", sans-serif;
+  font-family: "Source Code Pro", monospace;
+  font-family: "VT323", monospace;
+  background-color:#f05a5a;
+  color: white;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  margin:0 2px;
+  font-size:17px;
+}
+
+.LangBtn.active {
+  background-color: #50ee5e;
+  color:#000;
 }
