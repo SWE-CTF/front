@@ -44,10 +44,13 @@ const Login = () => {
         localStorage.setItem("username", response.data.username);
         localStorage.setItem("name", response.data.name);
         localStorage.setItem("email", response.data.email);
+        localStorage.setItem("nickname", response.data.nickname);
+        console.log(localStorage.getItem("login_token"));
         if (response.data.role === undefined) {
           localStorage.setItem("role", "none");
         } else {
           localStorage.setItem("role", response.data.role);
+          console.log(localStorage.getItem("role"));
         }
         navigate("/"); // 로그인 성공 시 마이페이지로 이동
       } else {

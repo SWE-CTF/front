@@ -4,11 +4,10 @@ import { useNavigate, useLocation } from "react-router-dom";
 import HomeButton from "../components/HomeButton";
 import Nav from "../components/Nav";
 
-const Modify = () => {
+const AnnouncementModify = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { oldTitle, oldContent, oldQuestionId, oldChallengeId } =
-    location.state;
+  const { oldTitle, oldContent, oldNoticeId } = location.state;
   const titleRef = useRef();
   const token = localStorage.getItem("login_token");
   const [title, setTitle] = useState("");
@@ -18,26 +17,16 @@ const Modify = () => {
   const init = () => {
     setTitle(oldTitle);
     setContent(oldContent);
-    setChallengeId(oldChallengeId);
+    console.log(oldNoticeId);
   };
 
   useEffect(() => {
     init();
   }, []);
 
-  const handleInputNum = (e) => {
-    // 입력된 값에서 숫자 이외의 문자 제거
-    const numericValue = e.target.value.replace(/[^0-9]/g, "");
-    setChallengeId(numericValue);
-  };
-
   const handleSubmit = () => {
     if (title.length < 1) {
       titleRef.current.focus();
-      return;
-    }
-    if (challengeId1.length < 1) {
-      alert("문제 번호는 1이상입니다");
       return;
     }
     if (content.length < 5) {
@@ -46,15 +35,13 @@ const Modify = () => {
       return;
     }
 
-    const challengeId = parseInt(challengeId1, 10);
     const data = {
-      challengeId,
       title,
       content,
     };
 
     axios
-      .put(`/api/question/${oldQuestionId}`, data, {
+      .put(`/api/notice/${oldNoticeId}`, data, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -88,13 +75,6 @@ const Modify = () => {
             ref={titleRef}
           ></input>
         </div>
-        <div className="num">
-          <input
-            placeholder="write problem num here"
-            value={challengeId1}
-            onChange={handleInputNum}
-          ></input>
-        </div>
         <div className="content">
           <textarea
             placeholder="write question content here"
@@ -124,4 +104,4 @@ const Modify = () => {
   );
 };
 
-export default Modify;
+export default AnnouncementModify;
