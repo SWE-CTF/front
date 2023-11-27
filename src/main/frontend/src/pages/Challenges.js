@@ -98,12 +98,14 @@ const Challenges = () => {
     };
 
     fetchPost();
-
-    // console.log(post);
   }, [postId]);
 
   const newlineText = (content) => {
     return content.split('\n').map(str => <p>{str}</p>);
+  }
+
+  const testCases = (e) => {
+    return <p><p>Input</p><div>{e['input']}</div><p>Output</p><div>{e['output']}</div></p>
   }
 
   return (
@@ -121,6 +123,10 @@ const Challenges = () => {
               <div className="ChallengesLeft">
                 <h1>{post.title}</h1>
                 <p>{newlineText(post.content)}</p>
+                <h1>Test case 1</h1>
+                <p>{testCases(post.testcases[0])}</p>
+                <h1>Test case 2</h1>
+                <p>{testCases(post.testcases[1])}</p>
               </div>
               <div className="ChallengesRight">
                 <h3>Select Language:</h3>
