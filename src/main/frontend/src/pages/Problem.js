@@ -106,22 +106,21 @@ function Problem() {
             {theme.dark ? "Switch to Light Mode" : "Switch to Dark Mode"}
           </button>
         </div>
-        {/* TODO: css design */}
-        <form>
-          <div>
-            <input
-              name="challengeTitle"
-              placeholder="Search Challenge"
-              value={searchQuery.challengeTitle}
-              onChange={handleInputChange}
-              onKeyDown={handleOnKeyPress}
-            />
-          </div>
-          <button onClick={handleSearch}>Search</button>
-        </form>
-        <div className="List">
+        <div className={`problemSearch ${theme.dark ? "dark" : "light"}`}>
+          <form>
+              <input
+                name="challengeTitle"
+                placeholder="Search Challenge"
+                value={searchQuery.challengeTitle}
+                onChange={handleInputChange}
+                onKeyDown={handleOnKeyPress}
+                />
+                <button onClick={handleSearch}>Search</button>
+          </form>
+        </div>
+        <div className={`List ${theme.dark ? "dark" : "light"}`}>
           <Posts
-            className={`linkList ${theme.dark ? "dark" : "light"}`}
+            className={` ${theme.dark ? "dark" : "light"}`}
             posts={currentPosts}
             loading={loading}
           ></Posts>

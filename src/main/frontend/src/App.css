@@ -9,6 +9,8 @@ input:-webkit-autofill:active {
   -webkit-text-fill-color: black !important;
 }
 
+@import url("https://cdn.jsdelivr.net/npm/galmuri/dist/galmuri.css");
+
 .App {
   text-align: center;
 }
@@ -18,10 +20,32 @@ input:-webkit-autofill:active {
   pointer-events: none;
 }
 
-.input * {
-  font-family: "Open Sans", sans-serif;
-  font-family: "Source Code Pro", monospace;
-  font-family: "VT323", monospace;
+* {
+  /* Galmuri11을(를) 사용하려면
+font-family: "Galmuri11", sans-serif;
+
+/* Galmuri11 Bold을(를) 사용하려면
+font-family: "Galmuri11", sans-serif;
+font-weight: bold;
+
+/* Galmuri11 Condensed을(를) 사용하려면
+font-family: "Galmuri11", sans-serif;
+font-stretch: condensed;
+
+/* Galmuri9을(를) 사용하려면
+font-family: "Galmuri9", sans-serif;
+
+/* Galmuri7을(를) 사용하려면
+font-family: "Galmuri7", sans-serif;
+
+/* GalmuriMono11을(를) 사용하려면
+font-family: "GalmuriMono11", monospace;
+
+/* GalmuriMono9을(를) 사용하려면
+font-family: "GalmuriMono9", monospace;
+ */
+/* GalmuriMono7을(를) 사용하려면 */
+font-family: "GalmuriMono7", monospace;
 }
 
 input::placeholder {
@@ -84,7 +108,7 @@ input::placeholder {
 
 .container {
   width: 100%;
-  height: 1050px;
+  height:100%;
   position: absolute;
 }
 
@@ -107,7 +131,7 @@ input::placeholder {
 .menu-link {
   text-decoration: none;
   color: #000;
-  font-size: 40px;
+  font-size: 30px;
   margin: 0 20px;
 }
 
@@ -311,8 +335,18 @@ input::placeholder {
 .Nav .navMenu {
   margin: 20px;
   text-decoration: none;
-  font-size: 25px;
+  font-size: 20px;
 }
+
+.dark .navMenu {
+  color:#fff;
+}
+
+.light .navMenu {
+  color:#000;
+  background:#fff;
+}
+
 
 .myPageLogo img {
   text-align: center;
@@ -320,29 +354,109 @@ input::placeholder {
 }
 
 
-/* List */
-.List {
+/* problem pages */
+
+.problemSearch{
   width:1024px;
-  height:550px;
-  border:1px solid white;
-  border-top:none;
-  border-bottom: none;
   margin:0 auto;
   margin-top:150px;
 }
 
-.linkList {
-  color:#000;
+.problemSearch form {
+  margin:0 960px;
+}
+
+.problemSearch input{
+  width:240px;
+  height:22px;
+  background:none;
+  border:1px solid white;
+  float:right;
+  font-size:16px;
+}
+
+.problemSearch button {
+  height:26px;
+  margin:0 10px;
+  background:none;
+  border:1px solid white;
+  cursor: pointer;
+}
+
+/* Problem pages 다크모드적용 */
+
+.dark .problemSearch input {
+  background-color: #202123;
+  color: #fff;
+}
+
+.light .problemSearch input {
+  border:1px solid #202123;
+  color:#202123;
+}
+
+/* Dark Mode 스타일 */
+.dark .problemSearch input::placeholder {
+  color: #fff;
+}
+
+/* 라이트 모드 스타일 */
+.light .problemSearch input::placeholder {
+  color: #202123;
+}
+
+
+.dark .problemSearch button {
+  background-color: #fff;
+  color: #000;
+}
+
+.light .problemSearch button {
+  background-color: #202123;
+  color: #fff;
+}
+
+
+.List {
+  width:1024px;
+  height:550px;
+  margin:0 auto;
+}
+
+.Listul {
+  margin:20px 0;;
+  padding:0;
+}
+
+
+.List ul li {
+  height:25px;
+  background:#202123;
   text-decoration:none;
   font-weight:lighter;
   list-style:none;
-  margin:12px 0;
-  font-size:25px;
+  font-size:15px;
+  list-style:none;
+  padding:5px 0;
 }
 
-.linkList:hover {
-  text-decoration: underline;
+.List ul li:nth-child(2n) {
+  background:#1b1c1d;
 }
+
+.light .List ul li {
+  background:#fff;
+}
+
+.light .List ul li:nth-child(2n){
+  background:#dfdfdf;
+}
+
+.linkList {
+  padding:0 5px;
+  text-decoration:none;
+}
+
 
 .WriteBtn{
   float:right;
@@ -396,7 +510,7 @@ input::placeholder {
   font-size: 20px;
 }
 
-/* 다른 버튼 스타일 속성 추가 가능 */
+/* problem pages */
 
 
 /* Challeges */
@@ -412,6 +526,14 @@ input::placeholder {
   box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
 }
+
+.ChallengesTitle {
+  width:100%;
+  height:40px;
+  padding:5px 0;
+  font-size:25px;
+}
+
 
 .ChallengesContent {
   display: flex;
@@ -567,16 +689,29 @@ input::placeholder {
 .list {
   width: 100%;
   border-top: 2px solid black;
-  padding-top: 5px;
 }
 
 .list article {
-  padding-bottom: 5px;
+  padding:10px 0;
   border-bottom: 1px solid rgb(150, 145, 145);
-  margin-bottom: 10px;
   display: flex;
   height: 30px;
   font-size: 18px;
+}
+
+.list article:nth-child(1) {
+  background-color:gold;
+  color:#fff;
+}
+
+.list article:nth-child(2) {
+  background-color:silver;
+  color:#fff;
+}
+
+.list article:nth-child(3) {
+  background-color:#cd7f32;
+  color:#fff;
 }
 
 .list article div:nth-child(1) {
@@ -1152,10 +1287,8 @@ input::placeholder {
 }
 
 .MyPage .loading {
-  position: fixed;
-  font-size: 100px;
-  top: 150px;
-  left: 650px;
+  font-size: 50px;
+  margin:0 auto;
 }
 
 .Ex .Body {

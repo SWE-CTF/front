@@ -1,22 +1,24 @@
 import { Link } from "react-router-dom";
-import logo from "../cherry.png";
+import useDarkMode from "../theme/useDarkMode"; //useDarkMode hook 추가
 
 const Nav = () => {
+  const [theme, toggleTheme] = useDarkMode();
+
   if (localStorage.getItem("login") === "true") {
     return (
       <header>
         <div>
           <div className="Nav">
-            <Link className="navMenu" to={"/Problem"}>
+            <Link className={`navMenu ${theme.dark ? "dark" : "light"}`} to={"/Problem"}>
               Problem
             </Link>
-            <Link className="navMenu" to={"/QuestionBoard"}>
+            <Link className={`navMenu ${theme.dark ? "dark" : "light"}`} to={"/QuestionBoard"}>
               Question Board
             </Link>
-            <Link className="navMenu" to={"/MyImpormation"}>
+            <Link className={`navMenu ${theme.dark ? "dark" : "light"}`} to={"/MyImpormation"}>
               MyInformation
             </Link>
-            <Link className="navMenu" to={"/Announcement"}>
+            <Link className={`navMenu ${theme.dark ? "dark" : "light"}`} to={"/Announcement"}>
               Announcement
             </Link>
           </div>

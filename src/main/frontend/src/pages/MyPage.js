@@ -1,11 +1,9 @@
-import { useState } from "react";
-import React, { useEffect, useRef } from "react";
+import axios from "axios";
+import React, { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
+import Basic from "../cherryCookie.webp";
 import HomeButton from "../components/HomeButton";
 import Nav from "../components/Nav";
-import Basic from "../cherryCookie.webp";
-import axios from "axios";
-import { Link } from "react-router-dom";
-import Home from "./Home";
 
 const MyPage = () => {
   const [submitProblem, setSubmitProblem] = useState(false);
