@@ -73,7 +73,7 @@ const Challenges = () => {
           headers: {
             Authorization: `Bearer ${token}`, // yourTokenHere에 실제 토큰을 넣어주세요
           },
-        })
+        }, { validateStatus: false })
         .then((res) => {
           if (res.status === 204 || res.status === 200) {
             console.log("게시물 삭제가 완료되었습니다:", res.data);
@@ -90,10 +90,27 @@ const Challenges = () => {
     }
   };
 
+  const handleQuestion = () => {
+    navigate('/QuestionBoard', {
+      state: {
+        cid: `${postId}`
+      },
+    });
+  }
+
+  const handleUpdate = () => {
+    navigate("/WriteBoard", {
+      state: {
+        update: true
+      }
+    });
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-
+    console.log(post);
+    console.log(localStorage);
     const data = {
       "challengeId": postId,
       "code": encodeURIComponent(code),
@@ -101,22 +118,29 @@ const Challenges = () => {
     };
 
     console.log(data);
-    try {
-      const response = await axios.post("/api/attempt/challenge", data, {
+    await axios
+      .post(`/api/attempt/challenge`, data, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("login_token")}`
+          Authorization: `Bearer ${token}`, // yourTokenHere에 실제 토큰을 넣어주세요
         },
+      }, { validateStatus: false })
+      .then((res) => {
+        if (res.status === 200) {
+          navigate("/Results", {
+            state:
+            {
+              cid: postId,
+              ctitle: post.title
+            }
+          });
+
+        } else if (res.status === 500 || res.status === 400) {
+          alert("에러발생");
+        }
+      })
+      .catch((error) => {
+        console.error("error:", error);
       });
-
-      if (response.status !== 200) {
-        throw new Error(`Error! status: ${response.status}`);
-      }
-
-    } catch (error) {
-      console.error(error);
-    }
-
-
   }
 
   const userCheck = () => {
@@ -204,7 +228,7 @@ const Challenges = () => {
                   <button onClick={() => setModalIsOpen(false)}>close</button>
                 </Modal>
                 {userCheck() ? <button onClick={handleDelete} >삭제하기</button> : <></>}
-                {userCheck() ? <button >수정하기</button> : <></>}
+                {userCheck() ? <button onClick={handleUpdate} >수정하기</button> : <></>}
               </div>
             </>
           ) : (
@@ -212,6 +236,7 @@ const Challenges = () => {
           )}
         </div>
       </div>
+      <button onClick={handleQuestion}>질문하기</button>
     </div>
   );
 };

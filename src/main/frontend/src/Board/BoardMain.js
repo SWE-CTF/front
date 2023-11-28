@@ -1,14 +1,15 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import HomeButton from "../components/HomeButton";
 import Nav from "../components/Nav";
 import searchImg from "../serach.png";
 import useDarkMode from "../theme/useDarkMode";
 import Pagination from "./Pagination";
 
-
 const BoardMain = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
   const [theme, toggleTheme] = useDarkMode();
   const [posts, setPosts] = useState(() => {
     const savedPosts = localStorage.getItem("posts");
@@ -32,20 +33,42 @@ const BoardMain = () => {
   /* 검색 기능 */
 
   const getInit = async () => {
-    axios
-      .get("/api/question/paging")
-      .then((res) => {
-        console.log(res.data);
-        console.log(posts);
-        const sortedPosts = res.data.sort(
-          (a, b) => b.questionId - a.questionId
-        );
-        setPosts(sortedPosts);
-        savePostsLocally(sortedPosts); //
+    if (location.state === null) {
+      await axios
+        .get("/api/question/paging")
+        .then((res) => {
+          console.log(res.data);
+          console.log(posts);
+          const sortedPosts = res.data.sort(
+            (a, b) => b.questionId - a.questionId
+          );
+          setPosts(sortedPosts);
+          savePostsLocally(sortedPosts); //
+        })
+        .catch((Error) => {
+          console.log(Error);
+        });
+    } else {
+      await axios
+      .get(`/api/question/challenge/${location.state.cid}`, { validateStatus: false })
+      .then(res => {
+        if (res.status === 404) {
+          setPosts([]);
+          savePostsLocally([]);
+        } else {
+          console.log(res.data);
+          console.log(posts);
+          const sortedPosts = res.data.sort(
+            (a, b) => b.questionId - a.questionId
+          );
+          setPosts(sortedPosts);
+          savePostsLocally(sortedPosts);
+        }
       })
       .catch((Error) => {
-        console.log(Error);
+        console.error(Error);
       });
+    }
   };
 
   useEffect(() => {
@@ -80,29 +103,29 @@ const BoardMain = () => {
           <div className="list">
             {userInput.length != 0
               ? searched
-                  .slice(offset, offset + limit)
-                  .map(({ questionId, title, nickname, writeTime }) => (
-                    <Link className="link" to={`/api/question/${questionId}`}>
-                      <article key={questionId}>
-                        <div>{questionId}.</div>
-                        <div>{title}</div>
-                        <div>{writeTime}</div>
-                        <div>{nickname}</div>
-                      </article>
-                    </Link>
-                  ))
+                .slice(offset, offset + limit)
+                .map(({ questionId, title, nickname, writeTime }) => (
+                  <Link className="link" to={`/api/question/${questionId}`}>
+                    <article key={questionId}>
+                      <div>{questionId}.</div>
+                      <div>{title}</div>
+                      <div>{writeTime}</div>
+                      <div>{nickname}</div>
+                    </article>
+                  </Link>
+                ))
               : posts
-                  .slice(offset, offset + limit) // 데이터를 원하는 범위로 슬라이스합니다.
-                  .map(({ questionId, title, nickname, writeTime }) => (
-                    <Link className="link" to={`/api/question/${questionId}`}>
-                      <article key={questionId}>
-                        <div>{questionId}.</div>
-                        <div>{title}</div>
-                        <div>{writeTime}</div>
-                        <div>{nickname}</div>
-                      </article>
-                    </Link>
-                  ))}
+                .slice(offset, offset + limit) // 데이터를 원하는 범위로 슬라이스합니다.
+                .map(({ questionId, title, nickname, writeTime }) => (
+                  <Link className="link" to={`/api/question/${questionId}`}>
+                    <article key={questionId}>
+                      <div>{questionId}.</div>
+                      <div>{title}</div>
+                      <div>{writeTime}</div>
+                      <div>{nickname}</div>
+                    </article>
+                  </Link>
+                ))}
             {/* {posts
               .slice(offset, offset + limit) // 데이터를 원하는 범위로 슬라이스합니다.
               .map(({ questionId, title, nickname, writeTime }) => (

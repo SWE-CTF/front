@@ -51,9 +51,9 @@ function Problem() {
       setLoading(true);
       try {
         const response = await axios.get(
-          "/api/challenge/search?keyword=" + searchQuery.challengeTitle
+          `/api/challenge/search?keyword=${searchQuery.challengeTitle}`
         );
-        console.log("/api/challenge/search?keyword=" + searchQuery.challengeTitle);
+        console.log(`/api/challenge/search?keyword=${searchQuery.challengeTitle}`);
         setPosts(response.data);
         setLoading(false);
       } catch (error) {
