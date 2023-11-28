@@ -1,11 +1,10 @@
-import { useParams } from "react-router-dom";
-import { Component, useEffect, useState } from "react";
-import Board from "./Board.js";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
-import Nav from "../components/Nav.js";
-import HomeButton from "../components/HomeButton.js";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import ChatList from "../components/ChatList.js";
+import HomeButton from "../components/HomeButton.js";
+import Nav from "../components/Nav.js";
+import Board from "./Board.js";
 
 const BoardDetail = () => {
   const { questionId } = useParams(); // /board/:idx와 동일한 변수명으로 데이터를 꺼낼 수 있습니다.

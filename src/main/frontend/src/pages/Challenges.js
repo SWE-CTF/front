@@ -1,11 +1,10 @@
 import Editor from "@monaco-editor/react";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import Modal from "react-modal";
+import { useNavigate, useParams } from "react-router-dom";
 import HomeButton from "../components/HomeButton";
 import useDarkMode from "../theme/useDarkMode";
-
-
 // 언어 목록
 const languages = ["java", "python", "c"];
 
@@ -29,7 +28,7 @@ import sys
   c: {
     value: `// Your C code here
 #include <stdio.h>
-#include <stdlib.h>
+#include <stdlib.
 
 int main(int argc, char *argv[]) {
 
@@ -41,12 +40,15 @@ int main(int argc, char *argv[]) {
 
 const Challenges = () => {
   const { postId } = useParams();
+  const navigate = useNavigate();
   const [post, setPost] = useState(null);
   const [theme, toggleTheme] = useDarkMode();
   const [selectedLanguage, setSelectedLanguage] = useState("java");
   const [activeLanguage, setActiveLanguage] = useState("java");
   const [code, setCode] = useState(languageEditors["java"].value);
-  
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const token = localStorage.getItem("login_token");
+
   const languages = ["java", "python", "c"];
 
 
@@ -59,15 +61,42 @@ const Challenges = () => {
 
   const handleInputChange = (e) => {
     setCode(e);
-    
+
+  };
+
+  const handleDelete = () => {
+    const confirmDelete = window.confirm("정말로 삭제하시겠습니까?");
+    if (confirmDelete) {
+      // 사용자가 확인을 누르면 삭제 요청 보내기
+      axios
+        .delete(`/api/challenge/${postId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`, // yourTokenHere에 실제 토큰을 넣어주세요
+          },
+        })
+        .then((res) => {
+          if (res.status === 204 || res.status === 200) {
+            console.log("게시물 삭제가 완료되었습니다:", res.data);
+            navigate("/Problem");
+            // 삭제 완료 후 필요한 작업 수행
+          } else if (res.status === 500 || res.status === 404) {
+            console.log("에러발생");
+          }
+        })
+        .catch((error) => {
+          console.error("게시물 삭제에 실패했습니다:", error);
+          // 삭제 실패 시 처리할 작업 수행
+        });
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+
     const data = {
       "challengeId": postId,
-      "code":encodeURIComponent(code),
+      "code": encodeURIComponent(code),
       "language": selectedLanguage
     };
 
@@ -90,11 +119,12 @@ const Challenges = () => {
 
   }
 
-  const handleHint = async (e) => {
-    e.preventDefault();
+  const userCheck = () => {
+    return localStorage.getItem("nickname") === post.examiner || localStorage.getItem("role") === "ROLE_ADMIN";
   }
 
   useEffect(() => {
+    console.log(localStorage);
     const fetchPost = async () => {
       try {
         const response = await axios.get(
@@ -106,6 +136,7 @@ const Challenges = () => {
         }
 
         setPost(response.data);
+        console.log(response.data);
       } catch (error) {
         console.error("게시물을 불러오는 동안 오류가 발생했습니다.", error);
       }
@@ -117,10 +148,6 @@ const Challenges = () => {
   const newlineText = (content) => {
     return content.split('\n').map(str => <p>{str}</p>);
   }
-
-  // const testCases = (e) => {
-  //   return <p></p>
-  // }
 
   return (
     <div className={`container ${theme.dark ? "dark" : "light"}`}>
@@ -162,16 +189,22 @@ const Challenges = () => {
                   </button>
                 ))}
                 <h3>{languageEditors[selectedLanguage].label} Code Input Area:</h3>
-                  <Editor
-                    name="code"
-                    value={code}
-                    language={selectedLanguage}
-                    onChange={handleInputChange}
-                    theme="vs-dark"
-                    height="300px"
-                  />
-                  <button onClick={handleSubmit}>채점하기</button>
-                  <button onClick={handleHint}>힌트보기</button>
+                <Editor
+                  name="code"
+                  value={code}
+                  language={selectedLanguage}
+                  onChange={handleInputChange}
+                  theme="vs-dark"
+                  height="300px"
+                />
+                <button onClick={handleSubmit}>채점하기</button>
+                <button onClick={() => setModalIsOpen(true)}>힌트보기</button>
+                <Modal isOpen={modalIsOpen} onRequestClose={() => setModalIsOpen(false)}>
+                  {post.hint}
+                  <button onClick={() => setModalIsOpen(false)}>close</button>
+                </Modal>
+                {userCheck() ? <button onClick={handleDelete} >삭제하기</button> : <></>}
+                {userCheck() ? <button >수정하기</button> : <></>}
               </div>
             </>
           ) : (

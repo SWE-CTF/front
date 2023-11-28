@@ -26,6 +26,11 @@ const WriteBoard = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    // if (localStorage.getItem("login") !== "true") {
+    //   alert("비정상적인 접근 (로그인 되지 않은 사용자입니다.");
+    //   navigate("/");
+    // }
+
     const fetchData = async () => {
       try {
         const response = await axios.get(
@@ -114,7 +119,7 @@ const WriteBoard = () => {
     }
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     const data = {
@@ -132,33 +137,34 @@ const WriteBoard = () => {
       output3: output3,
     };
 
-    const formData = new FormData();
-    formData.append("saveForm", new Blob([JSON.stringify(data)], {
-      type: "application/json"
-    }));
+    // const formData = new FormData();
+    // formData.append("saveForm", new Blob([JSON.stringify(data)], {
+    //   type: "application/json"
+    // }));
 
-    if (files.length > 0) {
-      formData.append("files", files[0]);
-      console.log("파일 이름:", files[0].name);
-    }
+    // if (files.length > 0) {
+    //   formData.append("files", files[0]);
+    //   console.log("파일 이름:", files[0].name);
+    // }
 
-    console.log("formData", formData)
-    console.log("제목:", title);
-    console.log("카테고리:", category);
-    console.log("내용:", content);
-    console.log("힌트:", hint);
-    console.log("메모리 제한:", memory);
-    console.log("시간 제한:", time);
-    console.log("Test Case 1 (Input):", input1);
-    console.log("Test Case 1 (Output):", output1);
-    console.log("Test Case 2 (Input):", input2);
-    console.log("Test Case 2 (Output):", output2);
-    console.log("Test Case 3 (Input):", input3);
-    console.log("Test Case 3 (Output):", output3);
+    // console.log("formData", formData)
+    // console.log("제목:", title);
+    // console.log("카테고리:", category);
+    // console.log("내용:", content);
+    // console.log("힌트:", hint);
+    // console.log("메모리 제한:", memory);
+    // console.log("시간 제한:", time);
+    // console.log("Test Case 1 (Input):", input1);
+    // console.log("Test Case 1 (Output):", output1);
+    // console.log("Test Case 2 (Input):", input2);
+    // console.log("Test Case 2 (Output):", output2);
+    // console.log("Test Case 3 (Input):", input3);
+    // console.log("Test Case 3 (Output):", output3);
 
 
+    console.log(data);
     try {
-      const response = await axios.post("/api/challenge/save", formData, {
+      const response = axios.post("/api/challenge/save", data, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("login_token")}`
         },

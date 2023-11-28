@@ -1,9 +1,8 @@
-import Nav from "../components/Nav";
-import HomeButton from "../components/HomeButton";
-import React, { useRef, useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import React, { useRef, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import HomeButton from "../components/HomeButton";
+import Nav from "../components/Nav";
 const Ex = () => {
   const navigate = useNavigate();
   const location = useLocation();

@@ -1,4 +1,5 @@
 import React from "react";
+import Modal from "react-modal";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import AnnounceDetail from "./Announcement.js/AnnounceDetail";
 import Announcement from "./Announcement.js/Announcement";
@@ -15,11 +16,13 @@ import Login from "./pages/Login";
 import MyPage from "./pages/MyPage";
 import Problem from "./pages/Problem";
 import Rank from "./pages/Rank";
+import Results from "./pages/Results";
 import ShowHistory from "./pages/ShowHistoy";
 import Signup from "./pages/Signup";
 import WriteBoard from "./pages/WriteBoard";
 
 function App() {
+  Modal.setAppElement('#root');
   return (
     <Router>
       <div className="container">
@@ -29,6 +32,7 @@ function App() {
           <Route exact path="/Login" element={<Login />} />
           <Route exact path="/Signup" element={<Signup />} />
           <Route exact path="/Problem" element={<Problem />} />
+          <Route exact path="/Results" element={<Results />} />
           <Route exact path="/WriteBoard" element={<WriteBoard />} />
           <Route path="/pages/:postId" element={<Challenges />} />
           <Route path="/MyImpormation" element={<MyPage />} />
