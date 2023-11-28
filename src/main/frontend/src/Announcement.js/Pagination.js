@@ -1,12 +1,11 @@
-import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-function Pagination({ total, limit, page, setPage }) {
+function Pagination({ total, limit, page, setPage, admin }) {
   const numPages = Math.ceil(total / limit); // 총 표시해야 할 페이지 수
   const navigate = useNavigate();
   const onWrite = () => {
     if (localStorage.getItem("login") === "true") {
-      navigate("/QuestionBoardEdit");
+      navigate("/AnnouncementEdit");
     } else {
       alert("로그인 해주세요");
       navigate(`/login`);
@@ -35,9 +34,13 @@ function Pagination({ total, limit, page, setPage }) {
         <button onClick={() => setPage(page + 1)} disabled={page === numPages}>
           &gt;
         </button>
-        <div className="Write">
-          <button onClick={onWrite}>글쓰기</button>
-        </div>
+        {admin === "true" ? (
+          <div className="Write">
+            <button onClick={onWrite}>글쓰기</button>
+          </div>
+        ) : (
+          <div></div>
+        )}
       </nav>
     </div>
   );

@@ -6,20 +6,11 @@ import HomeButton from "../components/HomeButton";
 import Nav from "../components/Nav";
 import searchImg from "../serach.png";
 
-const BoardMain = () => {
-  // const [posts, setPosts] = useState([]);
+const Announcement = () => {
   const [posts, setPosts] = useState(() => {
-    const savedPosts = localStorage.getItem("posts");
+    const savedPosts = localStorage.getItem("AnnouncementPosts");
     return savedPosts ? JSON.parse(savedPosts) : [];
   });
-  const [limit, setLimit] = useState(10);
-  const [page, setPage] = useState(1);
-  const offset = (page - 1) * limit;
-
-  //로컬스토리지에 posts라는 변수로 저장하는 함수
-  const savePostsLocally = (data) => {
-    localStorage.setItem("posts", JSON.stringify(data));
-  };
 
   /* 검색 기능 */
   const [userInput, setUserInput] = useState("");
@@ -29,12 +20,26 @@ const BoardMain = () => {
   const searched = posts.filter((item) => item.title.includes(userInput));
   /* 검색 기능 */
 
+  const [limit, setLimit] = useState(10);
+  const [page, setPage] = useState(1);
+  const offset = (page - 1) * limit;
+  const [adminBool, setAdminBool] = useState(false);
+  const savePostsLocally = (data) => {
+    localStorage.setItem("AnnouncementPosts", JSON.stringify(data));
+  };
+
   const getInit = async () => {
+    if (localStorage.getItem("role") === "ROLE_ADMIN") {
+      setAdminBool("true");
+      console.log(adminBool);
+    } else {
+      setAdminBool("false");
+    }
     axios
-      .get("/api/question/paging")
+      .get("/api/notice/paging")
       .then((res) => {
-        console.log(res.data);
         console.log(posts);
+        console.log(res.data);
         const sortedPosts = res.data.sort(
           (a, b) => b.questionId - a.questionId
         );
@@ -51,11 +56,11 @@ const BoardMain = () => {
   }, []);
 
   return (
-    <div className="Gesipan">
+    <div className="Announcement">
       <HomeButton></HomeButton>
       <Nav></Nav>
       <div className="title">
-        <strong>QuestionBoard</strong>
+        <strong>Announcement</strong>
         <div className="search">
           <input value={userInput} onChange={getValue} />
           <img className="Img" src={searchImg}></img>
@@ -67,44 +72,44 @@ const BoardMain = () => {
         <div className="content">제목</div>
         {/* <div className="challengeId">문제 번호</div> */}
         <div className="writeTime">작성 시간</div>
-        <div className="nickname">닉네임</div>
+        <div className="nickname">조회수</div>
       </div>
       <div className="list_wrap">
         <div className="list">
           {userInput.length != 0
             ? searched
                 .slice(offset, offset + limit)
-                .map(({ questionId, title, nickname, writeTime }) => (
-                  <Link className="link" to={`/api/question/${questionId}`}>
-                    <article key={questionId}>
-                      <div>{questionId}.</div>
+                .map(({ noticeId, title, writeTime, readCnt }) => (
+                  <Link className="link" to={`/api/notice/${noticeId}`}>
+                    <article key={noticeId}>
+                      <div>{noticeId}.</div>
                       <div>{title}</div>
                       <div>{writeTime}</div>
-                      <div>{nickname}</div>
+                      <div>{readCnt}</div>
                     </article>
                   </Link>
                 ))
             : posts
                 .slice(offset, offset + limit) // 데이터를 원하는 범위로 슬라이스합니다.
-                .map(({ questionId, title, nickname, writeTime }) => (
-                  <Link className="link" to={`/api/question/${questionId}`}>
-                    <article key={questionId}>
-                      <div>{questionId}.</div>
+                .map(({ noticeId, title, writeTime, readCnt }) => (
+                  <Link className="link" to={`/api/notice/${noticeId}`}>
+                    <article key={noticeId}>
+                      <div>{noticeId}.</div>
                       <div>{title}</div>
                       <div>{writeTime}</div>
-                      <div>{nickname}</div>
+                      <div>{readCnt}</div>
                     </article>
                   </Link>
                 ))}
           {/* {posts
             .slice(offset, offset + limit) // 데이터를 원하는 범위로 슬라이스합니다.
-            .map(({ questionId, title, nickname, writeTime }) => (
-              <Link className="link" to={`/api/question/${questionId}`}>
-                <article key={questionId}>
-                  <div>{questionId}.</div>
+            .map(({ noticeId, title, writeTime, readCnt }) => (
+              <Link className="link" to={`/api/notice/${noticeId}`}>
+                <article key={noticeId}>
+                  <div>{noticeId}.</div>
                   <div>{title}</div>
                   <div>{writeTime}</div>
-                  <div>{nickname}</div>
+                  <div>{readCnt}</div>
                 </article>
               </Link>
             ))} */}
@@ -115,6 +120,7 @@ const BoardMain = () => {
             limit={limit}
             page={page}
             setPage={setPage}
+            admin={adminBool}
           />
         </div>
       </div>
@@ -122,4 +128,4 @@ const BoardMain = () => {
   );
 };
 
-export default BoardMain;
+export default Announcement;

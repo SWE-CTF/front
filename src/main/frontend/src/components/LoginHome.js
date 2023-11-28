@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import logo from "../cherry.png";
+import HomeButton from "../components/HomeButton";
 import useDarkMode from "../theme/useDarkMode"; //useDarkMode hook 추가
 
 const LoginHome = () => {
@@ -11,11 +12,13 @@ const LoginHome = () => {
     localStorage.removeItem("name");
     localStorage.removeItem("email");
     localStorage.removeItem("role");
+    localStorage.removeItem("nickname");
     window.location.reload();
   };
   if (localStorage.getItem("login") === "true") {
     return (
       <div className={`container ${theme.dark ? "dark" : "light"}`}>
+          <HomeButton></HomeButton>
         <div className="darkBtn">
           <button onClick={toggleTheme}>
             {theme.dark ? "Switch to Light Mode" : "Switch to Dark Mode"}
@@ -36,7 +39,7 @@ const LoginHome = () => {
             </button>
           </Link>
           <Link
-            to="/Scoreboard"
+            to="/Rank"
             className={`menu-link ${theme.dark ? "dark" : "light"}`}
           >
             Scoreboard
@@ -47,6 +50,7 @@ const LoginHome = () => {
   } else {
     return (
       <div className={`container ${theme.dark ? "dark" : "light"}`}>
+        <HomeButton></HomeButton>
         <div className="darkBtn">
           <button onClick={toggleTheme}>
             {theme.dark ? "Switch to Light Mode" : "Switch to Dark Mode"}
@@ -71,7 +75,7 @@ const LoginHome = () => {
             Log in
           </Link>
           <Link
-            to="/Scoreboard"
+            to="/Rank"
             className={`menu-link ${theme.dark ? "dark" : "light"}`}
           >
             Scoreboard
