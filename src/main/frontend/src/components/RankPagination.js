@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 
 function RankPagination({ total, limit, page, setPage, admin }) {
   const numPages = Math.ceil(total / limit); // 총 표시해야 할 페이지 수

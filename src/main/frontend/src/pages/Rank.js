@@ -3,7 +3,11 @@ import { useEffect, useState } from "react";
 import HomeButton from "../components/HomeButton";
 import Nav from "../components/Nav";
 import RankPagination from "../components/RankPagination";
+import useDarkMode from "../theme/useDarkMode";
+
+
 const Rank = () => {
+  const [theme, toggleTheme] = useDarkMode();
   const [rankList, setRankList] = useState([]);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(1);

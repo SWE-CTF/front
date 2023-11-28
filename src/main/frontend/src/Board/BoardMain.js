@@ -1,13 +1,15 @@
-import Pagination from "./Pagination";
-import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
 import axios from "axios";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import HomeButton from "../components/HomeButton";
 import Nav from "../components/Nav";
 import searchImg from "../serach.png";
+import useDarkMode from "../theme/useDarkMode";
+import Pagination from "./Pagination";
+
 
 const BoardMain = () => {
-  // const [posts, setPosts] = useState([]);
+  const [theme, toggleTheme] = useDarkMode();
   const [posts, setPosts] = useState(() => {
     const savedPosts = localStorage.getItem("posts");
     return savedPosts ? JSON.parse(savedPosts) : [];
@@ -51,71 +53,77 @@ const BoardMain = () => {
   }, []);
 
   return (
-    <div className="Gesipan">
-      <HomeButton></HomeButton>
-      <Nav></Nav>
-      <div className="title">
-        <strong>QuestionBoard</strong>
-        <div className="search">
-          <input value={userInput} onChange={getValue} />
-          <img className="Img" src={searchImg}></img>
-        </div>
+    <div className={`container ${theme.dark ? "dark" : "light"}`}>
+      <div className="darkBtn">
+        <button onClick={toggleTheme}>
+          {theme.dark ? "Switch to Light Mode" : "Switch to Dark Mode"}
+        </button>
       </div>
-
-      <div className="list_top">
-        <div className="num">번호</div>
-        <div className="content">제목</div>
-        {/* <div className="challengeId">문제 번호</div> */}
-        <div className="writeTime">작성 시간</div>
-        <div className="nickname">닉네임</div>
-      </div>
-      <div className="list_wrap">
-        <div className="list">
-          {userInput.length != 0
-            ? searched
-                .slice(offset, offset + limit)
-                .map(({ questionId, title, nickname, writeTime }) => (
-                  <Link className="link" to={`/api/question/${questionId}`}>
-                    <article key={questionId}>
-                      <div>{questionId}.</div>
-                      <div>{title}</div>
-                      <div>{writeTime}</div>
-                      <div>{nickname}</div>
-                    </article>
-                  </Link>
-                ))
-            : posts
-                .slice(offset, offset + limit) // 데이터를 원하는 범위로 슬라이스합니다.
-                .map(({ questionId, title, nickname, writeTime }) => (
-                  <Link className="link" to={`/api/question/${questionId}`}>
-                    <article key={questionId}>
-                      <div>{questionId}.</div>
-                      <div>{title}</div>
-                      <div>{writeTime}</div>
-                      <div>{nickname}</div>
-                    </article>
-                  </Link>
-                ))}
-          {/* {posts
-            .slice(offset, offset + limit) // 데이터를 원하는 범위로 슬라이스합니다.
-            .map(({ questionId, title, nickname, writeTime }) => (
-              <Link className="link" to={`/api/question/${questionId}`}>
-                <article key={questionId}>
-                  <div>{questionId}.</div>
-                  <div>{title}</div>
-                  <div>{writeTime}</div>
-                  <div>{nickname}</div>
-                </article>
-              </Link>
-            ))} */}
+      <div className={`Gesipan ${theme.dark ? "dark" : "light"}`}>
+        <HomeButton></HomeButton>
+        <Nav></Nav>
+        <div className="title">
+          <strong>QuestionBoard</strong>
+          <div className="search">
+            <input value={userInput} onChange={getValue} />
+            <img className="Img" src={searchImg}></img>
+          </div>
         </div>
-        <div className="page">
-          <Pagination
-            total={posts.length}
-            limit={limit}
-            page={page}
-            setPage={setPage}
-          />
+        <div className="list_top">
+          <div className="num">번호</div>
+          <div className="content">제목</div>
+          {/* <div className="challengeId">문제 번호</div> */}
+          <div className="writeTime">작성 시간</div>
+          <div className="nickname">닉네임</div>
+        </div>
+        <div className="list_wrap">
+          <div className="list">
+            {userInput.length != 0
+              ? searched
+                  .slice(offset, offset + limit)
+                  .map(({ questionId, title, nickname, writeTime }) => (
+                    <Link className="link" to={`/api/question/${questionId}`}>
+                      <article key={questionId}>
+                        <div>{questionId}.</div>
+                        <div>{title}</div>
+                        <div>{writeTime}</div>
+                        <div>{nickname}</div>
+                      </article>
+                    </Link>
+                  ))
+              : posts
+                  .slice(offset, offset + limit) // 데이터를 원하는 범위로 슬라이스합니다.
+                  .map(({ questionId, title, nickname, writeTime }) => (
+                    <Link className="link" to={`/api/question/${questionId}`}>
+                      <article key={questionId}>
+                        <div>{questionId}.</div>
+                        <div>{title}</div>
+                        <div>{writeTime}</div>
+                        <div>{nickname}</div>
+                      </article>
+                    </Link>
+                  ))}
+            {/* {posts
+              .slice(offset, offset + limit) // 데이터를 원하는 범위로 슬라이스합니다.
+              .map(({ questionId, title, nickname, writeTime }) => (
+                <Link className="link" to={`/api/question/${questionId}`}>
+                  <article key={questionId}>
+                    <div>{questionId}.</div>
+                    <div>{title}</div>
+                    <div>{writeTime}</div>
+                    <div>{nickname}</div>
+                  </article>
+                </Link>
+              ))} */}
+          </div>
+          <div className="page">
+            <Pagination
+              total={posts.length}
+              limit={limit}
+              page={page}
+              setPage={setPage}
+            />
+          </div>
         </div>
       </div>
     </div>

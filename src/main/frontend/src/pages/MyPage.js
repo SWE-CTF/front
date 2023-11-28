@@ -4,8 +4,11 @@ import { Link } from "react-router-dom";
 import Basic from "../cherryCookie.webp";
 import HomeButton from "../components/HomeButton";
 import Nav from "../components/Nav";
+import useDarkMode from "../theme/useDarkMode";
+
 
 const MyPage = () => {
+  const [theme, toggleTheme] = useDarkMode();
   const [submitProblem, setSubmitProblem] = useState(false);
   const [solvedProblem, setSolvedProblem] = useState(false);
   const [wrongProblem, setWrongProblem] = useState(false);
@@ -143,200 +146,207 @@ const MyPage = () => {
   };
 
   return (
-    <div className="MyPage">
-      <HomeButton />
-      <Nav></Nav>
-      <div className="wrap">
-        <div className="header">
-          <div className="information">
-            <div className="photo">
-              <label className="signup-profileImg-label" htmlFor="profileImg">
-                <img src={imgFile ? imgFile : Basic} alt="프로필 이미지" />
-              </label>
-            </div>
-            <div className="username">
-              <strong>{localStorage.getItem("username")}</strong>
-            </div>
-            <div className="email">
-              {localStorage.getItem("email")}{" "}
-              <span>{localStorage.getItem("nickname")}</span>
-            </div>
-          </div>
-          <div className="changeInformation">
-            <button
-              onClick={() => {
-                setChangeInformation((e) => !e);
-                setSubmitProblem(false);
-                setSolvedProblem(false);
-                setWrongProblem(false);
-                setRank(false);
-                setNickname("");
-                setCurrentPwd("");
-                setNewPwd("");
-                setCheckNewPwd("");
-                SetDupNicknameBol(false);
-              }}
-            >
-              개인정보 수정
-            </button>
-          </div>
-          <input
-            className="signup-profileImg-input"
-            type="file"
-            accept="image/*"
-            id="profileImg"
-            onClick={checkChange}
-            onChange={saveImgFile}
-            ref={imgRef}
-            disabled
-          />
-        </div>
-        <div className="main">
-          <div className="select">
-            <div>
-              <button
-                onClick={() => {
-                  setSubmitProblem((e) => !e);
-                  setSolvedProblem(false);
-                  setWrongProblem(false);
-                  setRank(false);
-                  setChangeInformation(false);
-                }}
-              >
-                제출한 문제
-              </button>
-              <span className="submited">{attemptCount}</span>
-            </div>
-            <div>
-              <button
-                onClick={() => {
-                  setSubmitProblem(false);
-                  setSolvedProblem((e) => !e);
-                  setWrongProblem(false);
-                  setRank(false);
-                  setChangeInformation(false);
-                }}
-              >
-                맞은 문제
-              </button>
-              <span className="solve">{correctCount}</span>
-            </div>
-            <div>
-              <button
-                onClick={() => {
-                  setSubmitProblem(false);
-                  setSolvedProblem(false);
-                  setWrongProblem((e) => !e);
-                  setRank(false);
-                  setChangeInformation(false);
-                }}
-              >
-                틀린 문제
-              </button>
-              <span className="wrong">{incorrectCount}</span>
-            </div>
-
-            {/* <div>
-              <button
-                onClick={() => {
-                  setSubmitProblem(false);
-                  setSolvedProblem(false);
-                  setWrongProblem(false);
-                  setRank((e) => !e);
-                  setChangeInformation(false);
-                }}
-                disabled
-              >
-                등수
-              </button>
-              <span className="rank">1</span>
-            </div> */}
-          </div>
-          {loading === false ? (
-            <h2 className="loading">loading...</h2>
-          ) : (
-            <>
-              {submitProblem && (
-                <div className="content1">
-                  {allChallengeId.length === 0 ? (
-                    <span>푼 문제 없음</span>
-                  ) : (
-                    allChallengeId.map((item, index) => (
-                      <Link className="link" to={`/api/MyPage/${item}`}>
-                        <span>{item}번 </span>
-                      </Link>
-                    ))
-                  )}
-                </div>
-              )}
-              {solvedProblem && (
-                <div className="content2">
-                  {correctChallengeId.length === 0 ? (
-                    <span>푼 문제 없음</span>
-                  ) : (
-                    correctChallengeId.map((item, index) => (
-                      <Link className="link" to={`/api/MyPage/${item}`}>
-                        <span>{item}번 </span>
-                      </Link>
-                    ))
-                  )}
-                </div>
-              )}
-              {wrongProblem && (
-                <div className="content3">
-                  {failChallengeId.length === 0 ? (
-                    <span>푼 문제 없음</span>
-                  ) : (
-                    failChallengeId.map((item, index) => (
-                      <Link className="link" to={`/api/MyPage/${item}`}>
-                        <span>{item}번 </span>
-                      </Link>
-                    ))
-                  )}
-                </div>
-              )}
-            </>
-          )}
-          {changeInformation && (
-            <div className="changeInput">
-              <div className="nickname">
-                <input
-                  value={nickname}
-                  onChange={(e) => setNickname(e.target.value)}
-                  placeholder="nickname"
-                ></input>
-                {dupNicknameBol === false ? (
-                  <button className="noCheck" onClick={checkNickname}>
-                    check
-                  </button>
-                ) : (
-                  <button className="Check">check</button>
-                )}
-              </div>
-              <input
-                type="password"
-                value={currentPwd}
-                onChange={(e) => setCurrentPwd(e.target.value)}
-                placeholder="current password"
-              ></input>
-              <input
-                type="password"
-                value={newPwd}
-                onChange={(e) => setNewPwd(e.target.value)}
-                placeholder="new password"
-              ></input>
-              <input
-                type="password"
-                value={checkNewPwd}
-                onChange={(e) => setCheckNewPwd(e.target.value)}
-                placeholder="new password check"
-              ></input>
-              <button onClick={submit}>submit</button>
-            </div>
-          )}
-        </div>
+    <div className={`container ${theme.dark ? "dark" : "light"}`}>
+      <div className="darkBtn">
+        <button onClick={toggleTheme}>
+          {theme.dark ? "Switch to Light Mode" : "Switch to Dark Mode"}
+        </button>
       </div>
-      <div className="save">{changeImg ? <button>저장</button> : ""}</div>
+      <div className="MyPage">
+        <HomeButton />
+        <Nav></Nav>
+        <div className="wrap">
+          <div className="header">
+            <div className="information">
+              <div className="photo">
+                <label className="signup-profileImg-label" htmlFor="profileImg">
+                  <img src={imgFile ? imgFile : Basic} alt="프로필 이미지" />
+                </label>
+              </div>
+              <div className="username">
+                <strong>{localStorage.getItem("username")}</strong>
+              </div>
+              <div className="email">
+                {localStorage.getItem("email")}{" "}
+                <span>{localStorage.getItem("nickname")}</span>
+              </div>
+            </div>
+            <div className={`changeInformation ${theme.dark ? "dark" : "light"}`}>
+              <button
+                onClick={() => {
+                  setChangeInformation((e) => !e);
+                  setSubmitProblem(false);
+                  setSolvedProblem(false);
+                  setWrongProblem(false);
+                  setRank(false);
+                  setNickname("");
+                  setCurrentPwd("");
+                  setNewPwd("");
+                  setCheckNewPwd("");
+                  SetDupNicknameBol(false);
+                }}
+              >
+                개인정보 수정
+              </button>
+            </div>
+            <input
+              className="signup-profileImg-input"
+              type="file"
+              accept="image/*"
+              id="profileImg"
+              onClick={checkChange}
+              onChange={saveImgFile}
+              ref={imgRef}
+              disabled
+            />
+          </div>
+          <div className="main">
+            <div className={`select ${theme.dark ? "dark" : "light"}`}>
+              <div>
+                <button
+                  onClick={() => {
+                    setSubmitProblem((e) => !e);
+                    setSolvedProblem(false);
+                    setWrongProblem(false);
+                    setRank(false);
+                    setChangeInformation(false);
+                  }}
+                >
+                  제출한 문제
+                </button>
+                <span className="submited">{attemptCount}</span>
+              </div>
+              <div>
+                <button
+                  onClick={() => {
+                    setSubmitProblem(false);
+                    setSolvedProblem((e) => !e);
+                    setWrongProblem(false);
+                    setRank(false);
+                    setChangeInformation(false);
+                  }}
+                >
+                  맞은 문제
+                </button>
+                <span className="solve">{correctCount}</span>
+              </div>
+              <div>
+                <button
+                  onClick={() => {
+                    setSubmitProblem(false);
+                    setSolvedProblem(false);
+                    setWrongProblem((e) => !e);
+                    setRank(false);
+                    setChangeInformation(false);
+                  }}
+                >
+                  틀린 문제
+                </button>
+                <span className="wrong">{incorrectCount}</span>
+              </div>
+
+              {/* <div>
+                <button
+                  onClick={() => {
+                    setSubmitProblem(false);
+                    setSolvedProblem(false);
+                    setWrongProblem(false);
+                    setRank((e) => !e);
+                    setChangeInformation(false);
+                  }}
+                  disabled
+                >
+                  등수
+                </button>
+                <span className="rank">1</span>
+              </div> */}
+            </div>
+            {loading === false ? (
+              <h2 className="loading">loading...</h2>
+            ) : (
+              <>
+                {submitProblem && (
+                  <div className="content1">
+                    {allChallengeId.length === 0 ? (
+                      <span>푼 문제 없음</span>
+                    ) : (
+                      allChallengeId.map((item, index) => (
+                        <Link className="link" to={`/api/MyPage/${item}`}>
+                          <span>{item}번 </span>
+                        </Link>
+                      ))
+                    )}
+                  </div>
+                )}
+                {solvedProblem && (
+                  <div className="content2">
+                    {correctChallengeId.length === 0 ? (
+                      <span>푼 문제 없음</span>
+                    ) : (
+                      correctChallengeId.map((item, index) => (
+                        <Link className="link" to={`/api/MyPage/${item}`}>
+                          <span>{item}번 </span>
+                        </Link>
+                      ))
+                    )}
+                  </div>
+                )}
+                {wrongProblem && (
+                  <div className="content3">
+                    {failChallengeId.length === 0 ? (
+                      <span>푼 문제 없음</span>
+                    ) : (
+                      failChallengeId.map((item, index) => (
+                        <Link className="link" to={`/api/MyPage/${item}`}>
+                          <span>{item}번 </span>
+                        </Link>
+                      ))
+                    )}
+                  </div>
+                )}
+              </>
+            )}
+            {changeInformation && (
+              <div className="changeInput">
+                <div className="nickname">
+                  <input
+                    value={nickname}
+                    onChange={(e) => setNickname(e.target.value)}
+                    placeholder="nickname"
+                  ></input>
+                  {dupNicknameBol === false ? (
+                    <button className="noCheck" onClick={checkNickname}>
+                      check
+                    </button>
+                  ) : (
+                    <button className="Check">check</button>
+                  )}
+                </div>
+                <input
+                  type="password"
+                  value={currentPwd}
+                  onChange={(e) => setCurrentPwd(e.target.value)}
+                  placeholder="current password"
+                ></input>
+                <input
+                  type="password"
+                  value={newPwd}
+                  onChange={(e) => setNewPwd(e.target.value)}
+                  placeholder="new password"
+                ></input>
+                <input
+                  type="password"
+                  value={checkNewPwd}
+                  onChange={(e) => setCheckNewPwd(e.target.value)}
+                  placeholder="new password check"
+                ></input>
+                <button onClick={submit}>submit</button>
+              </div>
+            )}
+          </div>
+        </div>
+        <div className="save">{changeImg ? <button>저장</button> : ""}</div>
+      </div>
     </div>
   );
 };

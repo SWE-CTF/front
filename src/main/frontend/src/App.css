@@ -430,14 +430,14 @@ input::placeholder {
 
 
 .List ul li {
-  height:25px;
+  height:30px;
   background:#202123;
   text-decoration:none;
   font-weight:lighter;
   list-style:none;
-  font-size:15px;
+  font-size:18px;
   list-style:none;
-  padding:5px 0;
+  padding:10px 0;
 }
 
 .List ul li:nth-child(2n) {
@@ -645,6 +645,10 @@ input::placeholder {
   color: black;
 }
 
+.dark .Gesipan .list:nth-child(2n) {
+  border:1px solid red;
+}
+
 .title {
   margin-bottom: 30px;
 }
@@ -693,25 +697,10 @@ input::placeholder {
 
 .list article {
   padding:10px 0;
-  border-bottom: 1px solid rgb(150, 145, 145);
+  border-bottom: 1px solid #1b1c1d;
   display: flex;
   height: 30px;
   font-size: 18px;
-}
-
-.list article:nth-child(1) {
-  background-color:gold;
-  color:#fff;
-}
-
-.list article:nth-child(2) {
-  background-color:silver;
-  color:#fff;
-}
-
-.list article:nth-child(3) {
-  background-color:#cd7f32;
-  color:#fff;
 }
 
 .list article div:nth-child(1) {
@@ -809,12 +798,12 @@ input::placeholder {
   width: 18%;
 }
 
-/* pagination */
+/* rank pagination */
 
 .Pagination nav {
   display: flex;
   gap: 4px;
-  margin: 16px;
+  margin-top: 16px;
   justify-content: center;
   align-items: center;
   position: fixed;
@@ -828,16 +817,15 @@ input::placeholder {
   border-radius: 8px;
   padding: 8px;
   margin: 0;
-  background: black;
   color: white;
   font-size: 1rem;
 }
 
-.Pagination button:hover {
-  background: tomato;
+/* .Pagination button:hover {
+  background: #f05a5a;
   cursor: pointer;
   transform: translateY(-2px);
-}
+} */
 
 .Pagination button:disabled {
   background: grey;
@@ -853,10 +841,12 @@ input::placeholder {
 } */
 
 .Pagination button[aria-current] {
-  background: deeppink;
+  background: #f05a5a;
   font-weight: bold;
   cursor: not-allowed;
   transform: none;
+  width:80px;
+  height:40px;
 }
 
 /*ckeditor*/
@@ -1036,7 +1026,7 @@ input::placeholder {
 }
 
 .BoardDetail .delete {
-  background-color: rgb(240, 90, 90);
+  background-color: #f05a5a;
   color: white;
 }
 
@@ -1131,8 +1121,13 @@ input::placeholder {
 .MyPage .changeInformation button {
   border: none;
   background-color: white;
-  color: rgb(240, 90, 90);
+  color: #f05a5a;
   cursor: pointer;
+}
+
+.dark .changeInformation button {
+  color:#fff;
+  background:#202123;
 }
 
 .MyPage .main button {
@@ -1186,8 +1181,12 @@ input::placeholder {
 .MyPage .main .select div {
   display: flex;
   margin-bottom: 10px;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid white;
   justify-content: space-between;
+}
+
+.light .MyPage .main .select div {
+  border-bottom: 1px solid #000;
 }
 
 .MyPage .main .select span {
@@ -1195,9 +1194,15 @@ input::placeholder {
   margin-left: 10px;
 }
 
-.MyPage .main .select .submited {
-  color: blue;
+.dark .select button {
+  background:#202123;
+  color:#fff;
 }
+
+.MyPage .main .select .submited {
+  color: rgb(72, 105, 255);
+}
+
 .MyPage .main .select .solve {
   color: rgb(99, 226, 109);
 }
@@ -1647,6 +1652,21 @@ input::placeholder {
 .Rank .list article {
   display: flex;
   text-align: center;
+}
+
+.Rank .list article:nth-child(1){
+  background-color:gold;
+  color:#fff;
+}
+
+.Rank .list article:nth-child(2) {
+  background-color:silver;
+  color:#fff;
+}
+
+.Rank .list article:nth-child(3) {
+  background-color:#cd7f32;
+  color:#fff;
 }
 
 .Rank .list article div:nth-child(1) {
