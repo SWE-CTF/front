@@ -120,7 +120,7 @@ function Problem() {
         </div>
         <div className={`List ${theme.dark ? "dark" : "light"}`}>
           <Posts
-            className={` ${theme.dark ? "dark" : "light"}`}
+            className={`${theme.dark ? "dark" : "light"}`}
             posts={currentPosts}
             loading={loading}
           ></Posts>

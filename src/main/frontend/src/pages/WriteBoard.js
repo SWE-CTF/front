@@ -139,7 +139,6 @@ const WriteBoard = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(category);
     const data = {
       title: title,
       content: content,
@@ -161,25 +160,28 @@ const WriteBoard = () => {
     }));
 
     if (files.length > 0) {
-      for (var i = 0; i < files.length; ++i) {
-        formData.append("files", files[i]);
-        console.log("파일 이름:", files[i].name);
-      }
+      // console.log(files);
+      formData.append("files", files[0]);
     }
 
-    console.log("formData", formData)
-    console.log("제목:", title);
-    console.log("카테고리:", category);
-    console.log("내용:", content);
-    console.log("힌트:", hint);
-    console.log("메모리 제한:", memory);
-    console.log("시간 제한:", time);
-    console.log("Test Case 1 (Input):", input1);
-    console.log("Test Case 1 (Output):", output1);
-    console.log("Test Case 2 (Input):", input2);
-    console.log("Test Case 2 (Output):", output2);
-    console.log("Test Case 3 (Input):", input3);
-    console.log("Test Case 3 (Output):", output3);
+    // console.log(formData.files);
+    // console.log("2");
+    // for (var pair of formData.entries()) {
+    //   console.log(pair[0] + ', ' + pair[1]);
+    // }
+    // console.log(formData.get('files'));
+    // console.log("제목:", title);
+    // console.log("카테고리:", category);
+    // console.log("내용:", content);
+    // console.log("힌트:", hint);
+    // console.log("메모리 제한:", memory);
+    // console.log("시간 제한:", time);
+    // console.log("Test Case 1 (Input):", input1);
+    // console.log("Test Case 1 (Output):", output1);
+    // console.log("Test Case 2 (Input):", input2);
+    // console.log("Test Case 2 (Output):", output2);
+    // console.log("Test Case 3 (Input):", input3);
+    // console.log("Test Case 3 (Output):", output3);
 
 
 
@@ -195,6 +197,9 @@ const WriteBoard = () => {
             console.log("문제가 성공적으로 등록되었습니다.", res.data);
             console.log(res.status);
             navigate("/Problem");
+          } else if (res.status === 401) {
+            alert("토큰이 만료되었거나 인증되지 않은 사용자입니다.");
+            navigate("/");
           } else if (res.status === 500 || res.status === 400) {
             alert("에러발생");
           }
@@ -214,6 +219,9 @@ const WriteBoard = () => {
             console.log("문제가 성공적으로 수정되었습니다.", res.data);
             console.log(res.status);
             navigate("/Problem");
+          } else if (res.status === 401) {
+            alert("토큰이 만료되었거나 인증되지 않은 사용자입니다.");
+            navigate("/");
           } else if (res.status === 500 || res.status === 400) {
             alert("에러발생");
           }

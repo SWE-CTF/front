@@ -1,10 +1,9 @@
 import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import HomeButton from "../components/HomeButton";
 import Nav from "../components/Nav";
 import Pagination from "../components/Pagination";
-import searchImg from "../serach.png";
 import useDarkMode from "../theme/useDarkMode";
 import ResultValues from "./ResultValues";
 
@@ -23,6 +22,7 @@ const Results = () => {
     const token = localStorage.getItem("login_token");
     const [activePage, setActivePage] = useState(1);
     const [currentPage, setCurrentPage] = useState(1);
+    const navigate = useNavigate();
 
     const indexOfLast = currentPage * postsPerPage;
     const indexOfFirst = indexOfLast - postsPerPage;
@@ -33,19 +33,47 @@ const Results = () => {
         setActivePage(pageNumber);
     }, []);
 
+    const check = () => {
+        axios
+            .get(`api/attempt/member/success`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }, { validateStatus: false })
+            .then((res) => {
+                if (res.status === 200) {
+                    if (!res.data.correctChallengeId.includes(parseInt(location.state.cid))) {
+                        alert("문제 풀이자에게 제공되는 기능입니다.");
+                        navigate(`/pages/${location.state.cid}`);
+                    }
+                } else if (res.status === 401) {
+                    alert("토큰이 만료되었거나 인증되지 않은 사용자입니다.");
+                    navigate("/");
+                } else if (res.status === 500 || res.status === 400) {
+                    alert("에러 발생");
+                    navigate("/");
+                }
+            })
+    }
+
+
     useEffect(() => {
         const fetch = async () => {
-
             if (location.state === null) {
+                navigate("/");
+            } else if (location.state.mode === "submit") {
                 await axios
-                    .get(`/api/attempt/member`, {
+                    .get(`/api/challenge/${location.state.cid}/member`, {
                         headers: {
-                            Authorization: `Bearer ${token}`, // yourTokenHere에 실제 토큰을 넣어주세요
+                            Authorization: `Bearer ${token}`,
                         },
                     }, { validateStatus: false })
                     .then((res) => {
                         if (res.status === 200) {
                             setPosts(res.data);
+                        } else if (res.status === 401) {
+                            alert("토큰이 만료되었거나 인증되지 않은 사용자입니다.");
+                            navigate("/");
                         } else if (res.status === 500 || res.status === 400) {
                             alert("에러 발생");
                         }
@@ -53,16 +81,20 @@ const Results = () => {
                     .catch((error) => {
                         console.error("error:", error);
                     });
-            } else if (location.state.submitted === true) {
+            } else if (location.state.mode === "code") {
+                check();
                 await axios
-                    .get(`/api/challenge/${location.state.cid}/member`, {
+                    .get(`/api/challenge/${location.state.cid}/attempt`, {
                         headers: {
-                            Authorization: `Bearer ${token}`, // yourTokenHere에 실제 토큰을 넣어주세요
+                            Authorization: `Bearer ${token}`,
                         },
                     }, { validateStatus: false })
                     .then((res) => {
                         if (res.status === 200) {
                             setPosts(res.data);
+                        } else if (res.status === 401) {
+                            alert("토큰이 만료되었거나 인증되지 않은 사용자입니다.");
+                            navigate("/");
                         } else if (res.status === 500 || res.status === 400) {
                             alert("에러 발생");
                         }
@@ -74,15 +106,6 @@ const Results = () => {
         }
         fetch();
     }, []);
-
-
-    const handleTitleChange = (e) => {
-        setTitle(e.target.value);
-    }
-
-    const handleNameChange = (e) => {
-        setNickName(e.target.value);
-    }
 
     return (
         <div className={`container ${theme.dark ? "dark" : "light"}`}>
@@ -96,13 +119,6 @@ const Results = () => {
                 <Nav></Nav>
                 <div className="title">
                     <strong>Results</strong>
-                    {/* <div className="search"> */}
-                    <div>
-                        <form>
-                            <input value={title} onChange={handleTitleChange} placeholder="문제 번호" />
-                        </form>
-                        <img className="Img" src={searchImg}></img>
-                    </div>
                 </div>
                 <div className="list_top">
                     <div className="num">번호</div>
@@ -113,11 +129,11 @@ const Results = () => {
                 <div className="list_wrap">
                     <div className="list">
                         <ResultValues
-                        className={` ${theme.dark ? "dark" : "light"}`}
-                        posts={currentPosts}
-                        loading={loading}
+                            className={` ${theme.dark ? "dark" : "light"}`}
+                            posts={currentPosts}
+                            loading={loading}
                         />
-                        
+
                     </div>
                     <div className="page">
                         <Pagination
