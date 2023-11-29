@@ -177,7 +177,7 @@ const Challenges = () => {
           if (res.status !== 200) {
             throw new Error(`Error! status: ${res.status}`);
           }
-          const myFile = new File([res.data.file], {postId});
+          const myFile = new File([res.data.files], {postId});
           const reader = new FileReader();
           reader.onload = (ev) => {
             const previewImage = String(ev.target?.result)
