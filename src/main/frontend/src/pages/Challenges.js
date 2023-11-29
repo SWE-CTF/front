@@ -48,6 +48,7 @@ const Challenges = () => {
   const [code, setCode] = useState(languageEditors["java"].value);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [files, setFiles] = useState(null);
+  const [fileExist, setFileExist] = useState(false);
   const token = localStorage.getItem("login_token");
 
   const languages = ["java", "python", "c"];
@@ -177,13 +178,17 @@ const Challenges = () => {
           if (res.status !== 200) {
             throw new Error(`Error! status: ${res.status}`);
           }
-          const myFile = new File([res.data.files], {postId});
-          const reader = new FileReader();
-          reader.onload = (ev) => {
-            const previewImage = String(ev.target?.result)
-            setFiles(previewImage);
+          if (res.data.files.length > 0) {
+            const myFile = new File([res.data.files], { postId });
+            const reader = new FileReader();
+            reader.onload = (ev) => {
+              const previewImage = String(ev.target?.result)
+              setFiles(previewImage);
+            }
+            reader.readAsDataURL(myFile)
+
+            setFileExist(true);
           }
-          reader.readAsDataURL(myFile)
         })
         .catch((error) => {
           console.error("게시물을 불러오는 동안 오류가 발생했습니다.", error);
@@ -214,7 +219,7 @@ const Challenges = () => {
                   {post.title}
                 </div>
                 <p>{newlineText(post.content)}</p>
-                <img src={`${files}`} style={{ width: "500px", height: "500px"}} />
+                {fileExist ? <img src={`${files}`} style={{ width: "500px", height: "500px" }} /> : <></>}
                 <h3>Test case 1</h3>
                 <h4>Input</h4>
                 <div>{post.testcases[0]['input']}</div>
