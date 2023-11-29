@@ -136,8 +136,8 @@ const Challenges = () => {
           navigate("/Results", {
             state:
             {
-              cid: postId,
-              ctitle: post.title
+              submitted: true,
+              cid: postId
             }
           });
 
@@ -171,6 +171,8 @@ const Challenges = () => {
               ''
             )
           )
+          console.log(base64);
+          console.log(res.data.files);
           setPost(res.data);
           console.log(res.data);
           setFiles(base64)
