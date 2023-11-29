@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import HomeButton from "../components/HomeButton";
 import Nav from "../components/Nav";
 import useDarkMode from "../theme/useDarkMode";
@@ -9,7 +9,7 @@ const WriteBoard = () => {
   const [theme, toggleTheme] = useDarkMode();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState(1);
   const [categories, setCategories] = useState([]);
   const [files, setFiles] = useState([]);
   const [hint, setHint] = useState("");
@@ -23,6 +23,7 @@ const WriteBoard = () => {
   const [output3, setOutput3] = useState("");
   const [error, setError] = useState("");
 
+  const location = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -32,29 +33,45 @@ const WriteBoard = () => {
     // }
 
     const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          "api/challenge/categories"
-        );
+      if (location.state === null) {
+        try {
+          const response = await axios.get(
+            "api/challenge/categories"
+          );
 
-        if (response.status !== 200) {
-          throw new Error(`Error! status: ${response.status}`);
+          if (response.status !== 200) {
+            throw new Error(`Error! status: ${response.status}`);
+          }
+
+          setCategories(response.data);
+        } catch (error) {
+          alert("카테고리 목록을 불러오는데 실패했습니다.");
+          setError(error);
+          // console.error("카테고리 목록을 불러오는 동안 오류가 발생했습니다.", error);
+          navigate("/");
         }
+      } else if (location.state.update === true) {
+        try {
+          setTitle(location.state.title);
+          setContent(location.state.content);
+          setTime(location.state.time);
+          setMemory(location.state.memory);
+          setHint(location.state.hint);
+          setFiles(location.state.file);
 
-        setCategories(response.data);
-      } catch (error) {
-        alert("카테고리 목록을 불러오는데 실패했습니다.");
-        setError(error);
-        // console.error("카테고리 목록을 불러오는 동안 오류가 발생했습니다.", error);
-        navigate("/");
+        } catch (error) {
+          alert("게시판 내용을 불러오는데 실패했습니다.");
+          setError(error);
+          // console.error("카테고리 목록을 불러오는 동안 오류가 발생했습니다.", error);
+          navigate("/");
+        }
       }
     };
     fetchData();
   }, []);
 
   const selectOptions = (e) => {
-    return e.map(x => <option key={x.categoryId}>{x.categoryName}</option>);
-    // return e.map( x => <option key={x.categoryId}>{x.categoryId}</option> );
+    return e.map(x => <option value={x.categoryId}>{x.categoryName}</option>);
   }
 
   const handleTitleChange = (e) => {
@@ -119,9 +136,10 @@ const WriteBoard = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
+    console.log(category);
     const data = {
       title: title,
       content: content,
@@ -137,48 +155,72 @@ const WriteBoard = () => {
       output3: output3,
     };
 
-    // const formData = new FormData();
-    // formData.append("saveForm", new Blob([JSON.stringify(data)], {
-    //   type: "application/json"
-    // }));
+    const formData = new FormData();
+    formData.append("saveForm", new Blob([JSON.stringify(data)], {
+      type: "application/json"
+    }));
 
-    // if (files.length > 0) {
-    //   formData.append("files", files[0]);
-    //   console.log("파일 이름:", files[0].name);
-    // }
-
-    // console.log("formData", formData)
-    // console.log("제목:", title);
-    // console.log("카테고리:", category);
-    // console.log("내용:", content);
-    // console.log("힌트:", hint);
-    // console.log("메모리 제한:", memory);
-    // console.log("시간 제한:", time);
-    // console.log("Test Case 1 (Input):", input1);
-    // console.log("Test Case 1 (Output):", output1);
-    // console.log("Test Case 2 (Input):", input2);
-    // console.log("Test Case 2 (Output):", output2);
-    // console.log("Test Case 3 (Input):", input3);
-    // console.log("Test Case 3 (Output):", output3);
-
-
-    console.log(data);
-    try {
-      const response = axios.post("/api/challenge/save", data, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("login_token")}`
-        },
-      });
-
-      console.log("문제가 성공적으로 등록되었습니다.", response.data);
-      console.log(response.status);
-      // navigate("/problems");
-    } catch (error) {
-      console.error("문제 등록 중 오류가 발생했습니다.", error);
-
-      if (error.response) {
-        console.error("Response data:", error.response.data);
+    if (files.length > 0) {
+      for (var i = 0; i < files.length; ++i) {
+        formData.append("files", files[i]);
+        console.log("파일 이름:", files[i].name);
       }
+    }
+
+    console.log("formData", formData)
+    console.log("제목:", title);
+    console.log("카테고리:", category);
+    console.log("내용:", content);
+    console.log("힌트:", hint);
+    console.log("메모리 제한:", memory);
+    console.log("시간 제한:", time);
+    console.log("Test Case 1 (Input):", input1);
+    console.log("Test Case 1 (Output):", output1);
+    console.log("Test Case 2 (Input):", input2);
+    console.log("Test Case 2 (Output):", output2);
+    console.log("Test Case 3 (Input):", input3);
+    console.log("Test Case 3 (Output):", output3);
+
+
+
+    if (location.state === null) {
+      await axios.post("/api/challenge/save", formData, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("login_token")}`,
+          // "Content-Type": "multipart/form-data"
+        },
+      }, { validateStatus: false })
+        .then((res) => {
+          if (res.status === 200) {
+            console.log("문제가 성공적으로 등록되었습니다.", res.data);
+            console.log(res.status);
+            navigate("/Problem");
+          } else if (res.status === 500 || res.status === 400) {
+            alert("에러발생");
+          }
+        })
+        .catch((error) => {
+          console.error("문제 등록 중 오류가 발생했습니다.", error);
+        });
+    } else if (location.state.update === true) {
+      await axios.put(`/api/challenge/${location.state.cid}`, formData, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("login_token")}`,
+          // "Content-Type": "multipart/form-data"
+        },
+      }, { validateStatus: false })
+        .then((res) => {
+          if (res.status === 200) {
+            console.log("문제가 성공적으로 수정되었습니다.", res.data);
+            console.log(res.status);
+            navigate("/Problem");
+          } else if (res.status === 500 || res.status === 400) {
+            alert("에러발생");
+          }
+        })
+        .catch((error) => {
+          console.error("문제 수정 중 오류가 발생했습니다.", error);
+        });
     }
   };
 
@@ -332,7 +374,8 @@ const WriteBoard = () => {
               onChange={handleHintChange}
             />
           </div>
-          <button type="submit">문제 출제</button>
+          {location.state !== null ? <button type="submit">수정하기</button> :
+            <button type="submit">문제 출제</button>}
         </form>
       </div>
     </div>

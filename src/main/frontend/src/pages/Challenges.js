@@ -28,7 +28,7 @@ import sys
   c: {
     value: `// Your C code here
 #include <stdio.h>
-#include <stdlib.
+#include <stdlib.h>
 
 int main(int argc, char *argv[]) {
 
@@ -47,6 +47,7 @@ const Challenges = () => {
   const [activeLanguage, setActiveLanguage] = useState("java");
   const [code, setCode] = useState(languageEditors["java"].value);
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [files, setFiles] = useState(null);
   const token = localStorage.getItem("login_token");
 
   const languages = ["java", "python", "c"];
@@ -61,7 +62,6 @@ const Challenges = () => {
 
   const handleInputChange = (e) => {
     setCode(e);
-
   };
 
   const handleDelete = () => {
@@ -101,7 +101,14 @@ const Challenges = () => {
   const handleUpdate = () => {
     navigate("/WriteBoard", {
       state: {
-        update: true
+        update: true,
+        cid: post.postId,
+        title: post.title,
+        content: post.content,
+        time: post.time,
+        memory: post.memory,
+        hint: post.hint,
+        file: post.files
       }
     });
   }
@@ -150,95 +157,103 @@ const Challenges = () => {
   useEffect(() => {
     console.log(localStorage);
     const fetchPost = async () => {
-      try {
-        const response = await axios.get(
-          `/api/challenge/${postId}`
-        );
+      await axios.get(
+        `/api/challenge/${postId}`
+        , { validateStatus: false }
+      )
+        .then((res) => {
+          if (res.status !== 200) {
+            throw new Error(`Error! status: ${res.status}`);
+          }
+          const base64 = btoa(
+            new Uint8Array(res.data.files[0]).reduce(
+              (data, byte) => data + String.fromCharCode(byte),
+              ''
+            )
+          )
+          setPost(res.data);
+          console.log(res.data);
+          setFiles(base64)
+        })
+        .catch((error) => {
+          console.error("게시물을 불러오는 동안 오류가 발생했습니다.", error);
+        })
+  };
 
-        if (response.status !== 200) {
-          throw new Error(`Error! status: ${response.status}`);
-        }
+  fetchPost();
+}, [postId]);
 
-        setPost(response.data);
-        console.log(response.data);
-      } catch (error) {
-        console.error("게시물을 불러오는 동안 오류가 발생했습니다.", error);
-      }
-    };
+const newlineText = (content) => {
+  return content.split('\n').map(str => <p>{str}</p>);
+}
 
-    fetchPost();
-  }, [postId]);
-
-  const newlineText = (content) => {
-    return content.split('\n').map(str => <p>{str}</p>);
-  }
-
-  return (
-    <div className={`container ${theme.dark ? "dark" : "light"}`}>
-      <HomeButton />
-      <div className="darkBtn">
-        <button onClick={toggleTheme}>
-          {theme.dark ? "Switch to Light Mode" : "Switch to Dark Mode"}
-        </button>
-      </div>
-      <div className={`ChallengesForm `}>
-        <div className="ChallengesContent">
-          {post ? (
-            <>
-              <div className="ChallengesLeft">
-                <div className="ChallengesTitle">
-                  {post.title}
-                </div>
-                <p>{newlineText(post.content)}</p>
-                <h3>Test case 1</h3>
-                <h4>Input</h4>
-                <div>{post.testcases[0]['input']}</div>
-                <h3>Output</h3>
-                <div>{post.testcases[1]['output']}</div>
-                <h2>Test case 2</h2>
-                <h3>Input</h3>
-                <div>{post.testcases[0]['input']}</div>
-                <h3>Output</h3>
-                <div>{post.testcases[1]['output']}</div>
-              </div>
-              <div className="ChallengesRight">
-                <h3>Select Language:</h3>
-                {languages.map((language) => (
-                  <button
-                    className={`LangBtn ${activeLanguage === language ? "active" : ""}`}
-                    key={language}
-                    onClick={() => handleLanguageChange(language)}
-                  >
-                    {languageEditors[language].label}
-                  </button>
-                ))}
-                <h3>{languageEditors[selectedLanguage].label} Code Input Area:</h3>
-                <Editor
-                  name="code"
-                  value={code}
-                  language={selectedLanguage}
-                  onChange={handleInputChange}
-                  theme="vs-dark"
-                  height="300px"
-                />
-                <button onClick={handleSubmit}>채점하기</button>
-                <button onClick={() => setModalIsOpen(true)}>힌트보기</button>
-                <Modal isOpen={modalIsOpen} onRequestClose={() => setModalIsOpen(false)}>
-                  {post.hint}
-                  <button onClick={() => setModalIsOpen(false)}>close</button>
-                </Modal>
-                {userCheck() ? <button onClick={handleDelete} >삭제하기</button> : <></>}
-                {userCheck() ? <button onClick={handleUpdate} >수정하기</button> : <></>}
-              </div>
-            </>
-          ) : (
-            <p>문제를 불러오는 중...</p>
-          )}
-        </div>
-      </div>
-      <button onClick={handleQuestion}>질문하기</button>
+return (
+  <div className={`container ${theme.dark ? "dark" : "light"}`}>
+    <HomeButton />
+    <div className="darkBtn">
+      <button onClick={toggleTheme}>
+        {theme.dark ? "Switch to Light Mode" : "Switch to Dark Mode"}
+      </button>
     </div>
-  );
+    <div className={`ChallengesForm `}>
+      <div className="ChallengesContent">
+        {post ? (
+          <>
+            <div className="ChallengesLeft">
+              <div className="ChallengesTitle">
+                {post.title}
+              </div>
+              <p>{newlineText(post.content)}</p>
+              <img src={`data:;base64,${files}`} />
+              <h3>Test case 1</h3>
+              <h4>Input</h4>
+              <div>{post.testcases[0]['input']}</div>
+              <h3>Output</h3>
+              <div>{post.testcases[1]['output']}</div>
+              <h2>Test case 2</h2>
+              <h3>Input</h3>
+              <div>{post.testcases[0]['input']}</div>
+              <h3>Output</h3>
+              <div>{post.testcases[1]['output']}</div>
+            </div>
+            <div className="ChallengesRight">
+              <h3>Select Language:</h3>
+              {languages.map((language) => (
+                <button
+                  className={`LangBtn ${activeLanguage === language ? "active" : ""}`}
+                  key={language}
+                  onClick={() => handleLanguageChange(language)}
+                >
+                  {languageEditors[language].label}
+                </button>
+              ))}
+              <h3>{languageEditors[selectedLanguage].label} Code Input Area:</h3>
+              <Editor
+                name="code"
+                value={code}
+                language={selectedLanguage}
+                onChange={handleInputChange}
+                theme="vs-dark"
+                height="300px"
+              />
+              <button onClick={handleSubmit}>채점하기</button>
+              <button onClick={() => setModalIsOpen(true)}>힌트보기</button>
+              <Modal isOpen={modalIsOpen} onRequestClose={() => setModalIsOpen(false)}>
+                {post.hint}
+                <button onClick={() => setModalIsOpen(false)}>close</button>
+              </Modal>
+              {userCheck() ? <button onClick={handleDelete} >삭제하기</button> : <></>}
+              {userCheck() ? <button onClick={handleUpdate} >수정하기</button> : <></>}
+            </div>
+          </>
+        ) : (
+          <p>문제를 불러오는 중...</p>
+        )}
+      </div>
+    </div>
+    <button onClick={handleQuestion}>질문하기</button>
+  </div>
+);
 };
 
 export default Challenges;
