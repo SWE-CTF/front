@@ -41,7 +41,12 @@ const Rank = () => {
   const [sortedPosts, setSortedPosts] = useState([]);
 
   return (
-    <div>
+    <div className={`container ${theme.dark ? "dark" : "light"}`}>
+      <div className="darkBtn">
+        <button onClick={toggleTheme}>
+          {theme.dark ? "Switch to Light Mode" : "Switch to Dark Mode"}
+        </button>
+      </div>
       <div className="Rank">
         <HomeButton></HomeButton>
         <Nav></Nav>
