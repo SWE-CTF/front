@@ -545,6 +545,8 @@ input::placeholder {
 
 .ChallengesLeft {
   flex: 1;
+  overflow:scroll;
+  overflow-x:hidden;
 }
 
 .ChallengesLeft p{
@@ -558,6 +560,16 @@ input::placeholder {
   border-radius:8px;
 }
 
+.hintClose {
+  width:60px;
+  height:35px;
+  border-radius:8px;
+  background:#f05a5a;
+  border:none;
+  color:#fff;
+  float:right;
+  cursor:pointer;
+}
 
 .ChallengesRight {
   height:700px;

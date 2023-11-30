@@ -273,7 +273,7 @@ const Challenges = () => {
                   <button onClick={handleSubmit}>채점하기</button>
                   <Modal isOpen={modalIsOpen} onRequestClose={() => setModalIsOpen(false)}>
                     {post.hint}
-                    <button onClick={() => setModalIsOpen(false)}>close</button>
+                    <button className="hintClose" onClick={() => setModalIsOpen(false)}>close</button>
                   </Modal>
                   {userCheck() ? <button onClick={handleDelete} >삭제하기</button> : <></>}
                   {userCheck() ? <button onClick={handleUpdate} >수정하기</button> : <></>}
