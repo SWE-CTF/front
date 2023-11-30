@@ -627,7 +627,7 @@ input::placeholder {
   display: flex;
   align-items: flex-end;
   position: relative;
-  left: 650px;
+  left: 660px;
 }
 
 .Gesipan .Img {
@@ -636,17 +636,25 @@ input::placeholder {
 }
 
 .Gesipan {
-  width: 1000px;
+  width: 1024px;
+  height:550px;
   margin: 100px auto;
 }
 
 .Gesipan .link {
   text-decoration: none;
-  color: black;
+  color: #fff;
+  margin:0 auto;
 }
 
-.dark .Gesipan .list:nth-child(2n) {
-  border:1px solid red;
+.PageBtn {
+  height: 40px;
+  margin: 0 auto;
+}
+
+
+.light .Gesipan .link{
+  color:#000;
 }
 
 .title {
@@ -695,12 +703,21 @@ input::placeholder {
   border-top: 2px solid black;
 }
 
+.dark .list {
+  width: 100%;
+  border-top: 2px solid #333;
+}
+
 .list article {
   padding:10px 0;
   border-bottom: 1px solid #1b1c1d;
   display: flex;
   height: 30px;
   font-size: 18px;
+}
+
+.dark .list article{
+  border-bottom: 1px solid #333;
 }
 
 .list article div:nth-child(1) {
@@ -800,16 +817,10 @@ input::placeholder {
 
 /* rank pagination */
 
+
 .Pagination nav {
-  display: flex;
-  gap: 4px;
-  margin-top: 16px;
-  justify-content: center;
-  align-items: center;
-  position: fixed;
-  bottom: 30px;
-  left: 50%;
-  transform: translateX(-50%);
+  margin-top:195px;
+  margin-left:430px;
 }
 
 .Pagination button {
@@ -817,8 +828,19 @@ input::placeholder {
   border-radius: 8px;
   padding: 8px;
   margin: 0;
+  background:#63e26d;
   color: white;
   font-size: 1rem;
+  float:left;
+}
+
+.Pagination .Write {
+  float:right;
+  margin-top:-40px;
+}
+
+.Write button {
+  cursor:pointer;
 }
 
 /* .Pagination button:hover {
@@ -828,8 +850,9 @@ input::placeholder {
 } */
 
 .Pagination button:disabled {
+  margin:0 10px;
   background: grey;
-  cursor: revert;
+  cursor: pointer;
   transform: revert;
 }
 
@@ -843,7 +866,7 @@ input::placeholder {
 .Pagination button[aria-current] {
   background: #f05a5a;
   font-weight: bold;
-  cursor: not-allowed;
+  cursor: pointer;
   transform: none;
   width:80px;
   height:40px;
@@ -1021,7 +1044,7 @@ input::placeholder {
 }
 
 .BoardDetail .modify {
-  background-color: rgb(99, 226, 109);
+  background-color: #63e26d;
   color: white;
 }
 
@@ -1542,7 +1565,8 @@ input::placeholder {
 
 /*Announcement */
 .Announcement {
-  width: 1000px;
+  width: 1024px;
+  height:550px;
   margin: 100px auto;
 }
 
