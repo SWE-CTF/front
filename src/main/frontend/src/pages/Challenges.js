@@ -175,31 +175,38 @@ const Challenges = () => {
         , { validateStatus: false }
       )
         .then((res) => {
-          if (res.status !== 200) {
-            const imageData = res.data.files[0];
+          if (res.status === 200) {
+            console.log(res.data.files);
+            console.log(res.data.files[0]);
 
-            const byteCharacters = atob(imageData);
-            const byteArrays = [];
-            for (let offset = 0; offset < byteCharacters.length; offset += 512) {
-              const slice = byteCharacters.slice(offset, offset + 512);
-              const byteNumbers = new Array(slice.length);
-              for (let i = 0; i < slice.length; i++) {
-                byteNumbers[i] = slice.charCodeAt(i);
+            if (res.data.files.length > 0) {
+              const imageData = res.data.files[0];
+
+              const byteCharacters = atob(imageData);
+              const byteArrays = [];
+              for (let offset = 0; offset < byteCharacters.length; offset += 512) {
+                const slice = byteCharacters.slice(offset, offset + 512);
+                const byteNumbers = new Array(slice.length);
+                for (let i = 0; i < slice.length; i++) {
+                  byteNumbers[i] = slice.charCodeAt(i);
+                }
+                const byteArray = new Uint8Array(byteNumbers);
+                byteArrays.push(byteArray);
               }
-              const byteArray = new Uint8Array(byteNumbers);
-              byteArrays.push(byteArray);
+              // const blob = new Blob(byteArrays, { type: 'image/jpeg' });
+              // const blob = new Blob(byteArrays, { type: 'image/png' });
+              const blob = new Blob(byteArrays);
+
+              const imageUrl = URL.createObjectURL(blob);
+
+              setFiles(imageUrl);
+
+              setFileExist(true);
             }
-            // const blob = new Blob(byteArrays, { type: 'image/jpeg' });
-            // const blob = new Blob(byteArrays, { type: 'image/png' });
-            const blob = new Blob(byteArrays);
 
-            const imageUrl = URL.createObjectURL(blob);
-
-            setFiles(imageUrl);
-
-            setFileExist(true);
+            setPost(res.data);
           }
-          setPost(res.data);
+
         })
         .catch((error) => {
           console.error("게시물을 불러오는 동안 오류가 발생했습니다.", error);
