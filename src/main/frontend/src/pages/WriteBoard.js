@@ -162,6 +162,7 @@ const WriteBoard = () => {
     if (files.length > 0) {
       // console.log(files);
       formData.append("files", files[0]);
+      console.log(formData.get("files"));
     }
 
     // console.log(formData.files);
