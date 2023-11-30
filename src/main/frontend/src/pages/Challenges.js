@@ -176,7 +176,7 @@ const Challenges = () => {
       )
         .then((res) => {
           if (res.status !== 200) {
-            const imageData = res.data.image;
+            const imageData = res.data.files[0];
 
             const byteCharacters = atob(imageData);
             const byteArrays = [];
