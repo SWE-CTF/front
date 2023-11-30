@@ -76,7 +76,8 @@ const Rank = () => {
             </div>
           )}
         </div>
-        <div className="page">
+      </div>
+      <div className="page">
           <RankPagination
             total={sortedPosts.length}
             limit={limit}
@@ -84,7 +85,6 @@ const Rank = () => {
             setPage={setPage}
           />
         </div>
-      </div>
     </div>
   );
 };

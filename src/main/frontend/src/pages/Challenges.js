@@ -259,7 +259,9 @@ const Challenges = () => {
                   </button>
                 ))}
                 <h3>{languageEditors[selectedLanguage].label} Code Input Area:</h3>
+                <button className="hintBtn" onClick={() => setModalIsOpen(true)}>힌트보기</button>
                 <Editor
+                  className ="codeArea"
                   name="code"
                   value={code}
                   language={selectedLanguage}
@@ -267,14 +269,17 @@ const Challenges = () => {
                   theme="vs-dark"
                   height="300px"
                 />
-                <button onClick={handleSubmit}>채점하기</button>
-                <button onClick={() => setModalIsOpen(true)}>힌트보기</button>
-                <Modal isOpen={modalIsOpen} onRequestClose={() => setModalIsOpen(false)}>
-                  {post.hint}
-                  <button onClick={() => setModalIsOpen(false)}>close</button>
-                </Modal>
-                {userCheck() ? <button onClick={handleDelete} >삭제하기</button> : <></>}
-                {userCheck() ? <button onClick={handleUpdate} >수정하기</button> : <></>}
+                <div className="ChallengesBtn">
+                  <button onClick={handleSubmit}>채점하기</button>
+                  <Modal isOpen={modalIsOpen} onRequestClose={() => setModalIsOpen(false)}>
+                    {post.hint}
+                    <button onClick={() => setModalIsOpen(false)}>close</button>
+                  </Modal>
+                  {userCheck() ? <button onClick={handleDelete} >삭제하기</button> : <></>}
+                  {userCheck() ? <button onClick={handleUpdate} >수정하기</button> : <></>}
+                    <button onClick={handleQuestion}>질문하기</button>
+                    <button onClick={handleCode}>제출 코드 확인(타 사용자 포함)</button>
+                  </div>
               </div>
             </>
           ) : (
@@ -282,8 +287,7 @@ const Challenges = () => {
           )}
         </div>
       </div>
-      <button onClick={handleQuestion}>질문하기</button>
-      <button onClick={handleCode}>제출 코드 확인(타 사용자 포함)</button>
+      
     </div>
   );
 };
