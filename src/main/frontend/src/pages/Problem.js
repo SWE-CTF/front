@@ -26,7 +26,8 @@ function Problem() {
       setLoading(true);
       try {
         const response = await axios.get(
-          "api/challenge/paging"
+          "api/challenge/paging",
+          { validateStatus: false }
         );
 
         if (response.status !== 200) {
@@ -36,7 +37,6 @@ function Problem() {
         setPosts(response.data);
         setLoading(false);
       } catch (error) {
-        alert("게시물을 불러오는데 실패했습니다.");
         console.error("게시물을 불러오는 동안 오류가 발생했습니다.", error);
         navigate("/");
       }
@@ -51,13 +51,13 @@ function Problem() {
       setLoading(true);
       try {
         const response = await axios.get(
-          `/api/challenge/search?keyword=${searchQuery.challengeTitle}`
+          `/api/challenge/search?keyword=${searchQuery.challengeTitle}`,
+          { validateStatus: false }
         );
         console.log(`/api/challenge/search?keyword=${searchQuery.challengeTitle}`);
         setPosts(response.data);
         setLoading(false);
       } catch (error) {
-        alert("게시물을 불러오는데 실패했습니다.");
         console.error("게시물을 검색하는 동안 오류가 발생했습니다.", error);
         navigate("/");
       }

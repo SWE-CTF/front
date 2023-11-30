@@ -165,7 +165,7 @@ const Challenges = () => {
   }
 
   const userCheck = () => {
-    return localStorage.getItem("nickname") === post.examiner || localStorage.getItem("role") === "ROLE_ADMIN";
+    return localStorage.getItem("username") === post.examiner;
   }
 
   useEffect(() => {
@@ -176,8 +176,6 @@ const Challenges = () => {
       )
         .then((res) => {
           if (res.status === 200) {
-            console.log(res.data.files);
-            console.log(res.data.files[0]);
 
             if (res.data.files.length > 0) {
               const imageData = res.data.files[0];
