@@ -519,7 +519,7 @@ input::placeholder {
 .ChallengesForm {
   margin:0 auto;
   margin-top:50px;
-  width:1024px;
+  width:1440px;
   height:750px;
   flex-direction: column;
   align-items: center;
@@ -544,6 +544,7 @@ input::placeholder {
 }
 
 .ChallengesLeft {
+  height:740px;
   flex: 1;
   overflow:scroll;
   overflow-x:hidden;
