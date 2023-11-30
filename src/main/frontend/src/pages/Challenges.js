@@ -189,7 +189,9 @@ const Challenges = () => {
               const byteArray = new Uint8Array(byteNumbers);
               byteArrays.push(byteArray);
             }
-            const blob = new Blob(byteArrays, { type: 'image/jpeg' });
+            // const blob = new Blob(byteArrays, { type: 'image/jpeg' });
+            // const blob = new Blob(byteArrays, { type: 'image/png' });
+            const blob = new Blob(byteArrays);
 
             const imageUrl = URL.createObjectURL(blob);
 
