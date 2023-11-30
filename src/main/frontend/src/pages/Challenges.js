@@ -165,30 +165,46 @@ const Challenges = () => {
   }
 
   const userCheck = () => {
-    return localStorage.getItem("nickname") === post.examiner || localStorage.getItem("role") === "ROLE_ADMIN";
+    return localStorage.getItem("username") === post.examiner;
   }
 
   useEffect(() => {
     const fetchPost = async () => {
       await axios.get(
         `/api/challenge/${postId}`
-        , { responseType: "blob" }, { validateStatus: false }
+        , { validateStatus: false }
       )
         .then((res) => {
-          if (res.status !== 200) {
-            throw new Error(`Error! status: ${res.status}`);
-          }
-          if (res.data.files.length > 0) {
-            const myFile = new File([res.data.files], { postId });
-            const reader = new FileReader();
-            reader.onload = (ev) => {
-              const previewImage = String(ev.target?.result)
-              setFiles(previewImage);
-            }
-            reader.readAsDataURL(myFile)
+          if (res.status === 200) {
 
-            setFileExist(true);
+            if (res.data.files.length > 0) {
+              const imageData = res.data.files[0];
+
+              const byteCharacters = atob(imageData);
+              const byteArrays = [];
+              for (let offset = 0; offset < byteCharacters.length; offset += 512) {
+                const slice = byteCharacters.slice(offset, offset + 512);
+                const byteNumbers = new Array(slice.length);
+                for (let i = 0; i < slice.length; i++) {
+                  byteNumbers[i] = slice.charCodeAt(i);
+                }
+                const byteArray = new Uint8Array(byteNumbers);
+                byteArrays.push(byteArray);
+              }
+              // const blob = new Blob(byteArrays, { type: 'image/jpeg' });
+              // const blob = new Blob(byteArrays, { type: 'image/png' });
+              const blob = new Blob(byteArrays);
+
+              const imageUrl = URL.createObjectURL(blob);
+
+              setFiles(imageUrl);
+
+              setFileExist(true);
+            }
+
+            setPost(res.data);
           }
+
         })
         .catch((error) => {
           console.error("게시물을 불러오는 동안 오류가 발생했습니다.", error);
