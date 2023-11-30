@@ -116,7 +116,7 @@ const Challenges = () => {
     navigate("/WriteBoard", {
       state: {
         update: true,
-        cid: post.postId,
+        cid: postId,
         title: post.title,
         content: post.content,
         time: post.time,
