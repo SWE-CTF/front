@@ -28,7 +28,7 @@ import sys
   c: {
     value: `// Your C code here
 #include <stdio.h>
-#include <stdlib.
+#include <stdlib.h>
 
 int main(int argc, char *argv[]) {
 
@@ -47,6 +47,8 @@ const Challenges = () => {
   const [activeLanguage, setActiveLanguage] = useState("java");
   const [code, setCode] = useState(languageEditors["java"].value);
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [files, setFiles] = useState(null);
+  const [fileExist, setFileExist] = useState(false);
   const token = localStorage.getItem("login_token");
 
   const languages = ["java", "python", "c"];
@@ -61,7 +63,6 @@ const Challenges = () => {
 
   const handleInputChange = (e) => {
     setCode(e);
-
   };
 
   const handleDelete = () => {
@@ -71,7 +72,7 @@ const Challenges = () => {
       axios
         .delete(`/api/challenge/${postId}`, {
           headers: {
-            Authorization: `Bearer ${token}`, // yourTokenHere에 실제 토큰을 넣어주세요
+            Authorization: `Bearer ${token}`,
           },
         }, { validateStatus: false })
         .then((res) => {
@@ -79,9 +80,13 @@ const Challenges = () => {
             console.log("게시물 삭제가 완료되었습니다:", res.data);
             navigate("/Problem");
             // 삭제 완료 후 필요한 작업 수행
+          } else if (res.status === 401) {
+            alert("토큰이 만료되었거나 인증되지 않은 사용자입니다.");
+            navigate("/");
           } else if (res.status === 500 || res.status === 404) {
             console.log("에러발생");
           }
+
         })
         .catch((error) => {
           console.error("게시물 삭제에 실패했습니다:", error);
@@ -98,10 +103,26 @@ const Challenges = () => {
     });
   }
 
+  const handleCode = () => {
+    navigate('/Results', {
+      state: {
+        mode: "code",
+        cid: `${postId}`
+      },
+    });
+  }
+
   const handleUpdate = () => {
     navigate("/WriteBoard", {
       state: {
-        update: true
+        update: true,
+        cid: post.postId,
+        title: post.title,
+        content: post.content,
+        time: post.time,
+        memory: post.memory,
+        hint: post.hint,
+        file: post.files
       }
     });
   }
@@ -109,15 +130,12 @@ const Challenges = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(post);
-    console.log(localStorage);
     const data = {
       "challengeId": postId,
       "code": encodeURIComponent(code),
       "language": selectedLanguage
     };
 
-    console.log(data);
     await axios
       .post(`/api/attempt/challenge`, data, {
         headers: {
@@ -129,11 +147,14 @@ const Challenges = () => {
           navigate("/Results", {
             state:
             {
-              cid: postId,
-              ctitle: post.title
+              mode: "submit",
+              cid: postId
             }
           });
 
+        } else if (res.status === 401) {
+          alert("토큰이 만료되었거나 인증되지 않은 사용자입니다.");
+          navigate("/");
         } else if (res.status === 500 || res.status === 400) {
           alert("에러발생");
         }
@@ -144,26 +165,50 @@ const Challenges = () => {
   }
 
   const userCheck = () => {
-    return localStorage.getItem("nickname") === post.examiner || localStorage.getItem("role") === "ROLE_ADMIN";
+    return localStorage.getItem("username") === post.examiner;
   }
 
   useEffect(() => {
-    console.log(localStorage);
     const fetchPost = async () => {
-      try {
-        const response = await axios.get(
-          `/api/challenge/${postId}`
-        );
+      await axios.get(
+        `/api/challenge/${postId}`
+        , { validateStatus: false }
+      )
+        .then((res) => {
+          if (res.status === 200) {
 
-        if (response.status !== 200) {
-          throw new Error(`Error! status: ${response.status}`);
-        }
+            if (res.data.files.length > 0) {
+              const imageData = res.data.files[0];
 
-        setPost(response.data);
-        console.log(response.data);
-      } catch (error) {
-        console.error("게시물을 불러오는 동안 오류가 발생했습니다.", error);
-      }
+              const byteCharacters = atob(imageData);
+              const byteArrays = [];
+              for (let offset = 0; offset < byteCharacters.length; offset += 512) {
+                const slice = byteCharacters.slice(offset, offset + 512);
+                const byteNumbers = new Array(slice.length);
+                for (let i = 0; i < slice.length; i++) {
+                  byteNumbers[i] = slice.charCodeAt(i);
+                }
+                const byteArray = new Uint8Array(byteNumbers);
+                byteArrays.push(byteArray);
+              }
+              // const blob = new Blob(byteArrays, { type: 'image/jpeg' });
+              // const blob = new Blob(byteArrays, { type: 'image/png' });
+              const blob = new Blob(byteArrays);
+
+              const imageUrl = URL.createObjectURL(blob);
+
+              setFiles(imageUrl);
+
+              setFileExist(true);
+            }
+
+            setPost(res.data);
+          }
+
+        })
+        .catch((error) => {
+          console.error("게시물을 불러오는 동안 오류가 발생했습니다.", error);
+        })
     };
 
     fetchPost();
@@ -190,6 +235,7 @@ const Challenges = () => {
                   {post.title}
                 </div>
                 <p>{newlineText(post.content)}</p>
+                {fileExist ? <img src={`${files}`} style={{ width: "500px", height: "500px" }} /> : <></>}
                 <h3>Test case 1</h3>
                 <h4>Input</h4>
                 <div>{post.testcases[0]['input']}</div>
@@ -213,7 +259,9 @@ const Challenges = () => {
                   </button>
                 ))}
                 <h3>{languageEditors[selectedLanguage].label} Code Input Area:</h3>
+                <button className="hintBtn" onClick={() => setModalIsOpen(true)}>힌트보기</button>
                 <Editor
+                  className ="codeArea"
                   name="code"
                   value={code}
                   language={selectedLanguage}
@@ -221,14 +269,17 @@ const Challenges = () => {
                   theme="vs-dark"
                   height="300px"
                 />
-                <button onClick={handleSubmit}>채점하기</button>
-                <button onClick={() => setModalIsOpen(true)}>힌트보기</button>
-                <Modal isOpen={modalIsOpen} onRequestClose={() => setModalIsOpen(false)}>
-                  {post.hint}
-                  <button onClick={() => setModalIsOpen(false)}>close</button>
-                </Modal>
-                {userCheck() ? <button onClick={handleDelete} >삭제하기</button> : <></>}
-                {userCheck() ? <button onClick={handleUpdate} >수정하기</button> : <></>}
+                <div className="ChallengesBtn">
+                  <button onClick={handleSubmit}>채점하기</button>
+                  <Modal isOpen={modalIsOpen} onRequestClose={() => setModalIsOpen(false)}>
+                    {post.hint}
+                    <button className="hintClose" onClick={() => setModalIsOpen(false)}>close</button>
+                  </Modal>
+                  {userCheck() ? <button onClick={handleDelete} >삭제하기</button> : <></>}
+                  {userCheck() ? <button onClick={handleUpdate} >수정하기</button> : <></>}
+                    <button onClick={handleQuestion}>질문하기</button>
+                    <button onClick={handleCode}>제출 코드 확인(타 사용자 포함)</button>
+                  </div>
               </div>
             </>
           ) : (
@@ -236,7 +287,7 @@ const Challenges = () => {
           )}
         </div>
       </div>
-      <button onClick={handleQuestion}>질문하기</button>
+      
     </div>
   );
 };

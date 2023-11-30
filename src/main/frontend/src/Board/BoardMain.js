@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import HomeButton from "../components/HomeButton";
 import Nav from "../components/Nav";
-import searchImg from "../serach.png";
 import useDarkMode from "../theme/useDarkMode";
 import Pagination from "./Pagination";
 
@@ -43,7 +42,7 @@ const BoardMain = () => {
             (a, b) => b.questionId - a.questionId
           );
           setPosts(sortedPosts);
-          savePostsLocally(sortedPosts); //
+          savePostsLocally(sortedPosts);
         })
         .catch((Error) => {
           console.log(Error);
@@ -89,7 +88,6 @@ const BoardMain = () => {
           <strong>QuestionBoard</strong>
           <div className="search">
             <input value={userInput} onChange={getValue} />
-            <img className="Img" src={searchImg}></img>
           </div>
         </div>
         <div className="list_top">
@@ -126,18 +124,6 @@ const BoardMain = () => {
                     </article>
                   </Link>
                 ))}
-            {/* {posts
-              .slice(offset, offset + limit) // 데이터를 원하는 범위로 슬라이스합니다.
-              .map(({ questionId, title, nickname, writeTime }) => (
-                <Link className="link" to={`/api/question/${questionId}`}>
-                  <article key={questionId}>
-                    <div>{questionId}.</div>
-                    <div>{title}</div>
-                    <div>{writeTime}</div>
-                    <div>{nickname}</div>
-                  </article>
-                </Link>
-              ))} */}
           </div>
           <div className="page">
             <Pagination

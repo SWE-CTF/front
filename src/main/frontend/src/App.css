@@ -461,7 +461,7 @@ input::placeholder {
 .WriteBtn{
   float:right;
   margin:0;
-  margin-top:-60px;
+  margin-top:-40px;
 }
 
 .WriteBtn button{
@@ -491,8 +491,9 @@ input::placeholder {
 }
 
 .pagination li.active button {
-  background-color: #50ee5e;
-  color: #000;
+  background-color: #f05a5a;
+  color: #fff;
+  font-weight:bold;
   /* 다른 스타일 속성 추가 가능 */
 }
 
@@ -500,7 +501,7 @@ input::placeholder {
   font-family: "Open Sans", sans-serif;
   font-family: "Source Code Pro", monospace;
   font-family: "VT323", monospace;
-  background-color: #f05a5a;
+  background-color: #50ee5e;
   width:80px;
   color: white;
   padding: 10px;
@@ -518,7 +519,8 @@ input::placeholder {
 .ChallengesForm {
   margin:0 auto;
   margin-top:50px;
-  width:70%;
+  width:1440px;
+  height:750px;
   flex-direction: column;
   align-items: center;
   padding: 20px;
@@ -542,18 +544,61 @@ input::placeholder {
 }
 
 .ChallengesLeft {
+  height:740px;
   flex: 1;
+  overflow:scroll;
+  overflow-x:hidden;
 }
 
 .ChallengesLeft p{
   font-size:20px;
 }
 
+.hintBtn {
+  height:35px;
+  margin-top:-45px;
+  float:right;
+  border-radius:8px;
+}
+
+.hintClose {
+  width:60px;
+  height:35px;
+  border-radius:8px;
+  background:#f05a5a;
+  border:none;
+  color:#fff;
+  float:right;
+  cursor:pointer;
+}
+
 .ChallengesRight {
+  height:700px;
   border-left:1px solid #d1d1d1;
   flex: 1;
   border-radius: 8px;
   padding: 16px;
+}
+
+.ChallengesBtn {
+  margin-top:220px;
+}
+
+.ChallengesBtn button {
+  height:35px;
+  float:right;
+  border-radius:8px;
+  cursor:pointer;
+  margin:0 3px;
+}
+
+.ChallengesBtn button:hover {
+  background:#50ee5e;
+  color:#fff;
+}
+
+.codeArea {
+  height:500px;
 }
 
 .seq {
@@ -627,7 +672,7 @@ input::placeholder {
   display: flex;
   align-items: flex-end;
   position: relative;
-  left: 650px;
+  left: 660px;
 }
 
 .Gesipan .Img {
@@ -636,17 +681,25 @@ input::placeholder {
 }
 
 .Gesipan {
-  width: 1000px;
+  width: 1024px;
+  height:550px;
   margin: 100px auto;
 }
 
 .Gesipan .link {
   text-decoration: none;
-  color: black;
+  color: #fff;
+  margin:0 auto;
 }
 
-.dark .Gesipan .list:nth-child(2n) {
-  border:1px solid red;
+.PageBtn {
+  height: 40px;
+  margin: 0 auto;
+}
+
+
+.light .Gesipan .link{
+  color:#000;
 }
 
 .title {
@@ -695,12 +748,21 @@ input::placeholder {
   border-top: 2px solid black;
 }
 
+.dark .list {
+  width: 100%;
+  border-top: 2px solid #333;
+}
+
 .list article {
   padding:10px 0;
   border-bottom: 1px solid #1b1c1d;
   display: flex;
   height: 30px;
   font-size: 18px;
+}
+
+.dark .list article{
+  border-bottom: 1px solid #333;
 }
 
 .list article div:nth-child(1) {
@@ -798,52 +860,72 @@ input::placeholder {
   width: 18%;
 }
 
-/* rank pagination */
-
 .Pagination nav {
   display: flex;
-  gap: 4px;
-  margin-top: 16px;
   justify-content: center;
-  align-items: center;
-  position: fixed;
-  bottom: 30px;
-  left: 50%;
-  transform: translateX(-50%);
+  width: 1024px;
+  margin: 0 auto;
+  margin-top: 30px;
 }
+
+.PageBtn {
+  display: flex;
+  align-items: center;
+}
+
+.PageBtn button {
+  margin: 0;
+}
+
 
 .Pagination button {
   border: none;
   border-radius: 8px;
   padding: 8px;
-  margin: 0;
+  margin:0 3px;
+  background:#63e26d;
   color: white;
   font-size: 1rem;
+  float:left;
+  cursor:pointer;
 }
 
-/* .Pagination button:hover {
-  background: #f05a5a;
-  cursor: pointer;
-  transform: translateY(-2px);
-} */
+.Gesipan .Pagination .Write {
+  margin-top:-40px;
+}
+
+.Pagination .Write {
+  float:right;
+}
+
+.Pagination .Write button {
+  background:#f05a5a;
+}
+
+
+
+.Write button {
+  cursor:pointer;
+}
 
 .Pagination button:disabled {
   background: grey;
-  cursor: revert;
+  cursor: pointer;
   transform: revert;
 }
 
-/* .Pagination button:aria-current {
-  background: green;
-  font-weight: bold;
-  cursor: revert;
+.pagination button:disabled {
+  width:0;
+  background: grey;
+  cursor: pointer;
   transform: revert;
-} */
+}
+
 
 .Pagination button[aria-current] {
   background: #f05a5a;
   font-weight: bold;
-  cursor: not-allowed;
+  cursor: pointer;
   transform: none;
   width:80px;
   height:40px;
@@ -1021,7 +1103,7 @@ input::placeholder {
 }
 
 .BoardDetail .modify {
-  background-color: rgb(99, 226, 109);
+  background-color: #63e26d;
   color: white;
 }
 
@@ -1486,7 +1568,7 @@ input::placeholder {
   margin-left: 15px;
   text-align: left;
   width: 600px;
-  color: rgb(240, 90, 90);
+  color: #f05a5a;
 }
 
 .ChatList .adopt {
@@ -1528,27 +1610,32 @@ input::placeholder {
 }
 
 .ChatList .modifyButton :nth-child(1) {
-  background-color: rgb(240, 90, 90);
+  background-color: #f05a5a;
 }
 .ChatList .modifyButton :nth-child(2) {
-  background-color: rgb(99, 226, 109);
+  background-color: #63e26d;
 }
 
 .ChatList .modifyComment {
   width: 780px;
   height: 40px;
-  background-color: rgb(248, 242, 242);
+  background-color: #f8f2f2;
 }
 
 /*Announcement */
 .Announcement {
-  width: 1000px;
+  width: 1024px;
+  height:550px;
   margin: 100px auto;
 }
 
 .Announcement .link {
   text-decoration: none;
-  color: black;
+  color: #fff;
+}
+
+.light .Announcement .link {
+  color:#000;
 }
 
 .Announcement .list_top .num {

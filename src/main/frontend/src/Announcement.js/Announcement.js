@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import HomeButton from "../components/HomeButton";
 import Nav from "../components/Nav";
-import searchImg from "../serach.png";
 import useDarkMode from "../theme/useDarkMode";
 import Pagination from "./Pagination";
 
@@ -71,7 +70,6 @@ const Announcement = () => {
           <strong>Announcement</strong>
           <div className="search">
             <input value={userInput} onChange={getValue} />
-            <img className="Img" src={searchImg}></img>
           </div>
         </div>
 

@@ -161,15 +161,6 @@ const Signup = () => {
                 onChange={handleInputChange}
               ></input>
             </div>
-            <div>
-              TEAM:
-              <input
-                name="team"
-                placeholder="Team"
-                value={userData.team}
-                onChange={handleInputChange}
-              ></input>
-            </div>
           </div>
           <button onClick={handleSignup}>Sign Up</button>
         </div>

@@ -1,8 +1,7 @@
 import { Link } from "react-router-dom";
 import logo from "../cherry.png";
 import HomeButton from "../components/HomeButton";
-import useDarkMode from "../theme/useDarkMode"; //useDarkMode hook 추가
-
+import useDarkMode from "../theme/useDarkMode";
 const LoginHome = () => {
   const [theme, toggleTheme] = useDarkMode();
   const logout = () => {
@@ -15,10 +14,11 @@ const LoginHome = () => {
     localStorage.removeItem("nickname");
     window.location.reload();
   };
+
   if (localStorage.getItem("login") === "true") {
     return (
       <div className={`container ${theme.dark ? "dark" : "light"}`}>
-          <HomeButton></HomeButton>
+        <HomeButton></HomeButton>
         <div className="darkBtn">
           <button onClick={toggleTheme}>
             {theme.dark ? "Switch to Light Mode" : "Switch to Dark Mode"}
