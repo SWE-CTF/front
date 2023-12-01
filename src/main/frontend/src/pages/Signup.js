@@ -12,7 +12,6 @@ const Signup = () => {
     name: "",
     email: "",
     nickname: "",
-    team: ""
   });
 
   const [theme, toggleTheme] = useDarkMode();
@@ -32,22 +31,6 @@ const Signup = () => {
   const handleDuplicateCheck = async (e) => {
     alert("not implemented yet");
     return;
-    // e.preventDefault();
-
-    // if (userData.username.length <= 5) {
-    //   alert("입력값을 확인하세요.");
-    //   return;
-    // }
-
-    // // TODO: request for duplicate check
-    // const response = await axios.post(
-    //   "/api/member/join",
-    //   userData
-    // );
-    // if (response.data === "아이디") {
-    //   alert("사용 가능한 아이디입니다!");
-    //   return;
-    // }
   }
 
   const handleSignup = async (e) => {

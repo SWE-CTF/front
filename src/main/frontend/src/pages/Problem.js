@@ -82,7 +82,7 @@ function Problem() {
         </div>
         <div className={`List ${theme.dark ? "dark" : "light"}`}>
         <div className="title">
-          <strong>QuestionBoard</strong>
+          <strong>문제 게시판</strong>
         </div>
         <div className="list_top">
           <div className="num">번호</div>
@@ -108,7 +108,7 @@ function Problem() {
                 {posts.slice(offset, offset + limit).map((post, index) => (
                     <Link
                       className={`link ${theme.dark ? "dark" : "light"}`}
-                      to={`/pages/${post.id}`}
+                      to={`/pages/${post.challengeId}`}
                     >
                   <article key={post.challengeId}>
                       <div>{post.challengeId}</div>
