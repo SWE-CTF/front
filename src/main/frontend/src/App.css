@@ -293,7 +293,6 @@ input::placeholder {
   cursor: pointer;
 }
 
-
 .SignButton {
   font-family: "Open Sans", sans-serif;
   font-family: "Source Code Pro", monospace;
@@ -396,7 +395,6 @@ input::placeholder {
 .light .problemSearch input::placeholder {
   color: #202123;
 }
-
 
 .dark .problemSearch button {
   background-color: #fff;
@@ -1801,5 +1799,83 @@ input::placeholder {
 
 .LangBtn.active {
   background-color: #50ee5e;
-  color:#000;
+  color: #000;
+}
+
+/* Result */
+.Code {
+  display: flex;
+  justify-content: space-between;
+  font-size: 20px;
+  width: 400px;
+  border-bottom: 1px solid black;
+  margin: 0 auto;
+  position: relative;
+  right: 40px;
+  margin-bottom: 5px;
+  padding-bottom: 5px;
+}
+
+.Code .watch {
+  width: 25%;
+  text-align: center;
+}
+
+.Code .id {
+  width: 25%;
+  padding-left: 10px;
+}
+
+.Code .result {
+  width: 50%;
+  text-align: end;
+}
+
+.Result {
+  width: 400px;
+  margin: 100px auto;
+}
+
+.Result .top {
+  display: flex;
+  justify-content: space-between;
+}
+
+.Result .top .num {
+  width: 300px;
+  width: 25%;
+  padding-left: 10px;
+}
+
+.Result .top .content {
+  width: 300px;
+  text-align: center;
+  width: 25%;
+}
+
+.Result .top .writeTime {
+  width: 300px;
+  text-align: end;
+  position: relative;
+  width: 50%;
+  /* border: 1px solid black; */
+}
+
+.watch button {
+  background-color: white;
+  /* border: none; */
+  cursor: pointer;
+  font-size: 16px;
+  color: lightpink;
+}
+
+.Result .page {
+  display: flex;
+  justify-content: end;
+  /* border: 1px solid black; */
+}
+
+.Result .list {
+  height: 620px;
+  /* border: 1px solid black; */
 }

@@ -287,7 +287,6 @@ const Challenges = () => {
           )}
         </div>
       </div>
-      
     </div>
   );
 };
