@@ -38,17 +38,22 @@ const Signup = () => {
 
     // 회원가입 기준 검사
     
-    if (
-      userData.username.length <= 5 ||
-      userData.password.length <= 5 ||
-      userData.name.length <= 1 ||
-      !emailValidation(userData.email) ||
-      userData.nickname.length <= 1
-    ) {
-      alert("입력값을 확인하세요.");
+    if (userData.username.length <= 5 || userData.password.length <= 5){
+      alert("아이디나 패스워드는 6글자 이상으로 입력해주세요. ");
       return;
     }
-
+    if(userData.name.length <= 1 ){
+      alert("이름은 최소 두글자 이상입니다.");
+      return;
+    }
+    if(!emailValidation(userData.email) ){
+      alert("이메일 양식에 맞추어 입력해주세요.");
+      return;
+    }
+    if(userData.nickname.length <= 1){
+      alert("닉네임은 최소 두글자 확인하세요.");
+      return;
+    }
 
     if (userData.password !== userData.passwordCheck) {
       alert("패스워드와 패스워드 중복체크 값이 다릅니다.");
