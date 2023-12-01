@@ -3,7 +3,10 @@ import React, { useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import HomeButton from "../components/HomeButton";
 import Nav from "../components/Nav";
+import useDarkMode from "../theme/useDarkMode";
+
 const Ex = () => {
+  const [theme, toggleTheme] = useDarkMode();
   const navigate = useNavigate();
   const location = useLocation();
   const titleRef = useRef();
@@ -55,7 +58,8 @@ const Ex = () => {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("login_token")}`,
           },
-        }
+          validateStatus: false
+        },
       )
       .then((res) => {
         // if (res.statusCode === 200 || res.statusCode === 404) {
@@ -66,6 +70,11 @@ const Ex = () => {
         //   alert("업로드 실패.");
         //   return;
         // }
+        if (res.status === 401) {
+          alert("로그인하지 않았거나 토큰이 만료되었습니다.");
+          navigate("/", { state: {logout : true}})
+          return;
+        }
         alert("저장 성공!");
         navigate("/QuestionBoard", { replace: true });
         return;
@@ -78,9 +87,14 @@ const Ex = () => {
   };
 
   return (
-    <div className="Ex">
+    <div className={`Ex container ${theme.dark ? "dark" : "light"}`}>
       <Nav></Nav>
       <HomeButton></HomeButton>
+      <div className="darkBtn">
+        <button onClick={toggleTheme}>
+          {theme.dark ? "Switch to Light Mode" : "Switch to Dark Mode"}
+        </button>
+      </div>
       <div className="Body">
         <div className="title">
           <input

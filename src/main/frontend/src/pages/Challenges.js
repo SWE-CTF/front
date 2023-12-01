@@ -74,15 +74,17 @@ const Challenges = () => {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }, { validateStatus: false })
+          validateStatus: false
+        },)
         .then((res) => {
           if (res.status === 204 || res.status === 200) {
             console.log("게시물 삭제가 완료되었습니다:", res.data);
             navigate("/Problem");
             // 삭제 완료 후 필요한 작업 수행
           } else if (res.status === 401) {
-            alert("토큰이 만료되었거나 인증되지 않은 사용자입니다.");
-            navigate("/");
+            alert("로그인하지 않았거나 토큰이 만료되었습니다.");
+            navigate("/", { state: { logout: true } })
+            return;
           } else if (res.status === 500 || res.status === 404) {
             console.log("에러발생");
           }
@@ -141,9 +143,11 @@ const Challenges = () => {
         headers: {
           Authorization: `Bearer ${token}`, // yourTokenHere에 실제 토큰을 넣어주세요
         },
-      }, { validateStatus: false })
+        validateStatus: false
+      })
       .then((res) => {
         if (res.status === 200) {
+          alert("제출 완료!! 결과 업데이트까지 시간이 조금 걸립니다.");
           navigate("/Results", {
             state:
             {
@@ -153,8 +157,9 @@ const Challenges = () => {
           });
 
         } else if (res.status === 401) {
-          alert("토큰이 만료되었거나 인증되지 않은 사용자입니다.");
-          navigate("/");
+          alert("로그인하지 않았거나 토큰이 만료되었습니다.");
+          navigate("/", { state: { logout: true } })
+          return;
         } else if (res.status === 500 || res.status === 400) {
           alert("에러발생");
         }
@@ -287,7 +292,6 @@ const Challenges = () => {
           )}
         </div>
       </div>
-      
     </div>
   );
 };

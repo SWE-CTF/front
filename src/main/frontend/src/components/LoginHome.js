@@ -2,8 +2,12 @@ import { Link } from "react-router-dom";
 import logo from "../cherry.png";
 import HomeButton from "../components/HomeButton";
 import useDarkMode from "../theme/useDarkMode";
+import Nav from "./Nav.js";
+import { useLocation } from "react-router-dom";
+
 const LoginHome = () => {
   const [theme, toggleTheme] = useDarkMode();
+  const location = useLocation();
   const logout = () => {
     localStorage.removeItem("login");
     localStorage.removeItem("login_token");
@@ -16,8 +20,13 @@ const LoginHome = () => {
   };
 
   if (localStorage.getItem("login") === "true") {
+    console.log(location);
+    if (location.state !== null && location.state.logout === true)  {
+      logout();
+    }
     return (
       <div className={`container ${theme.dark ? "dark" : "light"}`}>
+        <Nav></Nav>
         <HomeButton></HomeButton>
         <div className="darkBtn">
           <button onClick={toggleTheme}>
@@ -50,6 +59,7 @@ const LoginHome = () => {
   } else {
     return (
       <div className={`container ${theme.dark ? "dark" : "light"}`}>
+        <Nav></Nav>
         <HomeButton></HomeButton>
         <div className="darkBtn">
           <button onClick={toggleTheme}>

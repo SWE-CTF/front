@@ -39,7 +39,7 @@ const Signup = () => {
     //   return;
     // }
 
-    // // TODO: request for duplicate check 
+    // // TODO: request for duplicate check
     // const response = await axios.post(
     //   "/api/member/join",
     //   userData
@@ -100,6 +100,11 @@ const Signup = () => {
 
   return (
     <div className={`container ${theme.dark ? "dark" : "light"}`}>
+      <div className="darkBtn">
+        <button onClick={toggleTheme}>
+          {theme.dark ? "Switch to Light Mode" : "Switch to Dark Mode"}
+        </button>
+      </div>
       <div className="Signup">
         <HomeButton />
         <div className="impormation">
