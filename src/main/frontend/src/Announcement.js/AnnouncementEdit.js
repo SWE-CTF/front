@@ -38,9 +38,15 @@ const AnnouncementEdit = () => {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("login_token")}`,
           },
-        }
+        },
+        { validateStatus: false}
       )
       .then((res) => {
+        if (res.status === 401) {
+          alert("로그인하지 않았거나 토큰이 만료되었습니다.");
+          navigate("/", { state: { logout: true } })
+          return;
+        }
         alert("저장 성공!");
         navigate("/Announcement", { replace: true });
         return;

@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
-import { useNavigate, useLocation } from "react-router-dom";
+import React, { useEffect, useRef, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import HomeButton from "../components/HomeButton";
 import Nav from "../components/Nav";
 
@@ -58,7 +58,7 @@ const Modify = () => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      })
+      }, { validateStatus: false })
       .then((response) => {
         if (response.status === 200) {
           console.log("게시물 수정이 완료되었습니다:", response.data);
@@ -66,6 +66,10 @@ const Modify = () => {
           navigate(-1);
         } else if (response.status === 500) {
           console.log("게시물이 수정되지 않았습니다");
+        } else if (response.status === 401) {
+          alert("로그인하지 않았거나 토큰이 만료되었습니다.");
+          navigate("/", { state: {logout : true}})
+          return;
         }
         // 수정 완료 후 필요한 작업 수행
       })

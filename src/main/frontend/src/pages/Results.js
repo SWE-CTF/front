@@ -53,8 +53,9 @@ const Results = () => {
             navigate(`/pages/${location.state.cid}`);
           }
         } else if (res.status === 401) {
-          alert("토큰이 만료되었거나 인증되지 않은 사용자입니다.");
-          navigate("/");
+          alert("로그인하지 않았거나 토큰이 만료되었습니다.");
+          navigate("/", { state: { logout: true } })
+          return;
         } else if (res.status === 500 || res.status === 400) {
           alert("에러 발생");
           navigate("/");
@@ -81,8 +82,9 @@ const Results = () => {
             if (res.status === 200) {
               setPosts(res.data);
             } else if (res.status === 401) {
-              alert("토큰이 만료되었거나 인증되지 않은 사용자입니다.");
-              navigate("/");
+              alert("로그인하지 않았거나 토큰이 만료되었습니다.");
+              navigate("/", { state: { logout: true } })
+              return;
             } else if (res.status === 500 || res.status === 400) {
               alert("에러 발생");
             }
@@ -106,8 +108,9 @@ const Results = () => {
             if (res.status === 200) {
               setPosts(res.data);
             } else if (res.status === 401) {
-              alert("토큰이 만료되었거나 인증되지 않은 사용자입니다.");
-              navigate("/");
+              alert("로그인하지 않았거나 토큰이 만료되었습니다.");
+              navigate("/", { state: { logout: true } })
+              return;
             } else if (res.status === 500 || res.status === 400) {
               alert("에러 발생");
             }

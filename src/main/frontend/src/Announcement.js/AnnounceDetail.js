@@ -1,11 +1,9 @@
-import { useParams } from "react-router-dom";
-import { Component, useEffect, useState } from "react";
-import Board from "./Board.js";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
-import Nav from "../components/Nav.js";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import HomeButton from "../components/HomeButton.js";
-import ChatList from "../components/ChatList.js";
+import Nav from "../components/Nav.js";
+import Board from "./Board.js";
 
 const AnnounceDetail = () => {
   const { noticeId } = useParams(); // /board/:idx와 동일한 변수명으로 데이터를 꺼낼 수 있습니다.
@@ -39,7 +37,7 @@ const AnnounceDetail = () => {
           headers: {
             Authorization: `Bearer ${token}`, // yourTokenHere에 실제 토큰을 넣어주세요
           },
-        })
+        }, {validateStatus: false})
         .then((res) => {
           if (res.status === 204 || res.status === 200) {
             console.log("게시물 삭제가 완료되었습니다:", res.data);
@@ -47,6 +45,10 @@ const AnnounceDetail = () => {
             // 삭제 완료 후 필요한 작업 수행
           } else if (res.status === 500 || res.status === 404) {
             console.log("에러발생");
+          } else if (res.status === 401) {
+            alert("로그인하지 않았거나 토큰이 만료되었습니다.");
+            navigate("/", { state: { logout: true } })
+            return;
           }
         })
         .catch((error) => {
@@ -68,7 +70,14 @@ const AnnounceDetail = () => {
         headers: {
           Authorization: `Bearer ${authToken}`,
         },
-      });
+      }, {validateStatus: false});
+
+      if (response.status === 401) {
+        alert("로그인하지 않았거나 토큰이 만료되었습니다.");
+        navigate("/", { state: { logout: true } })
+        return;
+      }
+
       console.log(response.data);
       setBoard(response.data);
       setLoading(true);
