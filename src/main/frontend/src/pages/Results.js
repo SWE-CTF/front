@@ -24,6 +24,7 @@ const Results = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const navigate = useNavigate();
 
+
   const indexOfLast = currentPage * postsPerPage;
   const indexOfFirst = indexOfLast - postsPerPage;
   const currentPosts = posts.slice(indexOfFirst, indexOfLast);
@@ -68,6 +69,7 @@ const Results = () => {
       if (location.state === null) {
         navigate("/");
       } else if (location.state.mode === "submit") {
+        setLoading(true);
         await axios
           .get(
             `/api/challenge/${location.state.cid}/member`,
@@ -80,6 +82,7 @@ const Results = () => {
           )
           .then((res) => {
             if (res.status === 200) {
+              setLoading(false);
               setPosts(res.data);
             } else if (res.status === 401) {
               alert("로그인하지 않았거나 토큰이 만료되었습니다.");
@@ -94,6 +97,7 @@ const Results = () => {
           });
       } else if (location.state.mode === "code") {
         check();
+        setLoading(true);
         await axios
           .get(
             `/api/challenge/${location.state.cid}/attempt`,
@@ -106,6 +110,7 @@ const Results = () => {
           )
           .then((res) => {
             if (res.status === 200) {
+              setLoading(false);
               setPosts(res.data);
             } else if (res.status === 401) {
               alert("로그인하지 않았거나 토큰이 만료되었습니다.");
@@ -120,11 +125,16 @@ const Results = () => {
           });
       }
     };
+    setTimeout(function () {
+      window.location.reload(1);
+    }, 15000);
+
     fetch();
   }, []);
 
   return (
     <div className={`container ${theme.dark ? "dark" : "light"}`}>
+      <Nav></Nav>
       <div className="darkBtn">
         <button onClick={toggleTheme}>
           {theme.dark ? "Switch to Light Mode" : "Switch to Dark Mode"}
@@ -136,6 +146,7 @@ const Results = () => {
         <div className="title">
           <strong>Results</strong>
         </div>
+        <div>해당 페이지는 15초마다 refresh 됩니다.</div>
         <div className="top">
           <div className="num">번호</div>
           <div className="content">코드</div>

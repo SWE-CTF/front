@@ -147,6 +147,7 @@ const Challenges = () => {
       })
       .then((res) => {
         if (res.status === 200) {
+          alert("제출 완료!! 결과 업데이트까지 시간이 조금 걸립니다.");
           navigate("/Results", {
             state:
             {
