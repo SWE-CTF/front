@@ -12,7 +12,6 @@ const Signup = () => {
     name: "",
     email: "",
     nickname: "",
-    team: ""
   });
 
   const [theme, toggleTheme] = useDarkMode();
@@ -32,22 +31,6 @@ const Signup = () => {
   const handleDuplicateCheck = async (e) => {
     alert("not implemented yet");
     return;
-    // e.preventDefault();
-
-    // if (userData.username.length <= 5) {
-    //   alert("입력값을 확인하세요.");
-    //   return;
-    // }
-
-    // // TODO: request for duplicate check 
-    // const response = await axios.post(
-    //   "/api/member/join",
-    //   userData
-    // );
-    // if (response.data === "아이디") {
-    //   alert("사용 가능한 아이디입니다!");
-    //   return;
-    // }
   }
 
   const handleSignup = async (e) => {
@@ -55,17 +38,22 @@ const Signup = () => {
 
     // 회원가입 기준 검사
     
-    if (
-      userData.username.length <= 5 ||
-      userData.password.length <= 5 ||
-      userData.name.length <= 1 ||
-      !emailValidation(userData.email) ||
-      userData.nickname.length <= 1
-    ) {
-      alert("입력값을 확인하세요.");
+    if (userData.username.length <= 5 || userData.password.length <= 5){
+      alert("아이디나 패스워드는 6글자 이상으로 입력해주세요. ");
       return;
     }
-
+    if(userData.name.length <= 1 ){
+      alert("이름은 최소 두글자 이상입니다.");
+      return;
+    }
+    if(!emailValidation(userData.email) ){
+      alert("이메일 양식에 맞추어 입력해주세요.");
+      return;
+    }
+    if(userData.nickname.length <= 1){
+      alert("닉네임은 최소 두글자 확인하세요.");
+      return;
+    }
 
     if (userData.password !== userData.passwordCheck) {
       alert("패스워드와 패스워드 중복체크 값이 다릅니다.");
@@ -100,6 +88,11 @@ const Signup = () => {
 
   return (
     <div className={`container ${theme.dark ? "dark" : "light"}`}>
+      <div className="darkBtn">
+        <button onClick={toggleTheme}>
+          {theme.dark ? "Switch to Light Mode" : "Switch to Dark Mode"}
+        </button>
+      </div>
       <div className="Signup">
         <HomeButton />
         <div className="impormation">

@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
 import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Board = ({
   questionId,
@@ -10,8 +10,11 @@ const Board = ({
   challengeId,
   chat,
 }) => {
+  const goProblem = () =>{
+    nav(`/pages/${challengeId}`);
+  }
   const [text, setText] = useState("");
-
+  const nav = useNavigate();
   const Submit = () => {
     if (text.length < 2) {
       alert("댓글은 2자 이상 작성해주세요");
@@ -63,7 +66,7 @@ const Board = ({
       </div>
       <div className="info2">
         <p className="content">{contents}</p>
-        <button>해당 문제 보기</button>
+        <button onClick={goProblem}>해당 문제 보기</button>
       </div>
     </div>
   );

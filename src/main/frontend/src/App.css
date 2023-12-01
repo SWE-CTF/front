@@ -128,12 +128,17 @@ input::placeholder {
   text-align: center;
 }
 
+.menu button {
+  font-size:30px;
+}
 .menu-link {
   text-decoration: none;
   color: #000;
   font-size: 30px;
   margin: 0 20px;
 }
+
+
 
 /* Login */
 
@@ -165,7 +170,7 @@ input::placeholder {
 .Login input {
   font-family: "Open Sans", sans-serif;
   font-family: "Source Code Pro", monospace;
-  font-family: "VT323", monospace;
+  font-family: "GalmuriMono7", monospace;
   font-size: 20px;
   height: 30px;
   border-radius: 10px;
@@ -178,7 +183,7 @@ input::placeholder {
 .Login button {
   font-family: "Open Sans", sans-serif;
   font-family: "Source Code Pro", monospace;
-  font-family: "VT323", monospace;
+  font-family: "GalmuriMono7", monospace;
   font-size: 20px;
   background-color: rgb(99, 226, 109);
   color: white;
@@ -191,12 +196,12 @@ input::placeholder {
 .menu button {
   font-family: "Open Sans", sans-serif;
   font-family: "Source Code Pro", monospace;
-  font-family: "VT323", monospace;
+  font-family: "GalmuriMono7", monospace;
   background: none;
   border: none;
   text-decoration: none;
   color: #000;
-  font-size: 40px;
+  font-size: 30px;
   margin: 0 20px;
   cursor: pointer;
 }
@@ -220,17 +225,17 @@ input::placeholder {
 }
 
 .CheckButton {
-  height: 50px;
+  height: 55px;
   margin-top: 156px;
   font-family: "Open Sans", sans-serif;
   font-family: "Source Code Pro", monospace;
-  font-family: "VT323", monospace;
-  font-size: 20px;
+  font-family: "GalmuriMono7", monospace;
+  font-size: 15px;
   background-color: rgb(80, 238, 94);
   color: white;
-  padding: 10px;
+  padding: 5px;
   margin-left: 5px;
-  width: 90px;
+  width: 100px;
   border-radius: 10px;
   border: none;
   cursor: pointer;
@@ -263,7 +268,7 @@ input::placeholder {
 .impormation input {
   font-family: "Open Sans", sans-serif;
   font-family: "Source Code Pro", monospace;
-  font-family: "VT323", monospace;
+  font-family: "GalmuriMono7", monospace;
   font-size: 20px;
   height: 30px;
   border-radius: 10px;
@@ -281,7 +286,7 @@ input::placeholder {
 .impormation button {
   font-family: "Open Sans", sans-serif;
   font-family: "Source Code Pro", monospace;
-  font-family: "VT323", monospace;
+  font-family: "GalmuriMono7", monospace;
   font-size: 20px;
   background-color: rgb(80, 238, 94);
   color: white;
@@ -293,11 +298,10 @@ input::placeholder {
   cursor: pointer;
 }
 
-
 .SignButton {
   font-family: "Open Sans", sans-serif;
   font-family: "Source Code Pro", monospace;
-  font-family: "VT323", monospace;
+  font-family: "GalmuriMono7", monospace;
   font-size: 20px;
   background-color: #50ee5e;
   color: white;
@@ -317,14 +321,6 @@ input::placeholder {
 /* Nav */
 
 .Nav {
-  /* position: fixed;
-  z-index: 1;
-  background-color: red;
-  width: 100%;
-  padding: 15px 0px;
-  margin-right: 50px;
-  text-align: center;
-  align-items: center; */
   position: fixed;
   z-index: 1;
   top: 3%; /* 화면 상단에서 50% 위치에 배치 */
@@ -338,9 +334,9 @@ input::placeholder {
   font-size: 20px;
 }
 
-.dark .navMenu {
-  color:#fff;
-}
+  .dark .navMenu {
+    color:#fff;
+  }
 
 .light .navMenu {
   color:#000;
@@ -359,12 +355,13 @@ input::placeholder {
 .problemSearch{
   width:1024px;
   margin:0 auto;
-  margin-top:150px;
+  margin-top:130px;
 }
 
 .problemSearch form {
-  margin:0 960px;
+  margin:0 1020px;
 }
+
 
 .problemSearch input{
   width:240px;
@@ -375,24 +372,16 @@ input::placeholder {
   font-size:16px;
 }
 
-.problemSearch button {
-  height:26px;
-  margin:0 10px;
-  background:none;
-  border:1px solid white;
-  cursor: pointer;
-}
 
 /* Problem pages 다크모드적용 */
 
 .dark .problemSearch input {
-  background-color: #202123;
-  color: #fff;
+  background-color: #fff;
+  color: #202123;
 }
 
-.light .problemSearch input {
+.light .problemSearch input{
   border:1px solid #202123;
-  color:#202123;
 }
 
 /* Dark Mode 스타일 */
@@ -404,7 +393,6 @@ input::placeholder {
 .light .problemSearch input::placeholder {
   color: #202123;
 }
-
 
 .dark .problemSearch button {
   background-color: #fff;
@@ -423,40 +411,10 @@ input::placeholder {
   margin:0 auto;
 }
 
-.Listul {
-  margin:20px 0;;
-  padding:0;
-}
-
-
-.List ul li {
-  height:30px;
-  background:#202123;
+.List a {
   text-decoration:none;
-  font-weight:lighter;
-  list-style:none;
-  font-size:18px;
-  list-style:none;
-  padding:10px 0;
+  color:#000;
 }
-
-.List ul li:nth-child(2n) {
-  background:#1b1c1d;
-}
-
-.light .List ul li {
-  background:#fff;
-}
-
-.light .List ul li:nth-child(2n){
-  background:#dfdfdf;
-}
-
-.linkList {
-  padding:0 5px;
-  text-decoration:none;
-}
-
 
 .WriteBtn{
   float:right;
@@ -467,7 +425,7 @@ input::placeholder {
 .WriteBtn button{
   font-family: "Open Sans", sans-serif;
   font-family: "Source Code Pro", monospace;
-  font-family: "VT323", monospace;
+  font-family: "GalmuriMono7", monospace;
   background-color:#f05a5a;
   color: white;
   padding: 10px;
@@ -480,7 +438,7 @@ input::placeholder {
 .Pages{
   width:1024px;
   margin:0 auto;
-  margin-top:50px;
+  margin-top:100px;
 }
 
 .pagination {
@@ -500,7 +458,7 @@ input::placeholder {
 .pagination li button {
   font-family: "Open Sans", sans-serif;
   font-family: "Source Code Pro", monospace;
-  font-family: "VT323", monospace;
+  font-family: "GalmuriMono7", monospace;
   background-color: #50ee5e;
   width:80px;
   color: white;
@@ -902,8 +860,6 @@ input::placeholder {
   background:#f05a5a;
 }
 
-
-
 .Write button {
   cursor:pointer;
 }
@@ -990,26 +946,27 @@ input::placeholder {
   flex-direction: column;
   /* justify-content: center; */
   /* text-align: center; */
-  width: 1000px;
-  margin: 0 400px;
+  width: 800px;
+  margin:0 auto;
   margin-top: 100px;
 }
 
 .Board h2 {
   /* border: 1px solid black; */
   text-align: left;
-  width: 800px;
+  width: 700px;
 }
 
 .Board .info {
   /* border: 1px solid black; */
   display: flex;
   /* border-bottom: 1px solid gray; */
-  width: 800px;
+  width: 100%;
 }
 
 .Board .info2 {
   display: flex;
+  width:820px;
 }
 
 .Board .info2 button {
@@ -1022,7 +979,7 @@ input::placeholder {
 }
 
 .Board .writer {
-  width: 150px;
+  width: 250px;
   font-size: 15px;
 }
 
@@ -1034,8 +991,8 @@ input::placeholder {
 .Board .content {
   text-align: left;
   border: 1px solid lightslategray;
+  width:1024px;
   height: 500px;
-  width: 800px;
   padding: 10px;
   margin-bottom: 10px;
 }
@@ -1071,11 +1028,18 @@ input::placeholder {
 }
 
 /* BoardDetail */
+
 .BoardDetail {
   display: flex;
   flex-direction: column;
   text-align: center;
   justify-items: center;
+}
+
+.BoardDetail .darkBtn button{
+  width:166px;
+  height:35px;
+  margin:15px 30px;
 }
 
 .BoardDetail .loading {
@@ -1104,7 +1068,7 @@ input::placeholder {
 
 .BoardDetail .modify {
   background-color: #63e26d;
-  color: white;
+  color:#fff;
 }
 
 .BoardDetail .delete {
@@ -1116,8 +1080,10 @@ input::placeholder {
   margin-bottom: 20px;
 }
 
-.BoardDetail .modify_delete {
-  margin-bottom: 20px;
+.BoardName {
+  position:relative;
+  overflow:scroll;
+  overflow-x:hidden;
 }
 
 /* Mypage */
@@ -1326,7 +1292,7 @@ input::placeholder {
 .MyPage .changeInput input::placeholder {
   font-family: "Open Sans", sans-serif;
   font-family: "Source Code Pro", monospace;
-  font-family: "VT323", monospace;
+  font-family: "GalmuriMono7", monospace;
 }
 
 .MyPage .changeInput button {
@@ -1337,7 +1303,7 @@ input::placeholder {
   height: 35px;
   font-family: "Open Sans", sans-serif;
   font-family: "Source Code Pro", monospace;
-  font-family: "VT323", monospace;
+  font-family: "GalmuriMono7", monospace;
   font-size: 18px;
 }
 
@@ -1404,14 +1370,14 @@ input::placeholder {
   color: black; /* 원하는 플레이스홀더 텍스트 색상을 설정합니다. */
   font-family: "Open Sans", sans-serif;
   font-family: "Source Code Pro", monospace;
-  font-family: "VT323", monospace;
+  font-family: "GalmuriMono7", monospace;
 }
 
 .Body .num input::placeholder {
   color: black; /* 원하는 플레이스홀더 텍스트 색상을 설정합니다. */
   font-family: "Open Sans", sans-serif;
   font-family: "Source Code Pro", monospace;
-  font-family: "VT323", monospace;
+  font-family: "GalmuriMono7", monospace;
   font-size: 17px;
 }
 
@@ -1419,7 +1385,7 @@ input::placeholder {
   color: black; /* 원하는 플레이스홀더 텍스트 색상을 설정합니다. */
   font-family: "Open Sans", sans-serif;
   font-family: "Source Code Pro", monospace;
-  font-family: "VT323", monospace;
+  font-family: "GalmuriMono7", monospace;
   font-size: 30px;
 }
 
@@ -1461,18 +1427,18 @@ input::placeholder {
 }
 
 /* 질문게시판 댓글 작성 */
+
 .BoardDetail .Comment {
   border: 1px solid black;
   width: 820px;
-  height: 120px;
-  margin: 0 400px;
-  margin-bottom: 20px;
+  margin:0 auto;
 }
 
 .BoardDetail .goProblem {
   position: relative;
   /* bottom: 100px; */
 }
+
 
 .BoardDetail .Comment P {
   margin-left: 10px;
@@ -1481,7 +1447,6 @@ input::placeholder {
 
 .BoardDetail .Comment textarea {
   width: 800px;
-  height: 50px;
   background-color: rgb(248, 242, 242);
 }
 
@@ -1491,7 +1456,7 @@ input::placeholder {
   border-radius: 0;
   background-color: rgb(99, 226, 109);
   color: white;
-  margin-bottom: 20px;
+  margin:20px
 }
 
 /* 댓글 창 구현*/
@@ -1503,7 +1468,7 @@ input::placeholder {
   height: 120px;
   /* align-items: center; */
   justify-content: center;
-  margin: 0 400px;
+  margin:0 auto;
 }
 
 .ChatList .header {
@@ -1511,7 +1476,6 @@ input::placeholder {
   border-bottom: 1px solid black;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
 }
 
 .ChatList .Button {
@@ -1554,7 +1518,7 @@ input::placeholder {
 }
 
 .ChatList .wrap {
-  width: 1200px;
+  width: 840px;
 }
 
 .ChatList .other {
@@ -1587,11 +1551,13 @@ input::placeholder {
   text-align: left;
   padding: 5px;
   overflow: auto;
+  color:#000;
 }
 
 .ChatList .ChatWrap {
   border: 1px solid black;
   margin-bottom: 20px;
+  width:820px;
   height: 130px;
 }
 
@@ -1627,6 +1593,10 @@ input::placeholder {
   width: 1024px;
   height:550px;
   margin: 100px auto;
+}
+
+.Announcement .Write button {
+  float:right;
 }
 
 .Announcement .link {
@@ -1706,6 +1676,10 @@ input::placeholder {
   margin-left: 10px;
 }
 
+.AnnounceDiv .BoardDetail .Board{
+  width:1024px;
+}
+
 /* Rank */
 
 .Rank {
@@ -1741,17 +1715,17 @@ input::placeholder {
   text-align: center;
 }
 
-.Rank .list article:nth-child(1){
+.Rank .list .Ranker:nth-child(1){
   background-color:gold;
   color:#fff;
 }
 
-.Rank .list article:nth-child(2) {
+.Rank .list .Ranker:nth-child(2) {
   background-color:silver;
   color:#fff;
 }
 
-.Rank .list article:nth-child(3) {
+.Rank .list .Ranker:nth-child(3) {
   background-color:#cd7f32;
   color:#fff;
 }
@@ -1796,7 +1770,7 @@ input::placeholder {
 .LangBtn{
   font-family: "Open Sans", sans-serif;
   font-family: "Source Code Pro", monospace;
-  font-family: "VT323", monospace;
+  font-family: "GalmuriMono7", monospace;
   background-color:#f05a5a;
   color: white;
   padding: 10px;
@@ -1809,5 +1783,88 @@ input::placeholder {
 
 .LangBtn.active {
   background-color: #50ee5e;
-  color:#000;
+  color: #000;
+}
+
+/* Result */
+.Code {
+  display: flex;
+  justify-content: space-between;
+  font-size: 20px;
+  width: 400px;
+  border-bottom: 1px solid black;
+  margin: 0 auto;
+  position: relative;
+  right: 40px;
+  margin-bottom: 5px;
+  padding-bottom: 15px;
+}
+
+.Code .watch {
+  text-align: center;
+  margin:-5px 0;
+}
+
+.Code .id {
+  width: 25%;
+  padding-left: 10px;
+  margin:-5px 0;
+}
+
+.Code .result {
+  width: 50%;
+  text-align: end;
+  margin:-5px 0;
+}
+
+.Result {
+  width: 400px;
+  margin: 100px auto;
+}
+
+.Result .top {
+  display: flex;
+  justify-content: space-between;
+}
+
+.Result .top .num {
+  width: 300px;
+  width: 25%;
+  padding-left: 10px;
+}
+
+.Result .top .content {
+  width: 300px;
+  text-align: center;
+  width: 25%;
+}
+
+.Result .top .writeTime {
+  width: 300px;
+  text-align: end;
+  position: relative;
+  width: 50%;
+  /* border: 1px solid black; */
+}
+
+.watch button {
+  width:100px;
+  height:30px;
+  background-color: #f05a5a;
+  /* border: none; */
+  cursor: pointer;
+  font-size: 16px;
+  color: #fff;
+  border:none;
+}
+
+.Result .page {
+  display: flex;
+  justify-content: end;
+  /* border: 1px solid black; */
+}
+
+.Result .list {
+  height: 620px;
+  /* border: 1px solid black; */
 }

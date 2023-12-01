@@ -4,9 +4,12 @@ import { useNavigate, useParams } from "react-router-dom";
 import ChatList from "../components/ChatList.js";
 import HomeButton from "../components/HomeButton.js";
 import Nav from "../components/Nav.js";
+import useDarkMode from "../theme/useDarkMode";
 import Board from "./Board.js";
 
+
 const BoardDetail = () => {
+  const [theme, toggleTheme] = useDarkMode();
   const { questionId } = useParams(); // /board/:idx와 동일한 변수명으로 데이터를 꺼낼 수 있습니다.
   const [board, setBoard] = useState({});
   const [content, setContent] = useState("");
@@ -33,13 +36,18 @@ const BoardDetail = () => {
         headers: {
           Authorization: `Bearer ${token}`, // Authorization 헤더에 토큰 추가
         },
-      })
+        validateStatus: false
+      },)
       .then((res) => {
         if (res.status === 200) {
           alert("댓글저장 성공");
           window.location.reload();
         } else if (res.status === 404 || res.status === 500) {
           console.log("댓글저장 실패");
+        } else if (res.status === 401) {
+          alert("로그인하지 않았거나 토큰이 만료되었습니다.");
+          navigate("/", { state: {logout : true}})
+          return;
         }
       });
   };
@@ -76,7 +84,8 @@ const BoardDetail = () => {
           headers: {
             Authorization: `Bearer ${token}`, // yourTokenHere에 실제 토큰을 넣어주세요
           },
-        })
+          validateStatus: false
+        },)
         .then((res) => {
           if (res.status === 204 || res.status === 200) {
             console.log("게시물 삭제가 완료되었습니다:", res.data);
@@ -84,6 +93,10 @@ const BoardDetail = () => {
             // 삭제 완료 후 필요한 작업 수행
           } else if (res.status === 500 || res.status === 404) {
             console.log("에러발생");
+          } else if (res.status === 401) {
+            alert("로그인하지 않았거나 토큰이 만료되었습니다.");
+            navigate("/", { state: {logout : true}})
+            return;
           }
         })
         .catch((error) => {
@@ -93,23 +106,6 @@ const BoardDetail = () => {
     }
   };
 
-  // 상세보기들어오면 해당 게시물 정보 가져오는 함수
-  // const getBoard = async () => {
-  //   const authToken = localStorage.getItem("login_token");
-  //   axios
-  //     .get(`/api/question/${questionId}`, {
-  //       headers: {
-  //         Authorization: `Bearer ${authToken}`, // Authorization 헤더에 토큰 추가
-  //       },
-  //     })
-  //     .then((res) => {
-  //       console.log(res.data);
-  //       setBoard(res.data);
-  //     })
-  //     .catch((Error) => {
-  //       console.log(Error);
-  //     });
-  // };
   const getBoard = async () => {
     const authToken = localStorage.getItem("login_token");
     try {
@@ -117,7 +113,14 @@ const BoardDetail = () => {
         headers: {
           Authorization: `Bearer ${authToken}`,
         },
-      });
+        validateStatus: false
+      },);
+
+      if (response.status === 401) {
+        alert("로그인하지 않았거나 토큰이 만료되었습니다.");
+        navigate("/", { state: {logout : true}})
+        return;
+      }
       console.log(response.data);
       setBoard(response.data);
       setLoading(true);
@@ -141,90 +144,95 @@ const BoardDetail = () => {
   };
 
   return (
-    <div className="BoardDetail">
-      <Nav></Nav>
-      <HomeButton></HomeButton>
-      {loading === false ? (
-        <h2 className="loading">loading...</h2>
-      ) : (
-        <div>
-          <Board
-            questionId={board.questionId}
-            title={board.title}
-            contents={board.content}
-            createdBy={board.writer}
-            challengeId={board.challengeId}
-          />
+    <div className={`container BoardDetail ${theme.dark ? "dark" : "light"}`}>
+        <div className={`BoardName ${theme.dark ? "dark" : "light"}`}>
+        <Nav></Nav>
+        <HomeButton></HomeButton>
+        <div className="darkBtn">
+          <button onClick={toggleTheme}>
+            {theme.dark ? "Switch to Light Mode" : "Switch to Dark Mode"}
+          </button>
         </div>
-      )}
-      <div className="modify_delete">
-        {isCurrentUserAuthor() &&
-          (board.commentId < 0 ? (
-            <button className="delete" onClick={handleDelete}>
-              글 삭제
-            </button>
-          ) : (
-            <button className="delete" onClick={handleDelete} disabled>
-              글 삭제
-            </button>
-          ))}
-        {isCurrentUserAuthor() &&
-          (board.commentId < 0 ? (
-            <button className="modify" onClick={handleEditClick}>
-              글 수정
-            </button>
-          ) : (
-            <button className="modify" onClick={handleEditClick} disabled>
-              글 수정
-            </button>
-          ))}
-      </div>
-      <div className="Comment">
-        <div className="header">
-          <p>write comment here</p>
+        {loading === false ? (
+          <h2 className="loading">loading...</h2>
+        ) : (
+            <Board
+              questionId={board.questionId}
+              title={board.title}
+              contents={board.content}
+              createdBy={board.writer}
+              challengeId={board.challengeId}
+            />
+        )}
+        <div className="modify_delete">
+          {isCurrentUserAuthor() &&
+            (board.commentId < 0 ? (
+              <button className="delete" onClick={handleDelete}>
+                글 삭제
+              </button>
+            ) : (
+              <button className="delete" onClick={handleDelete} disabled>
+                글 삭제
+              </button>
+            ))}
+          {isCurrentUserAuthor() &&
+            (board.commentId < 0 ? (
+              <button className="modify" onClick={handleEditClick}>
+                글 수정
+              </button>
+            ) : (
+              <button className="modify" onClick={handleEditClick} disabled>
+                글 수정
+              </button>
+            ))}
         </div>
-        <div className="content">
+        <div className={`Comment ${theme.dark ? "dark" : "light"}`}>
+          <div className="header">
+            <p>write comment here</p>
+          </div>
+          <div className="content">
+            {board.commentId < 0 ? (
+              <textarea
+                onClick={checkAuth}
+                value={content}
+                onChange={(e) => {
+                  setContent(e.target.value);
+                }}
+              ></textarea>
+            ) : (
+              <textarea
+                onClick={checkAuth}
+                value={content}
+                onChange={(e) => {
+                  setContent(e.target.value);
+                }}
+                disabled
+              ></textarea>
+            )}
+          </div>
+        </div>
+        <div class="saveBtn">
           {board.commentId < 0 ? (
-            <textarea
-              onClick={checkAuth}
-              value={content}
-              onChange={(e) => {
-                setContent(e.target.value);
-              }}
-            ></textarea>
+            <button className="save" onClick={submitCommnet}>
+              댓글 저장
+            </button>
           ) : (
-            <textarea
-              onClick={checkAuth}
-              value={content}
-              onChange={(e) => {
-                setContent(e.target.value);
-              }}
-              disabled
-            ></textarea>
+            <button className="save" onClick={submitCommnet} disabled>
+              댓글 저장
+            </button>
+          )}
+        </div>
+        <div className="Comments">
+          {Object.keys(board).length > 0 && (
+            <ChatList
+              list={board.commentList}
+              writer={board.writer}
+              adoptCommentId={board.commentId}
+            />
           )}
         </div>
       </div>
-      <div>
-        {board.commentId < 0 ? (
-          <button className="save" onClick={submitCommnet}>
-            댓글 저장
-          </button>
-        ) : (
-          <button className="save" onClick={submitCommnet} disabled>
-            댓글 저장
-          </button>
-        )}
       </div>
-      <div>
-        {Object.keys(board).length > 0 && (
-          <ChatList
-            list={board.commentList}
-            writer={board.writer}
-            adoptCommentId={board.commentId}
-          />
-        )}
-      </div>
-    </div>
   );
 };
 export default BoardDetail;

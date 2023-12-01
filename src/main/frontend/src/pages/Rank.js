@@ -67,8 +67,8 @@ const Rank = () => {
               {sortedPosts
                 .slice(offset, offset + limit)
                 .map(({ nickname, count }, index) => (
-                  <article key={index}>
-                    <div>{index + 1}</div>
+                  <article className={(page === 1 ? "Ranker" : "noRanker" )} key={index}>
+                    <div>{(page === 1 ? 0 : (page-1)*10) + (index + 1)}</div>
                     <div>{nickname}</div>
                     <div>{count}</div>
                   </article>

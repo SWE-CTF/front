@@ -1,10 +1,9 @@
 import axios from "axios";
-import React, { useCallback, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import HomeButton from "../components/HomeButton";
 import Nav from "../components/Nav";
-import Pagination from "../components/Pagination";
-import Posts from "../components/Posts";
+import RankPagination from "../components/RankPagination";
 import { MyContextProvider } from "../components/myContext";
 import useDarkMode from "../theme/useDarkMode";
 
@@ -12,71 +11,50 @@ function Problem() {
   const [theme, toggleTheme] = useDarkMode();
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage, setPostsPerPage] = useState(15);
-  const [activePage, setActivePage] = useState(1);
+  const [limit, setLimit] = useState(10);
+  const [page, setPage] = useState(1);
+  const offset = (page - 1) * limit;
   const [searchQuery, setSearchQuery] = useState({
     challengeTitle: "",
-    challengeCategory: ""
+    challengeCategory: "",
   });
   const navigate = useNavigate();
 
+  /* 검색 기능 */
+  const [userInput, setUserInput] = useState("");
+  const getValue = (e) => {
+    setUserInput(e.target.value);
+  };
+  const searched = posts.filter((item) => item.title.includes(userInput));
+  /* 검색 기능 */
+
+  console.log(searched);
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       try {
         const response = await axios.get(
-          "api/challenge/paging",
-          { validateStatus: false }
+          `/api/challenge/search?keyword=`,
+          {
+            validateStatus: false,
+          }
         );
 
         if (response.status !== 200) {
           throw new Error(`Error! status: ${response.status}`);
         }
 
+        console.log(response.data);
         setPosts(response.data);
         setLoading(false);
+        console.log(response.data)
       } catch (error) {
         console.error("게시물을 불러오는 동안 오류가 발생했습니다.", error);
         navigate("/");
       }
     };
     fetchData();
-  }, []);
-
-  const handleSearch = async (e) => {
-    e.preventDefault();
-
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        const response = await axios.get(
-          `/api/challenge/search?keyword=${searchQuery.challengeTitle}`,
-          { validateStatus: false }
-        );
-        console.log(`/api/challenge/search?keyword=${searchQuery.challengeTitle}`);
-        setPosts(response.data);
-        setLoading(false);
-      } catch (error) {
-        console.error("게시물을 검색하는 동안 오류가 발생했습니다.", error);
-        navigate("/");
-      }
-    };
-    fetchData();
-  }
-
-  const handleOnKeyPress = (e) => {
-    if (e.key === 'Enter') {
-      handleSearch(e);
-    }
-  };
-
-  const handleInputChange = (e) => {
-    setSearchQuery({
-      ...searchQuery,
-      [e.target.name]: e.target.value,
-    });
-  };
+  }, [])
 
   const onWrite = () => {
     if (localStorage.getItem("login") === "true") {
@@ -87,19 +65,10 @@ function Problem() {
     }
   };
 
-  const indexOfLast = currentPage * postsPerPage;
-  const indexOfFirst = indexOfLast - postsPerPage;
-  const currentPosts = posts.slice(indexOfFirst, indexOfLast);
-
-  const handlePageChange = useCallback((pageNumber) => {
-    setCurrentPage(pageNumber);
-    setActivePage(pageNumber);
-  }, []);
-
   return (
     <MyContextProvider>
+      <div className={`container Problem ${theme.dark ? "dark" : "light"}`}>
       <Nav></Nav>
-      <div className={`container ${theme.dark ? "dark" : "light"}`}>
         <HomeButton />
         <div className="darkBtn">
           <button onClick={toggleTheme}>
@@ -108,33 +77,64 @@ function Problem() {
         </div>
         <div className={`problemSearch ${theme.dark ? "dark" : "light"}`}>
           <form>
-              <input
-                name="challengeTitle"
-                placeholder="Search Challenge"
-                value={searchQuery.challengeTitle}
-                onChange={handleInputChange}
-                onKeyDown={handleOnKeyPress}
-                />
-                <button onClick={handleSearch}>Search</button>
+            <input value={userInput} onChange={getValue} />
           </form>
         </div>
         <div className={`List ${theme.dark ? "dark" : "light"}`}>
-          <Posts
-            className={`${theme.dark ? "dark" : "light"}`}
-            posts={currentPosts}
-            loading={loading}
-          ></Posts>
+        <div className="title">
+          <strong>문제 게시판</strong>
+        </div>
+        <div className="list_top">
+          <div className="num">번호</div>
+          <div className="content">제목</div>
+        </div>
+        <div className="list_wrap">
+          <div className="list">
+          {userInput.length != 0 ? (
+            searched
+              .slice(offset, offset + limit)
+              .map(({ challengeId, title }) => (
+                <Link className={`link ${theme.dark ? "dark" : "light"}`} to={`/api/question/${challengeId}`}>
+                  <article key={challengeId}>
+                    <div>{challengeId}</div>
+                    <div>{title}</div>
+                  </article>
+                </Link>
+              ))
+          ) : (
+            
+            <>
+              {loading && <div> loading... </div>}
+                {posts.slice(offset, offset + limit).map((post, index) => (
+                    <Link
+                      className={`link ${theme.dark ? "dark" : "light"}`}
+                      to={`/pages/${post.challengeId}`}
+                    >
+                  <article key={post.challengeId}>
+                      <div>{post.challengeId}</div>
+                      <div>{post.title}</div>
+                  </article>
+                    </Link>
+                ))}
+            </>
+          )}
+          </div>
+        </div>
         </div>
         <div className="Pages">
-          <Pagination
+          {/* <Pagination
             postsPerPage={15}
             totalPosts={posts.length}
             currentPage={activePage}
             onPageChange={handlePageChange}
+          /> */}
+          <RankPagination
+            total={posts.length}
+            limit={limit}
+            page={page}
+            setPage={setPage}
           />
-          <div
-            className={`WriteBtn ${theme.dark ? "dark" : "light"}`}
-          >
+          <div className={`WriteBtn ${theme.dark ? "dark" : "light"}`}>
             <button onClick={onWrite}>set exam questions</button>
           </div>
         </div>
