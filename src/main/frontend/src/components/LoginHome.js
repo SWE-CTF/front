@@ -1,9 +1,11 @@
-import { Link } from "react-router-dom";
+import useLocation, { Link } from "react-router-dom";
 import logo from "../cherry.png";
 import HomeButton from "../components/HomeButton";
 import useDarkMode from "../theme/useDarkMode";
+
 const LoginHome = () => {
   const [theme, toggleTheme] = useDarkMode();
+  const location = useLocation();
   const logout = () => {
     localStorage.removeItem("login");
     localStorage.removeItem("login_token");
@@ -16,6 +18,9 @@ const LoginHome = () => {
   };
 
   if (localStorage.getItem("login") === "true") {
+    if (location.state !== null && location.state.logout === true) {
+      logout();
+    }
     return (
       <div className={`container ${theme.dark ? "dark" : "light"}`}>
         <HomeButton></HomeButton>

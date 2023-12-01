@@ -54,6 +54,7 @@ const Ex = () => {
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("login_token")}`,
+            validateStatus: false
           },
         }
       )
@@ -66,6 +67,14 @@ const Ex = () => {
         //   alert("업로드 실패.");
         //   return;
         // }
+        if (res.status === 401) {
+          alert("토큰이 만료되었거나 로그인하지 않은 사용자입니다.");
+          navigate("/", {
+            state: {
+              logout: true
+            }
+          });
+        }
         alert("저장 성공!");
         navigate("/QuestionBoard", { replace: true });
         return;

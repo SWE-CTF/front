@@ -40,8 +40,17 @@ const MyPage = () => {
       const res = await axios.get(`/api/member/profile/check/${nickname}`, {
         headers: {
           Authorization: `Bearer ${authToken}`,
+          validateStatus: false
         },
       });
+      if (res.status === 401) {
+        alert("토큰이 만료되었거나 로그인하지 않은 사용자입니다.");
+        navigate("/", {
+          state: {
+            logout: true
+          }
+        });
+      }
       alert("사용가능한 닉네임입니다!");
       SetDupNicknameBol(true);
     } catch (e) {
@@ -56,8 +65,17 @@ const MyPage = () => {
       const res = await axios.get("/api/member/profile", {
         headers: {
           Authorization: `Bearer ${authToken}`,
+          validateStatus: false
         },
       });
+      if (res.status === 401) {
+        alert("토큰이 만료되었거나 로그인하지 않은 사용자입니다.");
+        navigate("/", {
+          state: {
+            logout: true
+          }
+        });
+      }
       console.log(res.data);
       setLoading(true);
       setAttemptCount(res.data["attemptCount"]);
@@ -108,9 +126,18 @@ const MyPage = () => {
         {
           headers: {
             Authorization: `Bearer ${authToken}`,
+            validateStatus: false
           },
         }
       );
+      if (res.status === 401) {
+        alert("토큰이 만료되었거나 로그인하지 않은 사용자입니다.");
+        navigate("/", {
+          state: {
+            logout: true
+          }
+        });
+      }
       console.log(res.data);
       alert("정보 변경 성공!");
       localStorage.setItem("nickname", nickname);

@@ -32,6 +32,7 @@ const BoardDetail = () => {
       .post(`/api/comment/${questionId}/save`, requestData, {
         headers: {
           Authorization: `Bearer ${token}`, // Authorization 헤더에 토큰 추가
+          validateStatus: false
         },
       })
       .then((res) => {
@@ -40,6 +41,13 @@ const BoardDetail = () => {
           window.location.reload();
         } else if (res.status === 404 || res.status === 500) {
           console.log("댓글저장 실패");
+        } else if (res.status === 401) {
+          alert("토큰이 만료되었거나 로그인하지 않은 사용자입니다.");
+          navigate("/", {
+            state: {
+              logout: true
+            }
+          });
         }
       });
   };
@@ -75,6 +83,7 @@ const BoardDetail = () => {
         .delete(`/api/question/${questionID}`, {
           headers: {
             Authorization: `Bearer ${token}`, // yourTokenHere에 실제 토큰을 넣어주세요
+            validateStatus: false
           },
         })
         .then((res) => {
@@ -84,6 +93,13 @@ const BoardDetail = () => {
             // 삭제 완료 후 필요한 작업 수행
           } else if (res.status === 500 || res.status === 404) {
             console.log("에러발생");
+          } else if (res.status === 401) {
+            alert("토큰이 만료되었거나 로그인하지 않은 사용자입니다.");
+            navigate("/", {
+              state: {
+                logout: true
+              }
+            });
           }
         })
         .catch((error) => {
@@ -116,8 +132,18 @@ const BoardDetail = () => {
       const response = await axios.get(`/api/question/${questionId}`, {
         headers: {
           Authorization: `Bearer ${authToken}`,
+          validateStatus: false
         },
       });
+
+      if (response.status === 401) {
+        alert("토큰이 만료되었거나 로그인하지 않은 사용자입니다.");
+        navigate("/", {
+          state: {
+            logout: true
+          }
+        });
+      }
       console.log(response.data);
       setBoard(response.data);
       setLoading(true);

@@ -73,16 +73,21 @@ const Challenges = () => {
         .delete(`/api/challenge/${postId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
+            validateStatus: false
           },
-        }, { validateStatus: false })
+        },)
         .then((res) => {
           if (res.status === 204 || res.status === 200) {
             console.log("게시물 삭제가 완료되었습니다:", res.data);
             navigate("/Problem");
             // 삭제 완료 후 필요한 작업 수행
           } else if (res.status === 401) {
-            alert("토큰이 만료되었거나 인증되지 않은 사용자입니다.");
-            navigate("/");
+            alert("토큰이 만료되었거나 로그인하지 않은 사용자입니다.");
+            navigate("/", {
+              state: {
+                logout: true
+              }
+            });
           } else if (res.status === 500 || res.status === 404) {
             console.log("에러발생");
           }
@@ -140,8 +145,9 @@ const Challenges = () => {
       .post(`/api/attempt/challenge`, data, {
         headers: {
           Authorization: `Bearer ${token}`, // yourTokenHere에 실제 토큰을 넣어주세요
+          validateStatus: false
         },
-      }, { validateStatus: false })
+      },)
       .then((res) => {
         if (res.status === 200) {
           navigate("/Results", {
@@ -153,8 +159,12 @@ const Challenges = () => {
           });
 
         } else if (res.status === 401) {
-          alert("토큰이 만료되었거나 인증되지 않은 사용자입니다.");
-          navigate("/");
+          alert("토큰이 만료되었거나 로그인하지 않은 사용자입니다.");
+          navigate("/", {
+            state: {
+              logout: true
+            }
+          });
         } else if (res.status === 500 || res.status === 400) {
           alert("에러발생");
         }
@@ -261,7 +271,7 @@ const Challenges = () => {
                 <h3>{languageEditors[selectedLanguage].label} Code Input Area:</h3>
                 <button className="hintBtn" onClick={() => setModalIsOpen(true)}>힌트보기</button>
                 <Editor
-                  className ="codeArea"
+                  className="codeArea"
                   name="code"
                   value={code}
                   language={selectedLanguage}
@@ -277,9 +287,9 @@ const Challenges = () => {
                   </Modal>
                   {userCheck() ? <button onClick={handleDelete} >삭제하기</button> : <></>}
                   {userCheck() ? <button onClick={handleUpdate} >수정하기</button> : <></>}
-                    <button onClick={handleQuestion}>질문하기</button>
-                    <button onClick={handleCode}>제출 코드 확인(타 사용자 포함)</button>
-                  </div>
+                  <button onClick={handleQuestion}>질문하기</button>
+                  <button onClick={handleCode}>제출 코드 확인(타 사용자 포함)</button>
+                </div>
               </div>
             </>
           ) : (
@@ -287,7 +297,7 @@ const Challenges = () => {
           )}
         </div>
       </div>
-      
+
     </div>
   );
 };

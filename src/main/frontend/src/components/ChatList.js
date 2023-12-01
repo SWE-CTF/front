@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import useNavigate from "react-dom-route";
 
 function ChatList(props) {
   // props로부터 list를 추출
@@ -10,6 +11,8 @@ function ChatList(props) {
   const [changeComment, setChangeComment] = useState("");
   const [editCommentId, setEditCommentId] = useState(null); // 수정 중인 댓글의 commentId 상태
   const [adopt, setAdopt] = useState(false);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (adoptCommentId > 0) {
@@ -34,12 +37,20 @@ function ChatList(props) {
         .delete(`/api/comment/${commentId}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("login_token")}`, // 헤더에 토큰을 설정합니다
+            validateStatus: false
           },
         })
         .then((res) => {
           if (res.status === 204 || res.status === 200) {
             alert("댓글 삭제 성공!");
             window.location.reload();
+          } else if (res.status === 401) {
+            alert("토큰이 만료되었거나 로그인하지 않은 사용자입니다.");
+            navigate("/", {
+              state: {
+                logout: true
+              }
+            });
           } else {
             console.log("수정 실패");
           }
@@ -65,6 +76,7 @@ function ChatList(props) {
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("login_token")}`, // 헤더에 토큰을 설정합니다
+            validateStatus: false
           },
         }
       )
@@ -72,7 +84,14 @@ function ChatList(props) {
         if (res.status === 200) {
           alert("수정 성공!");
           window.location.reload();
-        } else {
+        } else if (res.status === 401) {
+          alert("토큰이 만료되었거나 로그인하지 않은 사용자입니다.");
+          navigate("/", {
+            state: {
+              logout: true
+            }
+          });
+        }else {
           console.log("수정 실패");
         }
       })
@@ -92,6 +111,7 @@ function ChatList(props) {
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("login_token")}`, // 헤더에 토큰을 설정합니다
+              validateStatus: false
             },
           }
         )
@@ -99,7 +119,14 @@ function ChatList(props) {
           if (res.status === 200) {
             alert("채택 완료");
             window.location.reload();
-          } else {
+          } else if (res.status === 401) {
+            alert("토큰이 만료되었거나 로그인하지 않은 사용자입니다.");
+            navigate("/", {
+              state: {
+                logout: true
+              }
+            });
+          }else {
             console.log("채택 실패");
           }
         })

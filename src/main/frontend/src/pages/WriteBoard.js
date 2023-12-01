@@ -189,17 +189,22 @@ const WriteBoard = () => {
       await axios.post("/api/challenge/save", formData, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("login_token")}`,
+          validateStatus: false
           // "Content-Type": "multipart/form-data"
         },
-      }, { validateStatus: false })
+      },)
         .then((res) => {
           if (res.status === 200) {
             console.log("문제가 성공적으로 등록되었습니다.", res.data);
             console.log(res.status);
             navigate("/Problem");
           } else if (res.status === 401) {
-            alert("토큰이 만료되었거나 인증되지 않은 사용자입니다.");
-            navigate("/");
+            alert("토큰이 만료되었거나 로그인하지 않은 사용자입니다.");
+            navigate("/", {
+              state: {
+                logout: true
+              }
+            });
           } else if (res.status === 500 || res.status === 400) {
             alert("에러발생");
           }
@@ -211,17 +216,22 @@ const WriteBoard = () => {
       await axios.put(`/api/challenge/${location.state.cid}`, formData, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("login_token")}`,
+          validateStatus: false
           // "Content-Type": "multipart/form-data"
         },
-      }, { validateStatus: false })
+      },)
         .then((res) => {
           if (res.status === 200) {
             console.log("문제가 성공적으로 수정되었습니다.", res.data);
             console.log(res.status);
             navigate("/Problem");
           } else if (res.status === 401) {
-            alert("토큰이 만료되었거나 인증되지 않은 사용자입니다.");
-            navigate("/");
+            alert("토큰이 만료되었거나 로그인하지 않은 사용자입니다.");
+            navigate("/", {
+              state: {
+                logout: true
+              }
+            });
           } else if (res.status === 500 || res.status === 400) {
             alert("에러발생");
           }

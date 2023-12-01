@@ -38,8 +38,9 @@ const Results = () => {
             .get(`api/attempt/member/success`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
+                    validateStatus: false
                 },
-            }, { validateStatus: false })
+            },)
             .then((res) => {
                 if (res.status === 200) {
                     if (!res.data.correctChallengeId.includes(parseInt(location.state.cid))) {
@@ -49,9 +50,13 @@ const Results = () => {
                 } else if (res.status === 401) {
                     alert("토큰이 만료되었거나 인증되지 않은 사용자입니다.");
                     navigate("/");
-                } else if (res.status === 500 || res.status === 400) {
-                    alert("에러 발생");
-                    navigate("/");
+                } else if (res.status === 401) {
+                    alert("토큰이 만료되었거나 로그인하지 않은 사용자입니다.");
+                    navigate("/", {
+                        state: {
+                            logout: true
+                        }
+                    });
                 }
             })
     }
@@ -66,14 +71,19 @@ const Results = () => {
                     .get(`/api/challenge/${location.state.cid}/member`, {
                         headers: {
                             Authorization: `Bearer ${token}`,
+                            validateStatus: false
                         },
-                    }, { validateStatus: false })
+                    },)
                     .then((res) => {
                         if (res.status === 200) {
                             setPosts(res.data);
                         } else if (res.status === 401) {
-                            alert("토큰이 만료되었거나 인증되지 않은 사용자입니다.");
-                            navigate("/");
+                            alert("토큰이 만료되었거나 로그인하지 않은 사용자입니다.");
+                            navigate("/", {
+                                state: {
+                                    logout: true
+                                }
+                            });
                         } else if (res.status === 500 || res.status === 400) {
                             alert("에러 발생");
                         }
@@ -87,14 +97,19 @@ const Results = () => {
                     .get(`/api/challenge/${location.state.cid}/attempt`, {
                         headers: {
                             Authorization: `Bearer ${token}`,
+                            validateStatus: false
                         },
-                    }, { validateStatus: false })
+                    },)
                     .then((res) => {
                         if (res.status === 200) {
                             setPosts(res.data);
                         } else if (res.status === 401) {
-                            alert("토큰이 만료되었거나 인증되지 않은 사용자입니다.");
-                            navigate("/");
+                            alert("토큰이 만료되었거나 로그인하지 않은 사용자입니다.");
+                            navigate("/", {
+                                state: {
+                                    logout: true
+                                }
+                            });
                         } else if (res.status === 500 || res.status === 400) {
                             alert("에러 발생");
                         }

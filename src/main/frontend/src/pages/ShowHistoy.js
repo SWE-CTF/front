@@ -1,10 +1,8 @@
-import { useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import HomeButton from "../components/HomeButton";
 import Nav from "../components/Nav";
-import axios from "axios";
 
 const ShowHistory = () => {
   const { item } = useParams();
@@ -21,8 +19,17 @@ const ShowHistory = () => {
       const res = await axios.get(`/api/member/profile/challenge/${item}`, {
         headers: {
           Authorization: `Bearer ${authToken}`,
+          validateStatus: false
         },
       });
+      if (res.status === 401) {
+        alert("토큰이 만료되었거나 로그인하지 않은 사용자입니다.");
+        navigate("/", {
+          state: {
+            logout: true
+          }
+        });
+      }
       setHistory(res.data);
       console.log(res.data);
     } catch (e) {
