@@ -127,7 +127,7 @@ function Problem() {
         </div>
         <div className="Pages">
           <Pagination
-            postsPerPage={15}
+            postsPerPage={10}
             totalPosts={posts.length}
             currentPage={activePage}
             onPageChange={handlePageChange}
