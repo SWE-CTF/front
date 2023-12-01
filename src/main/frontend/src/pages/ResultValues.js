@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Modal from "react-modal";
 
 const Posts = ({ className, posts, loading }) => {
-  console.log("H", posts);
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
 

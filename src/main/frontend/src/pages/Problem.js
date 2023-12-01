@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import HomeButton from "../components/HomeButton";
 import Nav from "../components/Nav";
@@ -11,9 +11,6 @@ function Problem() {
   const [theme, toggleTheme] = useDarkMode();
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage, setPostsPerPage] = useState(15);
-  const [activePage, setActivePage] = useState(1);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(1);
   const offset = (page - 1) * limit;
@@ -26,17 +23,18 @@ function Problem() {
   /* 검색 기능 */
   const [userInput, setUserInput] = useState("");
   const getValue = (e) => {
-    setUserInput(e.target.value.toLowerCase());
+    setUserInput(e.target.value);
   };
   const searched = posts.filter((item) => item.title.includes(userInput));
   /* 검색 기능 */
 
+  console.log(searched);
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       try {
         const response = await axios.get(
-          `/api/challenge/search?keyword=${searchQuery.challengeTitle}`,
+          `/api/challenge/search?keyword=`,
           {
             validateStatus: false,
           }
@@ -46,6 +44,7 @@ function Problem() {
           throw new Error(`Error! status: ${response.status}`);
         }
 
+        console.log(response.data);
         setPosts(response.data);
         setLoading(false);
         console.log(response.data)
@@ -55,15 +54,7 @@ function Problem() {
       }
     };
     fetchData();
-  }, []);
-
-
-  const handleInputChange = (e) => {
-    setSearchQuery({
-      ...searchQuery,
-      [e.target.name]: e.target.value,
-    });
-  };
+  }, [])
 
   const onWrite = () => {
     if (localStorage.getItem("login") === "true") {
@@ -73,15 +64,6 @@ function Problem() {
       navigate(`/login`);
     }
   };
-
-  const indexOfLast = currentPage * postsPerPage;
-  const indexOfFirst = indexOfLast - postsPerPage;
-  const currentPosts = posts.slice(indexOfFirst, indexOfLast);
-
-  const handlePageChange = useCallback((pageNumber) => {
-    setCurrentPage(pageNumber);
-    setActivePage(pageNumber);
-  }, []);
 
   return (
     <MyContextProvider>

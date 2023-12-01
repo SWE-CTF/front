@@ -40,7 +40,8 @@ const AnnounceDetail = () => {
           headers: {
             Authorization: `Bearer ${token}`, // yourTokenHere에 실제 토큰을 넣어주세요
           },
-        })
+          validateStatus: false
+        }, )
         .then((res) => {
           if (res.status === 204 || res.status === 200) {
             console.log("게시물 삭제가 완료되었습니다:", res.data);
@@ -48,6 +49,10 @@ const AnnounceDetail = () => {
             // 삭제 완료 후 필요한 작업 수행
           } else if (res.status === 500 || res.status === 404) {
             console.log("에러발생");
+          } else if (res.status === 401) {
+            alert("로그인하지 않았거나 토큰이 만료되었습니다.");
+            navigate("/", { state: { logout: true } })
+            return;
           }
         })
         .catch((error) => {
@@ -69,7 +74,15 @@ const AnnounceDetail = () => {
         headers: {
           Authorization: `Bearer ${authToken}`,
         },
-      });
+        validateStatus: false
+      },);
+
+      if (response.status === 401) {
+        alert("로그인하지 않았거나 토큰이 만료되었습니다.");
+        navigate("/", { state: { logout: true } })
+        return;
+      }
+
       console.log(response.data);
       setBoard(response.data);
       setLoading(true);

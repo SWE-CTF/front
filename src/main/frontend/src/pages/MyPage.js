@@ -1,11 +1,10 @@
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Basic from "../cherryCookie.webp";
 import HomeButton from "../components/HomeButton";
 import Nav from "../components/Nav";
 import useDarkMode from "../theme/useDarkMode";
-
 
 const MyPage = () => {
   const [theme, toggleTheme] = useDarkMode();
@@ -33,6 +32,7 @@ const MyPage = () => {
   const [failChallengeId, setFailChallengeId] = useState([]);
 
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const checkNickname = async () => {
     const authToken = localStorage.getItem("login_token");
@@ -41,7 +41,13 @@ const MyPage = () => {
         headers: {
           Authorization: `Bearer ${authToken}`,
         },
+        validateStatus: false
       });
+      if (res.status === 401) {
+        alert("로그인하지 않았거나 토큰이 만료되었습니다.");
+        navigate("/", { state: { logout: true } })
+        return;
+      }
       alert("사용가능한 닉네임입니다!");
       SetDupNicknameBol(true);
     } catch (e) {
@@ -57,7 +63,13 @@ const MyPage = () => {
         headers: {
           Authorization: `Bearer ${authToken}`,
         },
-      });
+        validateStatus: false
+      },);
+      if (res.status === 401) {
+        alert("로그인하지 않았거나 토큰이 만료되었습니다.");
+        navigate("/", { state: { logout: true } })
+        return;
+      }
       console.log(res.data);
       setLoading(true);
       setAttemptCount(res.data["attemptCount"]);
@@ -109,8 +121,14 @@ const MyPage = () => {
           headers: {
             Authorization: `Bearer ${authToken}`,
           },
-        }
+          validateStatus: false
+        },
       );
+      if (res.status === 401) {
+        alert("로그인하지 않았거나 토큰이 만료되었습니다.");
+        navigate("/", { state: { logout: true } })
+        return;
+      }
       console.log(res.data);
       alert("정보 변경 성공!");
       localStorage.setItem("nickname", nickname);

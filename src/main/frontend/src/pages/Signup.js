@@ -39,7 +39,7 @@ const Signup = () => {
     //   return;
     // }
 
-    // // TODO: request for duplicate check 
+    // // TODO: request for duplicate check
     // const response = await axios.post(
     //   "/api/member/join",
     //   userData

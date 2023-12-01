@@ -1,10 +1,8 @@
-import { useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import HomeButton from "../components/HomeButton";
 import Nav from "../components/Nav";
-import axios from "axios";
 
 const ShowHistory = () => {
   const { item } = useParams();
@@ -22,7 +20,13 @@ const ShowHistory = () => {
         headers: {
           Authorization: `Bearer ${authToken}`,
         },
-      });
+        validateStatus: false
+      },);
+      if (res.status === 401) {
+        alert("로그인하지 않았거나 토큰이 만료되었습니다.");
+        navigate("/", { state: { logout: true } })
+        return;
+      }
       setHistory(res.data);
       console.log(res.data);
     } catch (e) {
