@@ -225,17 +225,17 @@ input::placeholder {
 }
 
 .CheckButton {
-  height: 50px;
+  height: 55px;
   margin-top: 156px;
   font-family: "Open Sans", sans-serif;
   font-family: "Source Code Pro", monospace;
   font-family: "GalmuriMono7", monospace;
-  font-size: 20px;
+  font-size: 15px;
   background-color: rgb(80, 238, 94);
   color: white;
-  padding: 10px;
+  padding: 5px;
   margin-left: 5px;
-  width: 90px;
+  width: 100px;
   border-radius: 10px;
   border: none;
   cursor: pointer;
