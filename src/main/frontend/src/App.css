@@ -1715,17 +1715,17 @@ input::placeholder {
   text-align: center;
 }
 
-.Rank .list article:nth-child(1){
+.Rank .list .Ranker:nth-child(1){
   background-color:gold;
   color:#fff;
 }
 
-.Rank .list article:nth-child(2) {
+.Rank .list .Ranker:nth-child(2) {
   background-color:silver;
   color:#fff;
 }
 
-.Rank .list article:nth-child(3) {
+.Rank .list .Ranker:nth-child(3) {
   background-color:#cd7f32;
   color:#fff;
 }

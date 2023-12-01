@@ -3,8 +3,10 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import HomeButton from "../components/HomeButton";
 import Nav from "../components/Nav";
+import useDarkMode from "../theme/useDarkMode";
 
 const ShowHistory = () => {
+  const [theme, toggleTheme] = useDarkMode();
   const { item } = useParams();
   const navigate = useNavigate();
   const [history, setHistory] = useState([]);
@@ -39,22 +41,29 @@ const ShowHistory = () => {
   }, []);
 
   return (
-    <div className="ShowHistory">
-      <HomeButton></HomeButton>
-      <Nav></Nav>
-      <button onClick={goBack}>[돌아가기]</button>
-      {history.length === 0 ? (
-        <h2>loading...</h2>
-      ) : (
-        history.map(({ code, codeStatus }, index) => (
-          <div key={index}>
-            <h2>
-              {index + 1}. {codeStatus}
-            </h2>
-            <p>{code}</p>
-          </div>
-        ))
-      )}
+    <div className={`container ${theme.dark ? "dark" : "light"}`}>
+      <div className="darkBtn">
+          <button onClick={toggleTheme}>
+            {theme.dark ? "Switch to Light Mode" : "Switch to Dark Mode"}
+          </button>
+        </div>
+      <div className="ShowHistory">
+        <HomeButton></HomeButton>
+        <Nav></Nav>
+        <button onClick={goBack}>[돌아가기]</button>
+        {history.length === 0 ? (
+          <h2>loading...</h2>
+        ) : (
+          history.map(({ code, codeStatus }, index) => (
+            <div key={index}>
+              <h2>
+                {index + 1}. {codeStatus}
+              </h2>
+              <p>{code}</p>
+            </div>
+          ))
+        )}
+      </div>
     </div>
   );
 };
