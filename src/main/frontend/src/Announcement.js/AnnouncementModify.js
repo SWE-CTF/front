@@ -45,7 +45,8 @@ const AnnouncementModify = () => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }, {validateStatus: false})
+        validateStatus: false
+      },)
       .then((response) => {
         if (response.status === 200) {
           console.log("게시물 수정이 완료되었습니다:", response.data);

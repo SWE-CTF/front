@@ -37,7 +37,8 @@ const AnnounceDetail = () => {
           headers: {
             Authorization: `Bearer ${token}`, // yourTokenHere에 실제 토큰을 넣어주세요
           },
-        }, {validateStatus: false})
+          validateStatus: false
+        }, )
         .then((res) => {
           if (res.status === 204 || res.status === 200) {
             console.log("게시물 삭제가 완료되었습니다:", res.data);
@@ -70,7 +71,8 @@ const AnnounceDetail = () => {
         headers: {
           Authorization: `Bearer ${authToken}`,
         },
-      }, {validateStatus: false});
+        validateStatus: false
+      },);
 
       if (response.status === 401) {
         alert("로그인하지 않았거나 토큰이 만료되었습니다.");

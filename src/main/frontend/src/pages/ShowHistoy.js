@@ -20,7 +20,8 @@ const ShowHistory = () => {
         headers: {
           Authorization: `Bearer ${authToken}`,
         },
-      }, {validateStatus: false});
+        validateStatus: false
+      },);
       if (res.status === 401) {
         alert("로그인하지 않았거나 토큰이 만료되었습니다.");
         navigate("/", { state: { logout: true } })

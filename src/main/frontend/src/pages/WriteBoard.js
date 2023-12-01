@@ -191,7 +191,8 @@ const WriteBoard = () => {
           Authorization: `Bearer ${localStorage.getItem("login_token")}`,
           // "Content-Type": "multipart/form-data"
         },
-      }, { validateStatus: false })
+        validateStatus: false
+      },)
         .then((res) => {
           if (res.status === 200) {
             console.log("문제가 성공적으로 등록되었습니다.", res.data);
@@ -214,7 +215,8 @@ const WriteBoard = () => {
           Authorization: `Bearer ${localStorage.getItem("login_token")}`,
           // "Content-Type": "multipart/form-data"
         },
-      }, { validateStatus: false })
+        validateStatus: false
+      },)
         .then((res) => {
           if (res.status === 200) {
             console.log("문제가 성공적으로 수정되었습니다.", res.data);

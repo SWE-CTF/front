@@ -41,8 +41,8 @@ const Results = () => {
           headers: {
             Authorization: `Bearer ${token}`,
           },
+          validateStatus: false
         },
-        { validateStatus: false }
       )
       .then((res) => {
         if (res.status === 200) {
@@ -75,8 +75,8 @@ const Results = () => {
               headers: {
                 Authorization: `Bearer ${token}`,
               },
+              validateStatus: false
             },
-            { validateStatus: false }
           )
           .then((res) => {
             if (res.status === 200) {
@@ -101,8 +101,8 @@ const Results = () => {
               headers: {
                 Authorization: `Bearer ${token}`,
               },
+              validateStatus: false
             },
-            { validateStatus: false }
           )
           .then((res) => {
             if (res.status === 200) {

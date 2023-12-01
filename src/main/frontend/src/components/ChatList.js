@@ -37,7 +37,8 @@ function ChatList(props) {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("login_token")}`, // 헤더에 토큰을 설정합니다
           },
-        }, { validateStatus: false })
+          validateStatus: false
+        },)
         .then((res) => {
           if (res.status === 204 || res.status === 200) {
             alert("댓글 삭제 성공!");
@@ -72,8 +73,8 @@ function ChatList(props) {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("login_token")}`, // 헤더에 토큰을 설정합니다
           },
+          validateStatus: false
         },
-        { validateStatus: false }
       )
       .then((res) => {
         if (res.status === 200) {
@@ -104,9 +105,8 @@ function ChatList(props) {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("login_token")}`, // 헤더에 토큰을 설정합니다
             },
+            validateStatus: false
           },
-
-          {validateStatus: false}
         )
         .then((res) => {
           if (res.status === 200) {

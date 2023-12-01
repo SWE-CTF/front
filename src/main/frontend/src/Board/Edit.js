@@ -55,8 +55,8 @@ const Ex = () => {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("login_token")}`,
           },
+          validateStatus: false
         },
-        { validateStatus: false }
       )
       .then((res) => {
         // if (res.statusCode === 200 || res.statusCode === 404) {
