@@ -1,13 +1,11 @@
 import axios from "axios";
 import React, { useCallback, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import HomeButton from "../components/HomeButton";
 import Nav from "../components/Nav";
 import RankPagination from "../components/RankPagination";
-import Posts from "../components/Posts";
 import { MyContextProvider } from "../components/myContext";
 import useDarkMode from "../theme/useDarkMode";
-import { Link } from "react-router-dom";
 
 function Problem() {
   const [theme, toggleTheme] = useDarkMode();
@@ -50,6 +48,7 @@ function Problem() {
 
         setPosts(response.data);
         setLoading(false);
+        console.log(response.data)
       } catch (error) {
         console.error("게시물을 불러오는 동안 오류가 발생했습니다.", error);
         navigate("/");
@@ -58,34 +57,6 @@ function Problem() {
     fetchData();
   }, []);
 
-  // const handleSearch = async (e) => {
-  //   e.preventDefault();
-
-  //   const fetchData = async () => {
-  //     setLoading(true);
-  //     try {
-  //       const response = await axios.get(
-  //         `/api/challenge/search?keyword=${searchQuery.challengeTitle}`,
-  //         { validateStatus: false }
-  //       );
-  //       console.log(
-  //         `/api/challenge/search?keyword=${searchQuery.challengeTitle}`
-  //       );
-  //       setPosts(response.data);
-  //       setLoading(false);
-  //     } catch (error) {
-  //       console.error("게시물을 검색하는 동안 오류가 발생했습니다.", error);
-  //       navigate("/");
-  //     }
-  //   };
-  //   fetchData();
-  // };
-
-  const handleOnKeyPress = (e) => {
-    if (e.key === "Enter") {
-      handleSearch(e);
-    }
-  };
 
   const handleInputChange = (e) => {
     setSearchQuery({
@@ -114,8 +85,8 @@ function Problem() {
 
   return (
     <MyContextProvider>
+      <div className={`container Problem ${theme.dark ? "dark" : "light"}`}>
       <Nav></Nav>
-      <div className={`container ${theme.dark ? "dark" : "light"}`}>
         <HomeButton />
         <div className="darkBtn">
           <button onClick={toggleTheme}>
@@ -128,56 +99,45 @@ function Problem() {
           </form>
         </div>
         <div className={`List ${theme.dark ? "dark" : "light"}`}>
+        <div className="title">
+          <strong>QuestionBoard</strong>
+        </div>
+        <div className="list_top">
+          <div className="num">번호</div>
+          <div className="content">제목</div>
+        </div>
+        <div className="list_wrap">
+          <div className="list">
           {userInput.length != 0 ? (
             searched
               .slice(offset, offset + limit)
-              .map(({ questionId, title, nickname, writeTime }) => (
-                <Link className="link" to={`/api/question/${questionId}`}>
-                  <article key={questionId}>
-                    <div>{questionId}.</div>
+              .map(({ challengeId, title }) => (
+                <Link className={`link ${theme.dark ? "dark" : "light"}`} to={`/api/question/${challengeId}`}>
+                  <article key={challengeId}>
+                    <div>{challengeId}</div>
                     <div>{title}</div>
-                    <div>{writeTime}</div>
-                    <div>{nickname}</div>
                   </article>
                 </Link>
               ))
           ) : (
+            
             <>
               {loading && <div> loading... </div>}
-              <ul className="Listul">
                 {posts.slice(offset, offset + limit).map((post, index) => (
-                  <li key={post.challengeId}>
                     <Link
-                      className="linkList"
+                      className={`link ${theme.dark ? "dark" : "light"}`}
                       to={`/pages/${post.id}`}
-                      // style={{
-                      //   backgroundColor:
-                      //     index % 2 === 0 //0부터 시작
-                      //       ? // ? JSON.parse(localStorage.getItem("theme"))["dark"]
-                      //         className === "dark"
-                      //         ? "#202123" // 짝수번째 링크의 배경색 (다크 모드)
-                      //         : "#fff" // 짝수번째 링크의 배경색 (라이트 모드)
-                      //       : // : JSON.parse(localStorage.getItem("theme"))["dark"]
-                      //       className === "dark"
-                      //       ? "#1b1c1d" // 홀수번째 링크의 배경색 (다크 모드)
-                      //       : "#dfdfdf", // 홀수번째 링크의 배경색 (라이트 모드)
-                      //   color:
-                      //     index % 2 === 0
-                      //       ? className === "dark"
-                      //         ? "#fff" // 짝수번째 링크의 텍스트 색상 (다크 모드)
-                      //         : "#202123" // 짝수번째 링크의 텍스트 색상 (라이트 모드)
-                      //       : className === "dark"
-                      //       ? "#fff" // 홀수번째 링크의 텍스트 색상 (다크 모드)
-                      //       : "#202123", // 홀수번째 링크의 텍스트 색상 (라이트 모드)
-                      // }}
                     >
-                      {post.title}
+                  <article key={post.challengeId}>
+                      <div>{post.challengeId}</div>
+                      <div>{post.title}</div>
+                  </article>
                     </Link>
-                  </li>
                 ))}
-              </ul>
             </>
           )}
+          </div>
+        </div>
         </div>
         <div className="Pages">
           {/* <Pagination

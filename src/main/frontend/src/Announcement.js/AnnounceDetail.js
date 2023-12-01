@@ -1,13 +1,14 @@
-import { useParams } from "react-router-dom";
-import { Component, useEffect, useState } from "react";
-import Board from "./Board.js";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
-import Nav from "../components/Nav.js";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import HomeButton from "../components/HomeButton.js";
-import ChatList from "../components/ChatList.js";
+import Nav from "../components/Nav.js";
+import useDarkMode from "../theme/useDarkMode";
+import Board from "./Board.js";
+
 
 const AnnounceDetail = () => {
+  const [theme, toggleTheme] = useDarkMode();
   const { noticeId } = useParams(); // /board/:idx와 동일한 변수명으로 데이터를 꺼낼 수 있습니다.
   const [board, setBoard] = useState({});
   const [content, setContent] = useState("");
@@ -81,38 +82,45 @@ const AnnounceDetail = () => {
   }, []);
 
   return (
-    <div className="BoardDetail">
-      <Nav></Nav>
-      <HomeButton></HomeButton>
-      {loading === false ? (
-        <h2 className="loading">loading...</h2>
-      ) : (
-        <Board
-          noticeId={board.noticeId}
-          title={board.title}
-          contents={board.content}
-          createdBy={board.writer}
-        />
-      )}
-      <div className="modify_delete">
-        {admin === "true" ? (
-          <div>
-            <button className="delete" onClick={handleDelete}>
-              글 삭제
-            </button>
-            <button className="modify" onClick={handleEditClick}>
-              글 수정
-            </button>
-          </div>
+    <div className={`AnnounceDiv container ${theme.dark ? "dark" : "light"}`}>
+      <div className="BoardDetail">
+      <div className="darkBtn">
+          <button onClick={toggleTheme}>
+            {theme.dark ? "Switch to Light Mode" : "Switch to Dark Mode"}
+          </button>
+        </div>
+        <Nav></Nav>
+        <HomeButton></HomeButton>
+        {loading === false ? (
+          <h2 className="loading">loading...</h2>
         ) : (
-          <div></div>
+          <Board
+            noticeId={board.noticeId}
+            title={board.title}
+            contents={board.content}
+            createdBy={board.writer}
+          />
         )}
+        <div className="modify_delete">
+          {admin === "true" ? (
+            <div>
+              <button className="delete" onClick={handleDelete}>
+                글 삭제
+              </button>
+              <button className="modify" onClick={handleEditClick}>
+                글 수정
+              </button>
+            </div>
+          ) : (
+            <div></div>
+          )}
+        </div>
+        <div></div>
+        {/* <div className="emotion">
+          <div className="like">Like : {board.like}</div>
+          <div className="dislike">dislike : {board.dislike}</div>
+        </div> */}
       </div>
-      <div></div>
-      {/* <div className="emotion">
-        <div className="like">Like : {board.like}</div>
-        <div className="dislike">dislike : {board.dislike}</div>
-      </div> */}
     </div>
   );
 };

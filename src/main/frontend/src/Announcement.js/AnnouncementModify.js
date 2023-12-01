@@ -1,10 +1,12 @@
-import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
-import { useNavigate, useLocation } from "react-router-dom";
+import React, { useEffect, useRef, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import HomeButton from "../components/HomeButton";
 import Nav from "../components/Nav";
+import useDarkMode from "../theme/useDarkMode";
 
 const AnnouncementModify = () => {
+  const [theme, toggleTheme] = useDarkMode();
   const navigate = useNavigate();
   const location = useLocation();
   const { oldTitle, oldContent, oldNoticeId } = location.state;
@@ -63,7 +65,12 @@ const AnnouncementModify = () => {
   };
 
   return (
-    <div className="Ex">
+    <div className={`Ex container ${theme.dark ? "dark" : "light"}`}>
+      <div className="darkBtn">
+          <button onClick={toggleTheme}>
+            {theme.dark ? "Switch to Light Mode" : "Switch to Dark Mode"}
+          </button>
+        </div>
       <Nav></Nav>
       <HomeButton></HomeButton>
       <div className="Body">

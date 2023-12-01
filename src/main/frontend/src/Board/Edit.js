@@ -3,7 +3,10 @@ import React, { useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import HomeButton from "../components/HomeButton";
 import Nav from "../components/Nav";
+import useDarkMode from "../theme/useDarkMode";
+
 const Ex = () => {
+  const [theme, toggleTheme] = useDarkMode();
   const navigate = useNavigate();
   const location = useLocation();
   const titleRef = useRef();
@@ -78,9 +81,14 @@ const Ex = () => {
   };
 
   return (
-    <div className="Ex">
+    <div className={`Ex container ${theme.dark ? "dark" : "light"}`}>
       <Nav></Nav>
       <HomeButton></HomeButton>
+      <div className="darkBtn">
+        <button onClick={toggleTheme}>
+          {theme.dark ? "Switch to Light Mode" : "Switch to Dark Mode"}
+        </button>
+      </div>
       <div className="Body">
         <div className="title">
           <input

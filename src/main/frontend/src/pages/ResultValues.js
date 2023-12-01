@@ -10,20 +10,11 @@ const Posts = ({ className, posts, loading }) => {
     return content.split("\n").map((str) => <p>{str}</p>);
   };
   const resturnCodeState = (codeState) => {
-    if (codeState == "SUCCESS") {
-      return "성공";
+    if (codeState === "SUCCESS") {
+      return <span style={{ color: 'green' }}>성공</span>;
     }
-    if (codeState == "FAIL") {
-      return "실패";
-    }
-    if (codeState == "TIME") {
-      return "시간 초과";
-    }
-    if (codeState == "MEMORY") {
-      return "메모리 초과";
-    }
-    if (codeState == "ERROR") {
-      return "에러";
+    if (codeState === "FAIL" || codeState === "TIME" || codeState === "MEMORY" || codeState === "ERROR") {
+      return <span style={{ color: 'red' }}>{codeState === "FAIL" ? "실패" : codeState === "TIME" ? "시간 초과" : codeState === "MEMORY" ? "메모리 초과" : "에러"}</span>;
     }
   };
 
