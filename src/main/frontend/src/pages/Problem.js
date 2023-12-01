@@ -98,8 +98,8 @@ function Problem() {
 
   return (
     <MyContextProvider>
-      <Nav></Nav>
       <div className={`container ${theme.dark ? "dark" : "light"}`}>
+      <Nav></Nav>
         <HomeButton />
         <div className="darkBtn">
           <button onClick={toggleTheme}>

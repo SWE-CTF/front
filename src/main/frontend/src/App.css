@@ -317,14 +317,6 @@ input::placeholder {
 /* Nav */
 
 .Nav {
-  /* position: fixed;
-  z-index: 1;
-  background-color: red;
-  width: 100%;
-  padding: 15px 0px;
-  margin-right: 50px;
-  text-align: center;
-  align-items: center; */
   position: fixed;
   z-index: 1;
   top: 3%; /* 화면 상단에서 50% 위치에 배치 */
@@ -338,9 +330,9 @@ input::placeholder {
   font-size: 20px;
 }
 
-.dark .navMenu {
-  color:#fff;
-}
+  .dark .navMenu {
+    color:#fff;
+  }
 
 .light .navMenu {
   color:#000;

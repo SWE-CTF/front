@@ -2,6 +2,8 @@ import { Link } from "react-router-dom";
 import logo from "../cherry.png";
 import HomeButton from "../components/HomeButton";
 import useDarkMode from "../theme/useDarkMode";
+import Nav from "./Nav.js";
+
 const LoginHome = () => {
   const [theme, toggleTheme] = useDarkMode();
   const logout = () => {
@@ -18,6 +20,7 @@ const LoginHome = () => {
   if (localStorage.getItem("login") === "true") {
     return (
       <div className={`container ${theme.dark ? "dark" : "light"}`}>
+        <Nav></Nav>
         <HomeButton></HomeButton>
         <div className="darkBtn">
           <button onClick={toggleTheme}>
@@ -50,6 +53,7 @@ const LoginHome = () => {
   } else {
     return (
       <div className={`container ${theme.dark ? "dark" : "light"}`}>
+        <Nav></Nav>
         <HomeButton></HomeButton>
         <div className="darkBtn">
           <button onClick={toggleTheme}>
