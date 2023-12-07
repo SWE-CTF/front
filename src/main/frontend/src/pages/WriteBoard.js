@@ -139,6 +139,23 @@ const WriteBoard = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (!title) {
+      alert("제목을 입력해주세요");
+      return;
+    }else if(!content){
+      alert("내용을 입력해주세요");
+      return;
+    }else if(!input1 || !output1 || !input2 || !output2 || !input3 || !output3){
+      alert("테스트케이스를 작성해주세요");
+      return;
+    }else if(!memory){
+      alert("메모리값을 입력해주세요");
+      return;
+    }else if(!time){
+      alert("시간제한을 설정해주세요");
+      return;
+    }
+
     const data = {
       title: title,
       content: content,
